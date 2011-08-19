@@ -1,0 +1,74 @@
+<!DOCTYPE html> 
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml"> 
+<head>
+<base href="http://keomobile.ic-s.org/">
+
+
+<meta name="generator" content="TYPO3 4.5 CMS">
+<meta name="revisit" content="7">
+<meta name="viewport" content="width=device-width, minimum-scale=1">
+
+<link rel="stylesheet" type="text/css" href="/typo3temp/stylesheet_6c301ff27c.css?1310476606" media="all">
+<link rel="stylesheet" type="text/css" href="/typo3conf/ext/ics_default_stylesheet/res/style.css?1310464808" media="all">
+<link rel="stylesheet" type="text/css" href="/fileadmin/kusm/templates/css/style-base.css?1313054084" media="all">
+<link rel="stylesheet" type="text/css" href="/fileadmin/kusm/templates/css/style-base-swatch.css?1311838275" media="all">
+<link rel="stylesheet" type="text/css" href="typo3temp/kusm_editor_2099567c907a9a0dab5d63f2581cb680.css?1312989415" media="all">
+
+<script src="http://code.jquery.com/jquery-1.6.1.min.js" type="text/javascript"></script> 
+<script src="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js" type="text/javascript"></script> 
+
+</head>
+
+<body style="background-color:#333;">
+
+<!-- ###TEMPLATE_SCHEDULE_TABLE### begin -->
+	<div class="###PREFIXID###_scheduleTable">
+		<div class="###PREFIXID###_recap">
+			###LINE_PICTO###
+			###DIRECTION_NAME### - ###STOP_NAME###
+		</div>
+		<div class="###PREFIXID###_date">
+			<input value="###DATE_SEL###" name="dateSel" type="date" data-role="datebox" data-options='{"mode": "calbox"}'>
+		</div>
+		<div class="###PREFIXID###_hour">
+			<a class="###PREFIXID###_hourLess" href="###URL_HOUR_LESS###">###HOUR_LESS_TEXT###</a>
+			<input value="###HOUR_SEL###" name="hourSel" type="date" data-role="datebox"
+   data-options='{"mode": "timebox"}'>
+			<a class="###PREFIXID###_hourMore" href="###URL_HOUR_MORE###">###HOUR_MORE_TEXT###</a>
+		</div>
+		<table>
+			<thead>
+				<tr>
+					<!-- ###HOUR_COLUMNS### begin -->
+					<th>
+						###HOUR###
+					</th>
+					<!-- ###HOUR_COLUMNS### begin -->
+				</tr>
+			</thead>
+			<tbody>
+				<!-- ###SCHEDULES_EVEN### begin -->
+				<tr class="even">
+					<!-- ###HOUR_COLUMNS### begin -->
+					<td>
+						###MIN###
+					</td>
+					<!-- ###HOUR_COLUMNS### end -->
+				</tr>
+				<!-- ###SCHEDULES_EVEN### end -->
+				<!-- ###SCHEDULES_ODD### begin -->
+				<tr class="odd">
+					<!-- ###HOUR_COLUMNS### begin -->
+					<td>
+						###MIN###
+					</td>
+					<!-- ###HOUR_COLUMNS### end -->
+				</tr>
+				<!-- ###SCHEDULES_ODD### end -->
+			</tbody>
+		</table>
+	</div>
+<!-- ###TEMPLATE_SCHEDULE_TABLE### end -->
+
+</body>
+</html>
