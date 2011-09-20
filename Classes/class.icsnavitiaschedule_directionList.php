@@ -50,9 +50,9 @@ class tx_icsnavitiaschedule_directionList {
 		return $content;
 	}
 	
-	function getDirections($line, $template) {
-		$directionForward = $this->getDirection($line, true, $template);
-		$directionBackward = $this->getDirection($line, false, $template);
+	function getDirections($line) {
+		$directionForward = $this->getDirection($line, true);
+		$directionBackward = $this->getDirection($line, false);
 		return $directionForward . $directionBackward;
 	}
 	
@@ -66,11 +66,7 @@ class tx_icsnavitiaschedule_directionList {
 			'###LINE_PICTO###' => $this->pObj->pictoLine->getlinepicto($line->externalCode, 'Navitia'),
 		);
 		
-		if($this->pObj->debug) {
-			$this->debugParam = t3lib_div::_GP($this->pObj->debug_param);
-		}
-		
-		if($forward) {
+		if ($forward) {
 			$markers['###DIRECTION_NAME###'] = $line->forward->name;
 			$markers['###URL###'] = $this->pObj->pi_linkTP_keepPIvars_url(array('sens' => $forward));
 		}
@@ -78,9 +74,9 @@ class tx_icsnavitiaschedule_directionList {
 			$markers['###DIRECTION_NAME###'] = $line->backward->name;
 			$markers['###URL###'] = $this->pObj->pi_linkTP_keepPIvars_url(array('sens' => 0));
 		}
-		
-		if(!is_null($this->debugParam)) {
-			$markers['###URL###'] .= '&' . $this->pObj->debug_param . '=' . $this->debugParam;
+
+		if (tx_icslibnavitia_Debug::IsDebugEnabled()) {
+			$markers['###URL###'] .= '&' . $this->pObj->debug_param . '=' . t3lib_div::_GP($this->pObj->debugParam);
 		}
 		
 		$content = $this->pObj->cObj->substituteMarkerArray($directionListTemplate, $markers);

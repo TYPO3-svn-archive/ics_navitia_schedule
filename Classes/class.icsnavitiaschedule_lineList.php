@@ -34,8 +34,6 @@ class tx_icsnavitiaschedule_lineList {
 	}
 
 	function getLineList($dataProvider, $networks = null) {
-		
-		//var_dump($networks);
 	
 		$templatePart = $this->pObj->templates['lineList'];
 		$lineList = $dataProvider->getLineList($networks);
@@ -44,27 +42,21 @@ class tx_icsnavitiaschedule_lineList {
 		
 		$markers = array(
 			'###PREFIXID###' => $this->prefixId,
-			'###LINE_LIST_TITLE###' => $this->pObj->pi_getLL('lineList.title')
+			'###LINE_LIST_TITLE###' => $this->pObj->pi_getLL('lineList.title'),
 		);
 		
 		if ($lineTot) {
-			// $lines = $lineList->ToArray();
-			// usort($lines, create_function('$v1, $v2', 'if (intval($v1->code)) { if (intval($v2->code)) { } else {} } else { if (is_numeric($v2->code)) { } else {} }');
-			foreach($lineList->ToArray() as $line)  {
+			foreach ($lineList->ToArray() as $line) {
 				$aLines[$line->code] = $line;
 			}
 			
 			ksort($aLines);
 			
-			if($this->pObj->debug) {
-				$this->debugParam = t3lib_div::_GP($this->pObj->debug_param);
-			}
-			
-			foreach($aLines as $line) {
-				if(!empty($line->name)) {
+			foreach ($aLines as $line) {
+				if (!empty($line->name)) {
 					$lineListTemplate = $this->pObj->cObj->getSubpart($templatePart, '###LINE_LIST###');
 					$linePicto = $this->pObj->pictoLine->getlinepicto($line->externalCode, 'Navitia');
-					if(!empty($linePicto)) {
+					if (!empty($linePicto)) {
 						$markers['###LINE_PICTO###'] = $linePicto;
 					}
 					else {
@@ -73,8 +65,8 @@ class tx_icsnavitiaschedule_lineList {
 					
 					$markers['###LINE_NAME###'] = $line->name;
 					$markers['###URL###'] = $this->pObj->pi_getPageLink($GLOBALS['TSFE']->id, '', array($this->pObj->prefixId . '[lineExternalCode]' => $line->externalCode));
-					if(!is_null($this->debugParam)) {
-						$markers['###URL###'] .= '&' . $this->pObj->debug_param . '=' . $this->debugParam;
+					if (tx_icslibnavitia_Debug::IsDebugEnabled()) {
+						$markers['###URL###'] .= '&' . $this->pObj->debug_param . '=' . t3lib_div::_GP($this->pObj->debugParam);
 					}
 					$lineListContent .= $this->pObj->cObj->substituteMarkerArray($lineListTemplate, $markers);
 				}

@@ -41,8 +41,11 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase {
 	var $scriptRelPath = 'pi1/class.tx_icsnavitiaschedule_pi1.php';	// Path to this script relative to the extension dir.
 	var $extKey        = 'ics_navitia_schedule';	// The extension key.
 	
-	var $login;
-	var $url;
+	private $login;
+	private $url;
+	private $dataProvider;
+	var $pictoLine;
+	var $templates;
 	
 	/**
 	 * The main method of the PlugIn
@@ -58,17 +61,16 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase {
 		$this->pi_USER_INT_obj = 1;	// Configuring so caching is not expected. This value means that no cHash params are ever set. We do this, because it's a USER_INT object!
 	
 		$this->init();
-		ini_set('display_errors',1);
 
-		if(isset($this->piVars['lineExternalCode']) && !empty($this->piVars['lineExternalCode']) && isset($this->piVars['sens']) && isset($this->piVars['stopPointExternalCode']) && !empty($this->piVars['stopPointExternalCode'])) {
+		if (isset($this->piVars['lineExternalCode']) && !empty($this->piVars['lineExternalCode']) && isset($this->piVars['sens']) && isset($this->piVars['stopPointExternalCode']) && !empty($this->piVars['stopPointExternalCode'])) {
 			$departureBoard = t3lib_div::makeInstance('tx_icsnavitiaschedule_departureBoard', $this);
 			$content = $departureBoard->renderDepartureBoard($this->dataProvider, $this->piVars['lineExternalCode'], $this->piVars['sens'], $this->piVars['stopPointExternalCode']);
 		}
-		elseif(isset($this->piVars['lineExternalCode']) && !empty($this->piVars['lineExternalCode']) && isset($this->piVars['sens'])) {
+		elseif (isset($this->piVars['lineExternalCode']) && !empty($this->piVars['lineExternalCode']) && isset($this->piVars['sens'])) {
 			$stopList = t3lib_div::makeInstance('tx_icsnavitiaschedule_stopList', $this);
 			$content = $stopList->getStopsList($this->dataProvider, $this->piVars['lineExternalCode'], $this->piVars['sens']);
 		}
-		elseif(isset($this->piVars['lineExternalCode']) && !empty($this->piVars['lineExternalCode'])) {
+		elseif (isset($this->piVars['lineExternalCode']) && !empty($this->piVars['lineExternalCode'])) {
 			$directionList = t3lib_div::makeInstance('tx_icsnavitiaschedule_directionList', $this);
 			$content = $directionList->getDirectionList($this->dataProvider, $this->piVars['lineExternalCode']);
 		}
@@ -86,8 +88,6 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase {
 		$this->url = $this->conf['url'];
 		$this->networks = $this->conf['networks'];
 		
-		//$this->dataProvider = t3lib_div::makeInstance('tx_icslibnavitia_DummyScheduleService', $this->url, $this->login);
-		//ini_set('display_errors',1);
 		$this->dataProvider = t3lib_div::makeInstance('tx_icslibnavitia_APIService', $this->url, $this->login);
 		$this->pictoLine = t3lib_div::makeInstance('tx_icslinepicto_getlines');
 		$templateflex_file = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'template_file', 'configuration');
@@ -99,13 +99,13 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase {
 		);
 		
 		$libnavitia_conf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['ics_libnavitia']);
-		$this->debug = $libnavitia_conf['debug'];
 		$this->debug_param = $libnavitia_conf['debug_param'];
 	}
 	
 	function getNetworkList() {
-		if(!empty($this->networks)) {
-			$aNetworks = explode(',', $this->networks);
+		$networkList = null;
+		if (!empty($this->networks)) {
+			$networks = explode(',', $this->networks);
 			$networkList = $this->dataProvider->getNetworksByCodes($aNetworks);
 		}
 		return $networkList;

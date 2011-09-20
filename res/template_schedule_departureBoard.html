@@ -22,48 +22,37 @@
 <body style="background-color:#333;">
 
 <!-- ###TEMPLATE_SCHEDULE_TABLE### begin -->
-	<div class="###PREFIXID###_scheduleTable">
-		<div class="###PREFIXID###_recap">
-			###LINE_PICTO###
-			###DIRECTION_NAME### - ###STOP_NAME###
-		</div>
-		<form action="###ACTION_URL###" method="get" class="date">
-			<fieldset class="###PREFIXID###_date">
-				<input class="###PREFIXID###_dateSel" value="###DATE_SEL###" name="###PREFIXID###[date]" type="date" data-role="datebox" data-options='{"mode": "calbox"}' onChange="dateChange(this.value);">
-			</fieldset>
-			<fieldset class="###PREFIXID###_hour">
-				<a class="###PREFIXID###_hourLess" href="###HOUR_LESS_URL###">###HOUR_LESS_TEXT###</a>
-				<input value="###HOUR_SEL###" name="###PREFIXID###[hour]" type="date" data-role="datebox"
-	   data-options='{"mode": "timebox"}'>
-				<a class="###PREFIXID###_hourMore" href="###HOUR_MORE_URL###">###HOUR_MORE_TEXT###</a>
-			</fieldset>
-			<fieldset>
-				<input type="submit" value="OK">
-			</fieldset>
-		</form>
-		<table>
-			<thead>
-				<tr>
-					<!-- ###HOUR_COLUMNS### begin -->
-					<th>
-						###HOUR###
-					</th>
-					<!-- ###HOUR_COLUMNS### end -->
-				</tr>
-			</thead>
-			<tbody>
-				<!-- ###SCHEDULES_LINE### begin -->
-					<tr style="text-align:center;">
-						<!-- ###MIN_COLUMNS### begin -->
-						<td>
-							###MIN###
-						</td>
-						<!-- ###MIN_COLUMNS### end -->
-					</tr>
-				<!-- ###SCHEDULES_LINE### end -->
-			</tbody>
-		</table>
+<div class="###PREFIXID###_scheduleTable">
+	<div class="###PREFIXID###_recap">
+		###LINE_PICTO###
+		###DIRECTION_NAME### - ###STOP_NAME###
 	</div>
+	<form action="###ACTION_URL###" method="get" class="date">
+		<fieldset class="###PREFIXID###_date">
+			<input class="###PREFIXID###_dateSel" value="###DATE_SEL###" name="###PREFIXID###[date]" type="date" data-role="datebox" data-options='{"mode": "calbox"}' onChange="dateChange(this.value);">
+		</fieldset>
+		<fieldset class="###PREFIXID###_hour">
+			<a class="###PREFIXID###_hourLess" href="###HOUR_LESS_URL###">###HOUR_LESS_TEXT###</a>
+			<input value="###HOUR_SEL###" name="###PREFIXID###[hour]" type="date" data-role="datebox" data-options='{"mode": "timebox"}'>
+			<a class="###PREFIXID###_hourMore" href="###HOUR_MORE_URL###">###HOUR_MORE_TEXT###</a>
+		</fieldset>
+		<fieldset>
+			<input type="submit" value="OK">
+		</fieldset>
+	</form>
+	<table>
+		<thead>
+			<tr><!-- ###HOUR_COLUMNS### begin -->
+				<th>###HOUR###</th><!-- ###HOUR_COLUMNS### end -->
+			</tr>
+		</thead>
+		<tbody><!-- ###SCHEDULES_LINE### begin -->
+			<tr style="text-align:center;"><!-- ###MIN_COLUMNS### begin -->
+				<td>###MIN###</td><!-- ###MIN_COLUMNS### end -->
+			</tr><!-- ###SCHEDULES_LINE### end -->
+		</tbody>
+	</table>
+</div>
 <!-- ###TEMPLATE_SCHEDULE_TABLE### end -->
 
 </body>

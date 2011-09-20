@@ -37,24 +37,19 @@ class tx_icsnavitiaschedule_stopList {
 		$templatePart = $this->pObj->templates['stopList'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_SCHEDULE_STOP_LIST###');
 		$stops = $dataProvider->getRoutePointList($lineExternalCode, $forward);
-		//$stopTot = $stops->Count();
 		
 		$markers = array(
 			'###PREFIXID###' => $this->pObj->prefixId,
-			'###STOP_LIST_TITLE###' => $this->pObj->pi_getLL('stopList.title')
+			'###STOP_LIST_TITLE###' => $this->pObj->pi_getLL('stopList.title'),
 		);
 		
-		if($this->pObj->debug) {
-			$this->debugParam = t3lib_div::_GP($this->pObj->debug_param);
-		}
-		
 		$stopListTemplate = $this->pObj->cObj->getSubpart($template, '###STOP_LIST###');
-		foreach($stops->ToArray() as $stop)  {
+		foreach ($stops->ToArray() as $stop) {
 			$markers['###STOP_NAME###'] = $stop->stopPoint->name;
 			$markers['###URL###'] = $this->pObj->pi_linkTP_keepPIvars_url(array('stopPointExternalCode' => $stop->stopPoint->externalCode));
-			
-			if(!is_null($this->debugParam)) {
-				$markers['###URL###'] .= '&' . $this->pObj->debug_param . '=' . $this->debugParam;
+
+			if (tx_icslibnavitia_Debug::IsDebugEnabled()) {
+				$markers['###URL###'] .= '&' . $this->pObj->debug_param . '=' . t3lib_div::_GP($this->pObj->debugParam);
 			}
 	
 			$stopListContent .= $this->pObj->cObj->substituteMarkerArray($stopListTemplate, $markers);

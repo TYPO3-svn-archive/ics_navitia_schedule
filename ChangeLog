@@ -1,5 +1,7 @@
 2011-09-20 Pierrick Caillon <pierrick@in-cite.net>
 	* Integrated all done code with little refactoring.
+	* Tidied code files and templates.
+	* Better support for the debug case.
 
 2011-08-19 In Cité Solution  <technique@in-cite.net>
 
