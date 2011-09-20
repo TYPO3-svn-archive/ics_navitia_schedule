@@ -27,15 +27,20 @@
 			###LINE_PICTO###
 			###DIRECTION_NAME### - ###STOP_NAME###
 		</div>
-		<div class="###PREFIXID###_date">
-			<input value="###DATE_SEL###" name="dateSel" type="date" data-role="datebox" data-options='{"mode": "calbox"}'>
-		</div>
-		<div class="###PREFIXID###_hour">
-			<a class="###PREFIXID###_hourLess" href="###URL_HOUR_LESS###">###HOUR_LESS_TEXT###</a>
-			<input value="###HOUR_SEL###" name="hourSel" type="date" data-role="datebox"
-   data-options='{"mode": "timebox"}'>
-			<a class="###PREFIXID###_hourMore" href="###URL_HOUR_MORE###">###HOUR_MORE_TEXT###</a>
-		</div>
+		<form action="###ACTION_URL###" method="get" class="date">
+			<fieldset class="###PREFIXID###_date">
+				<input class="###PREFIXID###_dateSel" value="###DATE_SEL###" name="###PREFIXID###[date]" type="date" data-role="datebox" data-options='{"mode": "calbox"}' onChange="dateChange(this.value);">
+			</fieldset>
+			<fieldset class="###PREFIXID###_hour">
+				<a class="###PREFIXID###_hourLess" href="###HOUR_LESS_URL###">###HOUR_LESS_TEXT###</a>
+				<input value="###HOUR_SEL###" name="###PREFIXID###[hour]" type="date" data-role="datebox"
+	   data-options='{"mode": "timebox"}'>
+				<a class="###PREFIXID###_hourMore" href="###HOUR_MORE_URL###">###HOUR_MORE_TEXT###</a>
+			</fieldset>
+			<fieldset>
+				<input type="submit" value="OK">
+			</fieldset>
+		</form>
 		<table>
 			<thead>
 				<tr>
@@ -43,28 +48,19 @@
 					<th>
 						###HOUR###
 					</th>
-					<!-- ###HOUR_COLUMNS### begin -->
+					<!-- ###HOUR_COLUMNS### end -->
 				</tr>
 			</thead>
 			<tbody>
-				<!-- ###SCHEDULES_EVEN### begin -->
-				<tr class="even">
-					<!-- ###HOUR_COLUMNS### begin -->
-					<td>
-						###MIN###
-					</td>
-					<!-- ###HOUR_COLUMNS### end -->
-				</tr>
-				<!-- ###SCHEDULES_EVEN### end -->
-				<!-- ###SCHEDULES_ODD### begin -->
-				<tr class="odd">
-					<!-- ###HOUR_COLUMNS### begin -->
-					<td>
-						###MIN###
-					</td>
-					<!-- ###HOUR_COLUMNS### end -->
-				</tr>
-				<!-- ###SCHEDULES_ODD### end -->
+				<!-- ###SCHEDULES_LINE### begin -->
+					<tr style="text-align:center;">
+						<!-- ###MIN_COLUMNS### begin -->
+						<td>
+							###MIN###
+						</td>
+						<!-- ###MIN_COLUMNS### end -->
+					</tr>
+				<!-- ###SCHEDULES_LINE### end -->
 			</tbody>
 		</table>
 	</div>

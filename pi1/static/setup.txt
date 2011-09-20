@@ -1,0 +1,19 @@
+plugin.tx_icsnavitiaschedule_pi1 {
+	url =
+	login = 
+	networks = {$plugin.tx_icsnavitiaschedule_pi1.networks}
+	view {
+		lineList {
+			templateFile = EXT:ics_navitia_schedule/res/template_schedule_lineList.html
+		}
+		directionList {
+			templateFile = EXT:ics_navitia_schedule/res/template_schedule_directionList.html
+		}
+		stopList {
+			templateFile = EXT:ics_navitia_schedule/res/template_schedule_stopList.html
+		}
+		departureBoard {
+			templateFile = EXT:ics_navitia_schedule/res/template_schedule_departureBoard.html
+		}
+	}
+}

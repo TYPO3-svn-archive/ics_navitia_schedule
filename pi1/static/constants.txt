@@ -1,0 +1,4 @@
+plugin.tx_icsnavitiaschedule_pi1 {
+	# cat=plugin_icsnavitiaschedule; type=text; label= Networks List (network external code)
+	networks = 
+}

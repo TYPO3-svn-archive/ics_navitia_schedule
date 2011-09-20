@@ -21,19 +21,21 @@
 
 <body style="background-color:#333;">
 
-<!-- ###TEMPLATE_SCHEDULE_DIRECTION_CHOICE### begin -->
-	<div class="###PREFIXID###_directionChoice">
-		<h3>###DIRECTION_CHOICE_TITLE###</h3>
-		<ul class="###PREFIXID###_directionList" data-role="listview" data-filter="true">
-			<!-- ###DIRECTION_CHOICE_LIST### begin -->
+
+<!-- ###TEMPLATE_SCHEDULE_STOP_LIST### begin -->
+	<div class="###PREFIXID###_stopList">
+		<h3>###STOP_LIST_TITLE###</h3>
+		<ul class="###PREFIXID###_stopList" data-role="listview" data-filter="true">
+			<!-- ###STOP_LIST### begin -->
 				<li>
-					###LINE_PICTO###
-					<span class="directionName">###DIRECTION_NAME###</span>
+					<a href="###URL###">
+						###STOP_NAME###
+					</a>
 				</li>
-			<!-- ###DIRECTION_CHOICE_LIST### end -->
+			<!-- ###STOP_LIST### end -->
 		</ul>
 	</div>
-<!-- ###TEMPLATE_SCHEDULE_DIRECTION_CHOICE### end -->
+<!-- ###TEMPLATE_SCHEDULE_STOP_LIST### end -->
 
 </body>
 </html>
