@@ -52,15 +52,31 @@ class tx_icsnavitiaschedule_lineList {
 			
 			ksort($aLines);
 			
+			$lineNum = 0;
 			foreach ($aLines as $line) {
+				
 				if (!empty($line->name)) {
 					$lineListTemplate = $this->pObj->cObj->getSubpart($templatePart, '###LINE_LIST###');
-					$linePicto = $this->pObj->pictoLine->getlinepicto($line->externalCode, 'Navitia');
+					$linePicto = $this->pObj->pictoLine->getlinepicto($line->code/*$line->externalCode*/, 'Navitia');
+					
+					$markers['###LINE_CODE###'] = $line->code . ' - ';
+					
 					if (!empty($linePicto)) {
 						$markers['###LINE_PICTO###'] = $linePicto;
+						$markers['###STYLE_LINECODE###'] = 'display:none;';
+						$markers['###STYLE_LINEPICTO###'] = 'display:inline;';
 					}
 					else {
 						$markers['###LINE_PICTO###'] = $line->code . ' - ';
+						$markers['###STYLE_LINECODE###'] = 'display:inline;';
+						$markers['###STYLE_LINEPICTO###'] = 'display:none;';
+					}
+					
+					if($lineNum%2) {
+						$markers['###DATA_THEME###'] = 'd';
+					}
+					else {
+						$markers['###DATA_THEME###'] = 'e';
 					}
 					
 					$markers['###LINE_NAME###'] = $line->name;
@@ -70,6 +86,8 @@ class tx_icsnavitiaschedule_lineList {
 					}
 					$lineListContent .= $this->pObj->cObj->substituteMarkerArray($lineListTemplate, $markers);
 				}
+				
+				$lineNum++;
 			}
 			
 		}

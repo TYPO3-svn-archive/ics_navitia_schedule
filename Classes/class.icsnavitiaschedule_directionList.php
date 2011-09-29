@@ -69,10 +69,12 @@ class tx_icsnavitiaschedule_directionList {
 		if ($forward) {
 			$markers['###DIRECTION_NAME###'] = $line->forward->name;
 			$markers['###URL###'] = $this->pObj->pi_linkTP_keepPIvars_url(array('sens' => $forward));
+			$markers['###DATA_THEME###'] = 'e';
 		}
 		else {
 			$markers['###DIRECTION_NAME###'] = $line->backward->name;
 			$markers['###URL###'] = $this->pObj->pi_linkTP_keepPIvars_url(array('sens' => 0));
+			$markers['###DATA_THEME###'] = 'd';
 		}
 
 		if (tx_icslibnavitia_Debug::IsDebugEnabled()) {

@@ -44,6 +44,8 @@ class tx_icsnavitiaschedule_stopList {
 		);
 		
 		$stopListTemplate = $this->pObj->cObj->getSubpart($template, '###STOP_LIST###');
+		
+		$stopNum = 0;
 		foreach ($stops->ToArray() as $stop) {
 			$markers['###STOP_NAME###'] = $stop->stopPoint->name;
 			$markers['###URL###'] = $this->pObj->pi_linkTP_keepPIvars_url(array('stopPointExternalCode' => $stop->stopPoint->externalCode));
@@ -51,8 +53,16 @@ class tx_icsnavitiaschedule_stopList {
 			if (tx_icslibnavitia_Debug::IsDebugEnabled()) {
 				$markers['###URL###'] .= '&' . $this->pObj->debug_param . '=' . t3lib_div::_GP($this->pObj->debugParam);
 			}
+			
+			if($stopNum%2) {
+				$markers['###DATA_THEME###'] = 'd';
+			}
+			else {
+				$markers['###DATA_THEME###'] = 'e';
+			}
 	
 			$stopListContent .= $this->pObj->cObj->substituteMarkerArray($stopListTemplate, $markers);
+			$stopNum++;
 		}
 		
 		$template = $this->pObj->cObj->substituteSubpart($template, '###STOP_LIST###', $stopListContent);

@@ -29,6 +29,14 @@
  
 class tx_icsnavitiaschedule_departureBoard {
 
+	var $aDestination = array(
+		-1		=> '',
+		0		=> 'a',
+		1		=> 'b',
+		2		=> 'c',
+		3		=> 'd',
+	);
+
 	public function __construct($pObj) {
 		$this->pObj = $pObj;
 	}
@@ -37,11 +45,17 @@ class tx_icsnavitiaschedule_departureBoard {
 		$templatePart = $this->pObj->templates['departureBoard'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_SCHEDULE_TABLE###');
 
+		if(is_array($this->pObj->conf['departureBoard.']['destination.'])) {
+			$this->aDestination = $this->pObj->conf['departureBoard.']['destination.'];
+		}
+		
 		$hours = array();
 		$aHours = false;
 		$hoursToShowContent = '';
 		$templateLineContent = '';
 		$lineContent = '';
+		$destinationContent = '';
+		$currentDateFormatted = new DateTime();
 		
 		if (!isset($this->pObj->piVars['hourOffset'])) {
 			$currentOffset = 0;
@@ -50,63 +64,88 @@ class tx_icsnavitiaschedule_departureBoard {
 			$currentOffset = $this->pObj->piVars['hourOffset'];
 		}
 		
+		$currentDateFormatted = new DateTime();
 		if (empty($this->pObj->piVars['date'])) {
+			//setlocale (LC_TIME, 'fr_FR.utf8','fra');
+			//$currentDate = strftime('%A %d %B %Y'); // TODO: TypoScript setting.
 			$currentDate = date('d/m/Y'); // TODO: TypoScript setting.
+			$currentDateFormatted->setDate(date('Y'), date('m'), date('d'));
 		}
 		else {
 			$currentDate = $this->pObj->piVars['date'];
+			$aDate = explode('/', $currentDate);
+			$currentDateFormatted->setDate($aDate[2], $aDate[1], $aDate[0]);
 		}
 		
 		if (empty($this->pObj->piVars['hour'])) {
 			$currentHour = date('H');	// TODO: TypoScript setting.
-			$currentTime = date('H\\hi');
+			//$currentTime = date('H\\hi');
+			$currentTime = intval(date('H')) + $currentOffset . 'h' .  date('i');
 		}
 		else {
 			$aTime = explode('h', $this->pObj->piVars['hour']);
 			$currentHour = $aTime[0];
-			$currentTime = $this->pObj->piVars['hour'];
+			$currentTime = intval($currentHour)+$currentOffset . 'h' . $aTime[1];
 		}
 		
-		$data = $dataProvider->getDepartureBoardByStopPointForLine($stopPointExternalCode, $lineExternalCode, new DateTime('now'), true);
+		
+		
+		$data = $dataProvider->getDepartureBoardByStopPointForLine($stopPointExternalCode, $lineExternalCode, $currentDateFormatted, $this->pObj->piVars['sens']);
+		
+		//var_dump($data['DestinationList']);
+		
+		//var_dump($data['StopPointList']);
+		
+		//DestinationPos
+		
 		$aLines = $data['LineList']->ToArray();
 		$line = $aLines[0];
-		
+
 		$markers = array(
-			'###PREFIXID###' => $this->pObj->prefixId,
-			'###LINE_PICTO###' => $this->pObj->pictoLine->getlinepicto($line->externalCode, 'Navitia'),
-			'###DATE_SEL###' => $currentDate,
-			'###HOUR_SEL###' => $currentTime,
-			'###HOUR_LESS_TEXT###' => $this->pObj->pi_getLL('hourLess'),
-			'###HOUR_MORE_TEXT###' => $this->pObj->pi_getLL('hourMore'),
-			'###HOUR###' => '',
-			'###HOUR_LESS_URL###' => $this->pObj->pi_linkTP_keepPIvars_url(array('hourOffset' => $currentOffset-1)),
-			'###HOUR_MORE_URL###' => $this->pObj->pi_linkTP_keepPIvars_url(array('hourOffset' => $currentOffset+1)),
-			'###ACTION_URL###' => $this->pObj->pi_linkTP_keepPIvars_url(array('hourOffset' => null)),
+			'PREFIXID' => $this->pObj->prefixId,
+			'LINE_PICTO' => $this->pObj->pictoLine->getlinepicto($line->code /*$line->externalCode*/, 'Navitia'),
+			'DATE_SEL' => $currentDate,
+			'HOUR_SEL' => $currentTime,
+			'HOUR_LESS_TEXT' => $this->pObj->pi_getLL('hourLess'),
+			'HOUR_MORE_TEXT' => $this->pObj->pi_getLL('hourMore'),
+			'HOUR' => '',
+			'HOUR_LESS_URL' => $this->pObj->pi_linkTP_keepPIvars_url(array('hourOffset' => $currentOffset-1)),
+			'HOUR_MORE_URL' => $this->pObj->pi_linkTP_keepPIvars_url(array('hourOffset' => $currentOffset+1)),
+			'ACTION_URL' => $this->pObj->pi_linkTP_keepPIvars_url(array('hourOffset' => null)),
+			'HIDDEN_FIELDS' => $this->pObj->getHiddenFields(),
+			'ERROR' => '',
+			'STOPPOINT_LABEL' => $this->pObj->pi_getLL('stoppoint'),
 		);
 		
+		if(!$data['StopPointList']->Count() && !$data['StopList']->Count()) {
+			$markers['ERROR'] = $this->pObj->pi_getLL('error');
+		}
 
 		if (tx_icslibnavitia_Debug::IsDebugEnabled()) {
-			$markers['###HOUR_LESS_URL###'] .= '&' . $this->pObj->debug_param . '=' . t3lib_div::_GP($this->pObj->debugParam);
-			$markers['###HOUR_MORE_URL###'] .= '&' . $this->pObj->debug_param . '=' . t3lib_div::_GP($this->pObj->debugParam);
-			$markers['###ACTION_URL###'] .= '&' . $this->pObj->debug_param . '=' . t3lib_div::_GP($this->pObj->debugParam);
+			$markers['HOUR_LESS_URL'] .= '&' . $this->pObj->debug_param . '=' . t3lib_div::_GP($this->pObj->debugParam);
+			$markers['HOUR_MORE_URL'] .= '&' . $this->pObj->debug_param . '=' . t3lib_div::_GP($this->pObj->debugParam);
+			$markers['ACTION_URL'] .= '&' . $this->pObj->debug_param . '=' . t3lib_div::_GP($this->pObj->debugParam);
 		}
 		
 		if ($forward) {
-			$markers['###DIRECTION_NAME###'] = $line->forward->name;
+			$markers['DIRECTION_NAME'] = $line->forward->name;
 		}
 		else {
-			$markers['###DIRECTION_NAME###'] = $line->backward->name;
+			$markers['DIRECTION_NAME'] = $line->backward->name;
 		}
 		
 		$stopPoint = $data['StopPointList']->ToArray();
 		
-		$markers['###STOP_NAME###'] = $stopPoint[0]->name;
+		$markers['STOP_NAME'] = $stopPoint[0]->name;
 		
 		foreach ($data['StopList']->ToArray() as $stop) {
 			if (!in_array($stop->stopTime->hour, $hours)) {
 				$hours[] = $stop->stopTime->hour;
 			}
-			$schedules[$stop->stopTime->hour][] = $stop->stopTime->minute;
+			
+			$schedules[$stop->stopTime->hour]['minute'][] = $stop->stopTime->minute;
+			$schedules[$stop->stopTime->hour]['destination'][] = $stop->destination;
+			$schedules[$stop->stopTime->hour]['comment'][] = $stop->comment->ExternalCode;
 		}
 		
 		if (is_array($hours) && count($hours)) {
@@ -117,7 +156,6 @@ class tx_icsnavitiaschedule_departureBoard {
 				}
 			
 				if (($hour >= $currentHour) && !$aHours) {
-					
 					if(intval($index-1)>=0 && !is_null($hours[intval($index-2)])) {
 						$hourToShow[] = $hours[intval($index-1)]; // On récupère l'heure juste avant l'heure courante
 					}
@@ -146,41 +184,73 @@ class tx_icsnavitiaschedule_departureBoard {
 		if (is_array($hourToShow) && count($hourToShow)) {
 			foreach ($hourToShow as $hour) {
 				$hoursToShowTemplate = $this->pObj->cObj->getSubpart($template, '###HOUR_COLUMNS###');
-				$markers['###HOUR###'] = $hour;
-				$hoursToShowContent .= $this->pObj->cObj->substituteMarkerArray($hoursToShowTemplate, $markers);
+				$markers['HOUR'] = $hour;
+				$hoursToShowContent .= $this->pObj->cObj->substituteMarkerArray($hoursToShowTemplate, $markers, '###|###');
 			}
 			$template = $this->pObj->cObj->substituteSubpart($template, '###HOUR_COLUMNS###', $hoursToShowContent);
 			
 			if (is_array($schedules) && count($schedules)) {
-				foreach($schedules as $schedule) {
-					$aNbLines[] = count($schedule);
+				foreach($schedules as $hour => $schedule) {
+					if(t3lib_div::inArray($hourToShow, $hour)) {
+						$aNbLines[] = count($schedule['minute']);
+					}
 				}
 				$nbLines = max($aNbLines);
 			}
 		}
-
+		
+		//var_dump($aNbLines);
+		
 		if ($nbLines) {
 			$templateLine = $this->pObj->cObj->getSubpart($template, '###SCHEDULES_LINE###');
 			for ($index=0;$index<$nbLines;$index++) {
-				
+				$markers['EVENODD'] = '';
 				$minsContent = '';
 				foreach ($hourToShow as $hour) {
 					$minutesTemplate = $this->pObj->cObj->getSubpart($templateLine, '###MIN_COLUMNS###');
-
-					if ($index<count($schedules[$hour])) {
-						$markers['###MIN###'] = $schedules[$hour][$index];
+					
+					if ($index<count($schedules[$hour]['minute'])) {
+						$markers['MIN'] = $schedules[$hour]['minute'][$index] . $this->aDestination[$schedules[$hour]['destination'][$index]] . $this->aDestination[$schedules[$hour]['comment'][$index]];
 					}
 					else {
-						$markers['###MIN###'] = '';
+						$markers['MIN'] = '';
 					}
-					$minsContent .= $this->pObj->cObj->substituteMarkerArray($minutesTemplate, $markers);
+					$minsContent .= $this->pObj->cObj->substituteMarkerArray($minutesTemplate, $markers, '###|###');
 				}
 				$lineContent .= $this->pObj->cObj->substituteSubpart($templateLine, '###MIN_COLUMNS###', $minsContent);
 			}
 		}
-
+		elseif($data['StopPointList']->Count() && $data['StopList']->Count()) {
+			$markers['ERROR'] = $this->pObj->pi_getLL('error.no_more_schedules');
+		}
+		
+		if($data['DestinationList']->Count()) {
+			$index = 0;
+			foreach ($data['DestinationList']->ToArray() as $destination) {
+				$destinationTemplate = $this->pObj->cObj->getSubpart($template, '###DESTINATION_LIST###');
+				$markers['TERMINUS'] = $this->pObj->pi_getLL('terminus');
+				$markers['DESTINATION'] = $destination->name;
+				$markers['DESTINATIONPOS'] = $this->aDestination[$index];
+				$destinationContent .= $this->pObj->cObj->substituteMarkerArray($destinationTemplate, $markers, '###|###');
+				$index++;
+			}
+		}
+		
+		/*if($data['CommentList']->Count()) {
+			$index = 0;
+			foreach ($data['CommentList']->ToArray() as $comment) {
+				$commentTemplate = $this->pObj->cObj->getSubpart($template, '###COMMENT_LIST###');
+				$markers['COMMENT_NAME'] = $comment->name;
+				$markers['COMMENTPOS'] = $this->aDestination[$data['DestinationList']->Count() -1 + $index];
+				$commentContent .= $this->pObj->cObj->substituteMarkerArray($commentTemplate, $markers, '###|###');
+				$index++;
+			}
+		}*/
+		
+		$template = $this->pObj->cObj->substituteSubpart($template, '###COMMENT_LIST###', $commentContent);
+		$template = $this->pObj->cObj->substituteSubpart($template, '###DESTINATION_LIST###', $destinationContent);
 		$template = $this->pObj->cObj->substituteSubpart($template, '###SCHEDULES_LINE###', $lineContent);
-		$content .= $this->pObj->cObj->substituteMarkerArray($template, $markers);
+		$content .= $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
 		return $content;
 	}
 	

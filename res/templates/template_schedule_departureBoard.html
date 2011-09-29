@@ -23,20 +23,30 @@
 
 <!-- ###TEMPLATE_SCHEDULE_TABLE### begin -->
 <div class="###PREFIXID###_scheduleTable">
-	<div class="###PREFIXID###_recap">
-		###LINE_PICTO###
-		###DIRECTION_NAME### - ###STOP_NAME###
+	<div class="###PREFIXID###_recap recap">
+		<div class="ui-block-d" data-theme="e">
+			<p class="###PREFIXID###_lineInfo lineInfo">
+				<span class="linePictoSchedule">
+					###LINE_PICTO###
+				</span>
+				<span class="lineInfo">
+					###DIRECTION_NAME###<br />
+					###STOPPOINT_LABEL### : ###STOP_NAME###
+				</span>
+			</p>
+		</div>
 	</div>
 	<form action="###ACTION_URL###" method="get" class="date">
-		<fieldset class="###PREFIXID###_date">
-			<input class="###PREFIXID###_dateSel" value="###DATE_SEL###" name="###PREFIXID###[date]" type="date" data-role="datebox" data-options='{"mode": "calbox"}' onChange="dateChange(this.value);">
+		###HIDDEN_FIELDS###
+		<fieldset class="###PREFIXID###_date"><!--ddd dd mmm YYYY-->
+			<input data-theme="d" class="###PREFIXID###_dateSel" value="###DATE_SEL###" name="###PREFIXID###[date]" type="date" data-role="datebox" data-options='{"mode": "calbox", "dateFormat": "dd/mm/YYYY"}' onChange="dateChange(this.value);" style="text-align:center;">
 		</fieldset>
 		<fieldset class="###PREFIXID###_hour">
-			<a class="###PREFIXID###_hourLess" href="###HOUR_LESS_URL###">###HOUR_LESS_TEXT###</a>
-			<input value="###HOUR_SEL###" name="###PREFIXID###[hour]" type="date" data-role="datebox" data-options='{"mode": "timebox"}'>
-			<a class="###PREFIXID###_hourMore" href="###HOUR_MORE_URL###">###HOUR_MORE_TEXT###</a>
+			<a class="###PREFIXID###_hourLess" href="###HOUR_LESS_URL###" data-theme="d">###HOUR_LESS_TEXT###</a>
+			<input data-theme="d" value="###HOUR_SEL###" name="###PREFIXID###[hour]" type="date" data-role="datebox" data-options='{"mode": "timebox"}'>
+			<a class="###PREFIXID###_hourMore" href="###HOUR_MORE_URL###" data-theme="d">###HOUR_MORE_TEXT###</a>
 		</fieldset>
-		<fieldset>
+		<fieldset class="###PREFIXID###_button">
 			<input type="submit" value="OK">
 		</fieldset>
 	</form>
@@ -47,11 +57,19 @@
 			</tr>
 		</thead>
 		<tbody><!-- ###SCHEDULES_LINE### begin -->
-			<tr style="text-align:center;"><!-- ###MIN_COLUMNS### begin -->
+			<tr><!-- ###MIN_COLUMNS### begin -->
 				<td>###MIN###</td><!-- ###MIN_COLUMNS### end -->
 			</tr><!-- ###SCHEDULES_LINE### end -->
 		</tbody>
 	</table>
+	<!-- ###DESTINATION_LIST### begin -->
+	<p class="###PREFIXID###_destination">###DESTINATIONPOS### : ###TERMINUS### - ###DESTINATION###</p>
+	<!-- ###DESTINATION_LIST### end -->
+	
+	<!-- ###COMMENT_LIST### begin -->
+	<p class="###PREFIXID###_comment">###COMMENTPOS### : ###COMMENT_NAME###</p>
+	<!-- ###COMMENT_LIST### end -->
+	###ERROR###
 </div>
 <!-- ###TEMPLATE_SCHEDULE_TABLE### end -->
 
