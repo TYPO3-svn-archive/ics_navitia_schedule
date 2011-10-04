@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for flexform for pi1 belonging to extension 'ics_navitia_schedule'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tt_content.pi1_flexform.sheet_general">Config</label>
+			<label index="pi1_flexform.sheets.general.display_mode">Display mode</label>
+			<label index="pi1_flexform.sheets.general.display_mode.I.1">Departure Board and search</label>
+			<label index="pi1_flexform.sheets.general.display_mode.I.2">Next Departure</label>
+			<label index="pi1_flexform.sheets.general.display_mode.I.3">Proximity</label>
+			<label index="pi1_flexform.sheets.general.display_mode.I.4">Bookmarks</label>
+			<label index="pi1_flexform.sheets.general.limit">Max number of items (0 is no limit)</label>
+			<label index="tt_content.pi1_flexform.sheet_templates">Template files</label>
+			<label index="pi1_flexform.sheets.templates.line">Line list template</label>
+			<label index="pi1_flexform.sheets.templates.direction">Direction list template</label>
+			<label index="pi1_flexform.sheets.templates.stop">Stop list template</label>
+			<label index="pi1_flexform.sheets.templates.board">Departure board template</label>
+			<label index="pi1_flexform.sheets.templates.next">Next departure template</label>
+		</languageKey>
+		<languageKey index="fr" type="array">
+			<label index="tt_content.pi1_flexform.sheet_general">Configuration</label>
+			<label index="pi1_flexform.sheets.general.display_mode">Mode d'affichage</label>
+		</languageKey>
+	</data>
+</T3locallang>

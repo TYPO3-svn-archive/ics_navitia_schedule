@@ -15,6 +15,9 @@ plugin.tx_icsnavitiaschedule_pi1 {
 		departureBoard {
 			templateFile = EXT:ics_navitia_schedule/res/templates/template_schedule_departureBoard.html
 		}
+		nextDeparture {
+			templateFile = EXT:ics_navitia_schedule/res/templates/template_schedule_nextDeparture.html
+		}
 	}
 	
 	departureBoard {
@@ -26,6 +29,8 @@ plugin.tx_icsnavitiaschedule_pi1 {
 			4=e
 		}
 	}
+	
+	mode = {$plugin.tx_icsnavitiaschedule_pi1.mode}
 	
 	_CSS_DEFAULT_STYLE (
 	

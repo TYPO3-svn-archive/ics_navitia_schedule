@@ -1,4 +1,7 @@
 plugin.tx_icsnavitiaschedule_pi1 {
-	# cat=plugin_icsnavitiaschedule; type=text; label= Networks List (network external code)
+	# cat=plugin_icsnavitiaschedule; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.networks
 	networks = 
+	
+	# cat=plugin_icsnavitiaschedule; type=options[board,next,proximity,bookmark]; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.displayMode
+	mode=board
 }

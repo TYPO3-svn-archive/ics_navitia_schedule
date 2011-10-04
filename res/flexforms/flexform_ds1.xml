@@ -1,0 +1,144 @@
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:tt_content.pi1_flexform.sheet_general</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<display_mode>
+					  	<TCEforms>
+							<label>LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.general.display_mode</label>
+							<onChange>reload</onChange>
+							<config>
+								<type>select</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.general.display_mode.I.1</numIndex>
+										<numIndex index="1">board</numIndex>
+									</numIndex>					
+									<numIndex index="1" type="array">
+										<numIndex index="0">LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.general.display_mode.I.2</numIndex>
+										<numIndex index="1">next</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.general.display_mode.I.3</numIndex>
+										<numIndex index="1">proximity</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.general.display_mode.I.4</numIndex>
+										<numIndex index="1">bookmark</numIndex>
+									</numIndex>
+								</items>
+								<minitems>0</minitems>
+								<maxitems>1</maxitems>
+								<size>1</size>
+							</config>
+						</TCEforms>
+					</display_mode>
+					<limit>
+						<TCEforms>
+							<label>LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.general.limit</label>
+							<displayCond>FIELD:display_mode:IN:proximity,bookmark</displayCond>
+							<config>
+								<type>input</type>
+								<size>5</size>
+								<max>2</max>
+								<eval>nospace,int</eval>
+							</config>
+						</TCEforms>
+					</limit>
+				</el>
+			</ROOT>
+		</sDEF>
+		<templates>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:tt_content.pi1_flexform.sheet_templates</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<line>
+						<TCEforms>
+							<label>LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.general.line</label>
+							<config>
+								<type>group</type>
+								<internal_type>file</internal_type>
+								<allowed>tmpl,html,htm</allowed>
+								<max_size>100</max_size>
+								<uploadfolder>uploads/tx_tx_icsnavitiaschedule</uploadfolder>
+								<maxitems>1</maxitems>
+								<size>1</size>
+								<selectedListStyle>Width:180px</selectedListStyle>
+							</config>
+						</TCEforms>
+					</line>
+					<direction>
+						<TCEforms>
+							<label>LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.general.direction</label>
+							<config>
+								<type>group</type>
+								<internal_type>file</internal_type>
+								<allowed>tmpl,html,htm</allowed>
+								<max_size>100</max_size>
+								<uploadfolder>uploads/tx_tx_icsnavitiaschedule</uploadfolder>
+								<maxitems>1</maxitems>
+								<size>1</size>
+								<selectedListStyle>Width:180px</selectedListStyle>
+							</config>
+						</TCEforms>
+					</direction>
+					<stop>
+						<TCEforms>
+							<label>LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.general.stop</label>
+							<config>
+								<type>group</type>
+								<internal_type>file</internal_type>
+								<allowed>tmpl,html,htm</allowed>
+								<max_size>100</max_size>
+								<uploadfolder>uploads/tx_tx_icsnavitiaschedule</uploadfolder>
+								<maxitems>1</maxitems>
+								<size>1</size>
+								<selectedListStyle>Width:180px</selectedListStyle>
+							</config>
+						</TCEforms>
+					</stop>
+					<board>
+						<TCEforms>
+							<label>LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.general.board</label>
+							<config>
+								<type>group</type>
+								<internal_type>file</internal_type>
+								<allowed>tmpl,html,htm</allowed>
+								<max_size>100</max_size>
+								<uploadfolder>uploads/tx_tx_icsnavitiaschedule</uploadfolder>
+								<maxitems>1</maxitems>
+								<size>1</size>
+								<selectedListStyle>Width:180px</selectedListStyle>
+							</config>
+						</TCEforms>
+					</board>
+					<next>
+						<TCEforms>
+							<label>LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.general.next</label>
+							<config>
+								<type>group</type>
+								<internal_type>file</internal_type>
+								<allowed>tmpl,html,htm</allowed>
+								<max_size>100</max_size>
+								<uploadfolder>uploads/tx_tx_icsnavitiaschedule</uploadfolder>
+								<maxitems>1</maxitems>
+								<size>1</size>
+								<selectedListStyle>Width:180px</selectedListStyle>
+							</config>
+						</TCEforms>
+					</next>
+				</el>
+			</ROOT>
+		</templates>
+	</sheets>
+</T3DataStructure>

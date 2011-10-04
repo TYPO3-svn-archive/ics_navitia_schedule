@@ -26,71 +26,29 @@
  *
  * Hint: use extdeveval to insert/update function index above.
  */
- 
-class tx_icsnavitiaschedule_departureBoard {
 
-	var $aDestination = array(
-		-1		=> '',
-		0		=> 'a',
-		1		=> 'b',
-		2		=> 'c',
-		3		=> 'd',
-	);
+/**
+ * @author Pierrick Caillon <pierrick@in-cite.net>
+ */
+class tx_icsnavitiaschedule_nextDeparture {
 
 	public function __construct($pObj) {
 		$this->pObj = $pObj;
 	}
 
-	function renderDepartureBoard($dataProvider, $lineExternalCode, $forward, $stopPointExternalCode) {
+	function renderNextDeparture($dataProvider, $lineExternalCode, $stopAreaExternalCode, $forward) {
 		$templatePart = $this->pObj->templates['departureBoard'];
-		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_SCHEDULE_TABLE###');
-
-		if(is_array($this->pObj->conf['departureBoard.']['destination.'])) {
-			$this->aDestination = $this->pObj->conf['departureBoard.']['destination.'];
-		}
+		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_NEXTDEPARTURE_LIST###');
 		
-		$hours = array();
-		$aHours = false;
-		$hoursToShowContent = '';
-		$templateLineContent = '';
-		$lineContent = '';
-		$destinationContent = '';
-		$currentDateFormatted = new DateTime();
+		// TODO: Load settings.
 		
-		if (!isset($this->pObj->piVars['hourOffset'])) {
-			$currentOffset = 0;
-		}
-		else {
-			$currentOffset = $this->pObj->piVars['hourOffset'];
-		}
+		$data = $dataProvider->getNextDepartureByStopAreaForLine($stopAreaExternalCode, $lineExternalCode, $forward);
 		
-		$currentDateFormatted = new DateTime();
-		if (empty($this->pObj->piVars['date'])) {
-			//setlocale (LC_TIME, 'fr_FR.utf8','fra');
-			//$currentDate = strftime('%A %d %B %Y'); // TODO: TypoScript setting.
-			$currentDate = date('d/m/Y'); // TODO: TypoScript setting.
-			$currentDateFormatted->setDate(date('Y'), date('m'), date('d'));
-		}
-		else {
-			$currentDate = $this->pObj->piVars['date'];
-			$aDate = explode('/', $currentDate);
-			$currentDateFormatted->setDate($aDate[2], $aDate[1], $aDate[0]);
-		}
+		//var_dump($data['DestinationList']);
 		
-		if (empty($this->pObj->piVars['hour'])) {
-			$currentHour = date('H');	// TODO: TypoScript setting.
-			//$currentTime = date('H\\hi');
-			$currentTime = intval(date('H')) + $currentOffset . 'h' .  date('i');
-		}
-		else {
-			$aTime = explode('h', $this->pObj->piVars['hour']);
-			$currentHour = $aTime[0];
-			$currentTime = intval($currentHour)+$currentOffset . 'h' . $aTime[1];
-		}
+		//var_dump($data['StopPointList']);
 		
-		// TODO: Add DateChangeTime parameter.
-		
-		$data = $dataProvider->getDepartureBoardByStopPointForLine($stopPointExternalCode, $lineExternalCode, $currentDateFormatted, $forward);
+		//DestinationPos
 		
 		$aLines = $data['LineList']->ToArray();
 		$line = $aLines[0];
@@ -192,6 +150,8 @@ class tx_icsnavitiaschedule_departureBoard {
 				$nbLines = max($aNbLines);
 			}
 		}
+		
+		//var_dump($aNbLines);
 		
 		if ($nbLines) {
 			$templateLine = $this->pObj->cObj->getSubpart($template, '###SCHEDULES_LINE###');

@@ -14,4 +14,6 @@ t3lib_extMgm::addPlugin(array(
 ),'list_type');
 
 t3lib_extMgm::addStaticFile($_EXTKEY,'pi1/static/', 'schedule');
+
+t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_pi1', 'FILE:EXT:'.$_EXTKEY.'/res/flexforms/flexform_ds1.xml');
 ?>

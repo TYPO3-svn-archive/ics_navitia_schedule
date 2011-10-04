@@ -62,55 +62,72 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase {
 	
 		$this->init();
 
-		if (isset($this->piVars['lineExternalCode']) && !empty($this->piVars['lineExternalCode']) && isset($this->piVars['sens']) && isset($this->piVars['stopPointExternalCode']) && !empty($this->piVars['stopPointExternalCode'])) {
-			$departureBoard = t3lib_div::makeInstance('tx_icsnavitiaschedule_departureBoard', $this);
-			$content = $departureBoard->renderDepartureBoard($this->dataProvider, $this->piVars['lineExternalCode'], $this->piVars['sens'], $this->piVars['stopPointExternalCode']);
-		}
-		elseif (isset($this->piVars['lineExternalCode']) && !empty($this->piVars['lineExternalCode']) && isset($this->piVars['sens'])) {
-			$stopList = t3lib_div::makeInstance('tx_icsnavitiaschedule_stopList', $this);
-			$content = $stopList->getStopsList($this->dataProvider, $this->piVars['lineExternalCode'], $this->piVars['sens']);
-		}
-		elseif (isset($this->piVars['lineExternalCode']) && !empty($this->piVars['lineExternalCode'])) {
-			$directionList = t3lib_div::makeInstance('tx_icsnavitiaschedule_directionList', $this);
-			$content = $directionList->getDirectionList($this->dataProvider, $this->piVars['lineExternalCode']);
-		}
-		else {
-			$lineList = t3lib_div::makeInstance('tx_icsnavitiaschedule_lineList', $this);
-			$networkList = $this->getNetworkList();
-			$content = $lineList->getLineList($this->dataProvider, $networkList);
+		switch ($this->mode) {
+			case 'next':
+				break;
+			case 'proximity':
+				break;
+			case 'bookmark':
+				break;
+			default:
+				if (isset($this->piVars['lineExternalCode']) && !empty($this->piVars['lineExternalCode']) && isset($this->piVars['sens']) && isset($this->piVars['stopPointExternalCode']) && !empty($this->piVars['stopPointExternalCode'])) {
+					$departureBoard = t3lib_div::makeInstance('tx_icsnavitiaschedule_departureBoard', $this);
+					$content = $departureBoard->renderDepartureBoard($this->dataProvider, $this->piVars['lineExternalCode'], $this->piVars['sens'], $this->piVars['stopPointExternalCode']);
+				}
+				elseif (isset($this->piVars['lineExternalCode']) && !empty($this->piVars['lineExternalCode']) && isset($this->piVars['sens'])) {
+					$stopList = t3lib_div::makeInstance('tx_icsnavitiaschedule_stopList', $this);
+					$content = $stopList->getStopsList($this->dataProvider, $this->piVars['lineExternalCode'], $this->piVars['sens']);
+				}
+				elseif (isset($this->piVars['lineExternalCode']) && !empty($this->piVars['lineExternalCode'])) {
+					$directionList = t3lib_div::makeInstance('tx_icsnavitiaschedule_directionList', $this);
+					$content = $directionList->getDirectionList($this->dataProvider, $this->piVars['lineExternalCode']);
+				}
+				else {
+					$lineList = t3lib_div::makeInstance('tx_icsnavitiaschedule_lineList', $this);
+					$networkList = $this->getNetworkList();
+					$content = $lineList->getLineList($this->dataProvider, $networkList);
+				}
 		}
 
 		return $this->pi_wrapInBaseClass($content);
 	}
 	
 	function init() {
+		$this->pi_initPIflexForm();
 		$this->login = $this->conf['login'];
 		$this->url = $this->conf['url'];
 		$this->networks = $this->conf['networks'];
 		
 		$this->dataProvider = t3lib_div::makeInstance('tx_icslibnavitia_APIService', $this->url, $this->login);
 		$this->pictoLine = t3lib_div::makeInstance('tx_icslinepicto_getlines');
-		$templateflex_file = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'template_file', 'configuration');
 		$this->templates = array(
-			'lineList' => $this->cObj->fileResource($templateflex_file?'uploads/tx_icsnavitiaschedule/' . $templateflex_file:$this->conf['view.']['lineList.']['templateFile']),
-			'directionList' => $this->cObj->fileResource($templateflex_file?'uploads/tx_icsnavitiaschedule/' . $templateflex_file:$this->conf['view.']['directionList.']['templateFile']),
-			'stopList' => $this->cObj->fileResource($templateflex_file?'uploads/tx_icsnavitiaschedule/' . $templateflex_file:$this->conf['view.']['stopList.']['templateFile']),
-			'departureBoard' => $this->cObj->fileResource($templateflex_file?'uploads/tx_icsnavitiaschedule/' . $templateflex_file:$this->conf['view.']['departureBoard.']['templateFile'])
+			'lineList' => $this->getTemplateFile('line', $this->conf['view.']['lineList.']['templateFile']),
+			'directionList' => $this->getTemplateFile('direction', $this->conf['view.']['directionList.']['templateFile']),
+			'stopList' => $this->getTemplateFile('stop', $this->conf['view.']['stopList.']['templateFile']),
+			'departureBoard' => $this->getTemplateFile('departure', $this->conf['view.']['departureBoard.']['templateFile']),
+			'nextDeparture' => $this->getTemplateFile('next', $this->conf['view.']['nextDeparture.']['templateFile']),
 		);
-		
-		$libnavitia_conf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['ics_libnavitia']);
-		$this->debug_param = $libnavitia_conf['debug_param'];
+		$this->mode = $this->conf['mode'];
+		$flexMode = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'display_mode');
+		if ($flexMode)
+			$this->mode = $flexMode;
+		if ($this->piVars['mode'])
+			$this->mode = $this->piVars['mode'];
 	}
 	
 	function getNetworkList() {
 		$networkList = null;
 		if (!empty($this->networks)) {
 			$networks = explode(',', $this->networks);
-			$networkList = $this->dataProvider->getNetworksByCodes($aNetworks);
+			$networkList = $this->dataProvider->getNetworksByCodes($networks);
 		}
 		return $networkList;
 	}
 	
+	function getTemplateFile($templateName, $default) {
+		$flex = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], $templateName, 'templates');
+		return $this->cObj->fileResource($flex ? 'uploads/tx_icsnavitiaschedule/' . $flex : $default);
+	}
 }
 
 
