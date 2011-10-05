@@ -30,6 +30,29 @@ plugin.tx_icsnavitiaschedule_pi1 {
 		}
 	}
 	
+	nextDeparture {
+		time_stdWrap.strftime = %H:%M
+		nextDay_stdWrap {
+			setContentToCurrent = 1
+			data = LLL:EXT:ics_navitia_schedule/pi1/locallang.xml:nextDeparture_nextDay
+			dataWrap = <span class="nextday">|</span> {current:}
+		}
+		currentDay_stdWrap {
+		}
+		nextLimit = 3
+		resultsLimit = 5
+		noNextDay = 0
+		dateChangeTime = 0
+		picto_stdWrap {
+		}
+		line_stdWrap {
+		}
+		name_stdWrap {
+		}
+		direction_stdWrap {
+		}
+	}
+	
 	mode = {$plugin.tx_icsnavitiaschedule_pi1.mode}
 	
 	_CSS_DEFAULT_STYLE (

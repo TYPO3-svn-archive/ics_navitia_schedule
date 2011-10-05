@@ -8,9 +8,12 @@
 		<languageKey index="default" type="array">
 			<label index="lineList.title">Choose your line</label>
 			<label index="directionList.title">Choose direction</label>
-			<label index="stopList.title">Choose stoparea</label>
+			<label index="stopList.title">Choose stop point</label>
 			<label index="hourLess">- 1h</label>
 			<label index="hourMore">+ 1h</label>
+			<label index="nextDeparture_nextDay">D+1</label>
+			<label index="nextDeparture_noData">No departure time available</label>
+			<label index="nextDeparture_direction">to</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="lineList.title">Choisissez votre ligne</label>
@@ -18,6 +21,9 @@
 			<label index="stopList.title">Choisissez l'arrêt</label>
 			<label index="hourLess">- 1h</label>
 			<label index="hourMore">+ 1h</label>
+			<label index="nextDeparture_nextDay">J+1</label>
+			<label index="nextDeparture_noData">Pas d'heure de départ disponible.</label>
+			<label index="nextDeparture_direction">vers</label>
 		</languageKey>
 	</data>
 </T3locallang>

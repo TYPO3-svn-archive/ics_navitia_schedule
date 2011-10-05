@@ -64,6 +64,10 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase {
 
 		switch ($this->mode) {
 			case 'next':
+				if (isset($this->piVars['lineExternalCode']) && !empty($this->piVars['lineExternalCode']) && isset($this->piVars['sens']) && isset($this->piVars['stopAreaExternalCode']) && !empty($this->piVars['stopAreaExternalCode'])) {
+					$next = t3lib_div::makeInstance('tx_icsnavitiaschedule_nextDeparture', $this);
+					$content = $next->renderNextDeparture($this->dataProvider, $this->piVars['lineExternalCode'], $this->piVars['stopAreaExternalCode'], $this->piVars['sens']);
+				}
 				break;
 			case 'proximity':
 				break;
@@ -90,6 +94,39 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase {
 		}
 
 		return $this->pi_wrapInBaseClass($content);
+	}
+	
+	/**
+	 * Declares onload event for geoloc init.
+	 * @author Pierrick Caillon <pierrick@in-cite.net>
+	 */
+	function positionLoad($content, $conf) {
+		$GLOBALS['TSFE']->JSeventFuncCalls['onload'][$this->prefixId] = 'if (' . $this->prefixId . '_init) ' . $this->prefixId . '_init();';
+		$conf['userFunc'] .= 'Int';
+		return $this->cObj->USER($conf, 'INT');
+	}
+	
+	/**
+	 * Sets onload handler for geoloc init if required.
+	 * @author Pierrick Caillon <pierrick@in-cite.net>
+	 */
+	function positionLoadInt($content, $conf) {
+		if (!isset($conf['refreshDelay']))
+			$conf['refreshDelay'] = 120;
+		$geoloc = new tx_icslibgeoloc_GeoLocation();
+		if (isset($conf['errorCallback']));
+			$geoloc->error = $conf['errorCallback'];
+		if ((
+			 ($geoloc->Position === false) || 
+			 ((!$geoloc->IsManual) && ($conf['refreshDelay']) && ($geoloc->Update + $conf['refreshDelay'] < time())) || 
+			 (($geoloc->IsManual) && ($conf['refreshDelayManual']) && ($geoloc->Update + $conf['refreshDelayManual'] < time()))) && 
+			(!$geoloc->IsDenied)) {
+			$geoloc->successUrl = t3lib_div::getIndpEnv('TYPO3_REQUEST_URL');
+			$geoloc->maxAge = intval($conf['refreshDelay']);
+			$geoloc->requireGps = true;
+			$GLOBALS['TSFE']->additionalJavaScript[$this->prefixId] .= $this->prefixId . '_init = function() {' . $geoloc->JsCall . '();};';
+		}
+		return '';
 	}
 	
 	function init() {
@@ -127,6 +164,22 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase {
 	function getTemplateFile($templateName, $default) {
 		$flex = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], $templateName, 'templates');
 		return $this->cObj->fileResource($flex ? 'uploads/tx_icsnavitiaschedule/' . $flex : $default);
+	}
+	
+	public function getHiddenFields() {
+		$params = t3lib_div::_GET();
+		$arguments = array();
+		foreach ($params as $name => $value) {
+			if (is_array($value))
+				continue;
+			if ((strpos($name, 'tx_') === 0) || (strpos($name, 'user_') === 0))
+				continue;
+			$arguments[$name] = strval($value);
+		}
+		$hidden = '';
+		foreach ($arguments as $name => $value)
+			$hidden .= '<input type="hidden" name="' . htmlspecialchars($name) . '" value="' . htmlspecialchars($value) . '" />';
+		return $hidden;
 	}
 }
 

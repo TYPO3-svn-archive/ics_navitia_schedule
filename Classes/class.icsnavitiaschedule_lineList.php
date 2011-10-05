@@ -95,5 +95,4 @@ class tx_icsnavitiaschedule_lineList {
 		$content .= $this->pObj->cObj->substituteMarkerArray($template, $markers);
 		return $content;
 	}
-	
 }

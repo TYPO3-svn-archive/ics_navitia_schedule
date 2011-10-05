@@ -31,179 +31,105 @@
  * @author Pierrick Caillon <pierrick@in-cite.net>
  */
 class tx_icsnavitiaschedule_nextDeparture {
+	private $pObj;
 
 	public function __construct($pObj) {
 		$this->pObj = $pObj;
 	}
 
 	function renderNextDeparture($dataProvider, $lineExternalCode, $stopAreaExternalCode, $forward) {
-		$templatePart = $this->pObj->templates['departureBoard'];
-		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_NEXTDEPARTURE_LIST###');
+		$templatePart = $this->pObj->templates['nextDeparture'];
+		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_STATION_NEXT###');
 		
-		// TODO: Load settings.
+		$timeLimit = max(1, intval($this->pObj->conf['nextDeparture.']['nextLimit']));
+		$dateChangeTime = intval($this->pObj->conf['nextDeparture.']['dateChangeTime']);
+		$noNextDay = intval($this->pObj->conf['nextDeparture.']['noNextDay']);
 		
-		$data = $dataProvider->getNextDepartureByStopAreaForLine($stopAreaExternalCode, $lineExternalCode, $forward);
+		$data = $dataProvider->getNextDepartureByStopAreaForLine($stopAreaExternalCode, $lineExternalCode, $forward, $timeLimit, $dateChangeTime, $noNextDay);
+		$line = $dataProvider->getLineByCode($lineExternalCode);
 		
-		//var_dump($data['DestinationList']);
-		
-		//var_dump($data['StopPointList']);
-		
-		//DestinationPos
-		
-		$aLines = $data['LineList']->ToArray();
-		$line = $aLines[0];
-
 		$markers = array(
 			'PREFIXID' => $this->pObj->prefixId,
-			'LINE_PICTO' => $this->pObj->pictoLine->getlinepicto($line->code /*$line->externalCode*/, 'Navitia'),
-			'DATE_SEL' => $currentDate,
-			'HOUR_SEL' => $currentTime,
-			'HOUR_LESS_TEXT' => $this->pObj->pi_getLL('hourLess'),
-			'HOUR_MORE_TEXT' => $this->pObj->pi_getLL('hourMore'),
-			'HOUR' => '',
-			'HOUR_LESS_URL' => $this->pObj->pi_linkTP_keepPIvars_url(array('hourOffset' => $currentOffset-1)),
-			'HOUR_MORE_URL' => $this->pObj->pi_linkTP_keepPIvars_url(array('hourOffset' => $currentOffset+1)),
-			'ACTION_URL' => $this->pObj->pi_linkTP_keepPIvars_url(array('hourOffset' => null)),
-			'HIDDEN_FIELDS' => $this->pObj->getHiddenFields(),
-			'ERROR' => '',
-			'STOPPOINT_LABEL' => $this->pObj->pi_getLL('stoppoint'),
 		);
 		
-		if(!$data['StopPointList']->Count() && !$data['StopList']->Count()) {
-			$markers['ERROR'] = $this->pObj->pi_getLL('error');
-		}
-
-		if (tx_icslibnavitia_Debug::IsDebugEnabled()) {
-			$markers['HOUR_LESS_URL'] .= '&' . $this->pObj->debug_param . '=' . t3lib_div::_GP($this->pObj->debugParam);
-			$markers['HOUR_MORE_URL'] .= '&' . $this->pObj->debug_param . '=' . t3lib_div::_GP($this->pObj->debugParam);
-			$markers['ACTION_URL'] .= '&' . $this->pObj->debug_param . '=' . t3lib_div::_GP($this->pObj->debugParam);
-		}
-		
-		if ($forward) {
-			$markers['DIRECTION_NAME'] = $line->forward->name;
+		if ($data->Count() > 0) {
+			$markers['STATION'] = $this->makeStation($data, $line, $forward);
 		}
 		else {
-			$markers['DIRECTION_NAME'] = $line->backward->name;
+			$station = $dataProvider->getStopAreaByCode($stopAreaExternalCode);
+			$markers['STATION'] = $this->makeStationNoData($station, $line, $forward);
 		}
 		
-		$stopPoint = $data['StopPointList']->ToArray();
-		
-		$markers['STOP_NAME'] = $stopPoint[0]->name;
-		
-		foreach ($data['StopList']->ToArray() as $stop) {
-			if (!in_array($stop->stopTime->hour, $hours)) {
-				$hours[] = $stop->stopTime->hour;
-			}
-			
-			$schedules[$stop->stopTime->hour]['minute'][] = $stop->stopTime->minute;
-			$schedules[$stop->stopTime->hour]['destination'][] = $stop->destination;
-			$schedules[$stop->stopTime->hour]['comment'][] = $stop->comment->ExternalCode;
-		}
-		
-		if (is_array($hours) && count($hours)) {
-			foreach ($hours as $index => $hour) {
-			
-				if (isset($this->pObj->piVars['hourOffset']) && !empty($this->pObj->piVars['hourOffset'])) {
-					$index += $this->pObj->piVars['hourOffset'];
-				}
-			
-				if (($hour >= $currentHour) && !$aHours) {
-					if(intval($index-1)>=0 && !is_null($hours[intval($index-2)])) {
-						$hourToShow[] = $hours[intval($index-1)]; // On récupère l'heure juste avant l'heure courante
-					}
-					
-					if(!is_null($hours[$index])) {
-						$hourToShow[] = $hours[$index]; // On récupère la 1ère heure par rapport à l'heure courante où on a des horaires
-					}
-					
-					if(intval($index+1)<=intval(count($hours)-1) && !is_null($hours[intval($index+1)])) {
-						$hourToShow[] = $hours[intval($index+1)]; // On récupère la 2nde heure par rapport à l'heure courante où on a des horaires
-					}
-					
-					if(intval($index+2)<=intval(count($hours)-1) && !is_null($hours[intval($index+2)])) {
-						$hourToShow[] = $hours[intval($index+2)]; // On récupère la 3ème heure par rapport à l'heure courante où on a des horaires
-					}
-					$aHours = true;
-				}
-				elseif (!$aHours && $hour == $hours[count($hours)-1] && intval($hour+1) == $currentHour) { // le cas où on a pas d'horaires mais seulement pour h-1
-					if (!is_null($hours[$index])) {
-						$hourToShow[] = $hours[$index]; 
-					}
-				}
-			}
-		}
+		$content .= $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
+		$content = $this->pObj->cObj->substituteMarkerArray($content, $markers, '###|###');
+		return $content;
+	}
+	
+	function makeStation(tx_icslibnavitia_INodeList $stopList, tx_icslibnavitia_Line $line, $forward) {
+		$templatePart = $this->pObj->templates['nextDeparture'];
+		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_STATION###');
 
-		if (is_array($hourToShow) && count($hourToShow)) {
-			foreach ($hourToShow as $hour) {
-				$hoursToShowTemplate = $this->pObj->cObj->getSubpart($template, '###HOUR_COLUMNS###');
-				$markers['HOUR'] = $hour;
-				$hoursToShowContent .= $this->pObj->cObj->substituteMarkerArray($hoursToShowTemplate, $markers, '###|###');
-			}
-			$template = $this->pObj->cObj->substituteSubpart($template, '###HOUR_COLUMNS###', $hoursToShowContent);
-			
-			if (is_array($schedules) && count($schedules)) {
-				foreach($schedules as $hour => $schedule) {
-					if(t3lib_div::inArray($hourToShow, $hour)) {
-						$aNbLines[] = count($schedule['minute']);
-					}
-				}
-				$nbLines = max($aNbLines);
-			}
+		$markers = array();
+		$markers['PICTO'] = $this->pObj->pictoLine->getlinepicto($line->code/*$line->externalCode*/, 'Navitia');
+		if (!$markers['PICTO']) $markers['PICTO'] = htmlspecialchars($line->code);
+		$markers['LINE'] = htmlspecialchars($line->name);
+		$markers['NAME'] = htmlspecialchars($stopList->Get(0)->stopArea->name);
+		$direction = ($forward ? $line->forward : $line->backward);
+		$markers['DIRECTION'] = htmlspecialchars($direction->name);
+		
+		$confBase = $this->pObj->conf['nextDeparture.'];
+		
+		foreach ($markers as $name => $value) {
+			$markers[$name] = $this->pObj->cObj->stdWrap($value, $confBase[strtolower($name) . '_stdWrap.']);
 		}
 		
-		//var_dump($aNbLines);
+		$markers['TO_LABEL'] = htmlspecialchars($this->pObj->pi_getLL('nextDeparture_direction'));
 		
-		if ($nbLines) {
-			$templateLine = $this->pObj->cObj->getSubpart($template, '###SCHEDULES_LINE###');
-			for ($index=0;$index<$nbLines;$index++) {
-				$markers['EVENODD'] = '';
-				$minsContent = '';
-				foreach ($hourToShow as $hour) {
-					$minutesTemplate = $this->pObj->cObj->getSubpart($templateLine, '###MIN_COLUMNS###');
-					
-					if ($index<count($schedules[$hour]['minute'])) {
-						$markers['MIN'] = $schedules[$hour]['minute'][$index] . $this->aDestination[$schedules[$hour]['destination'][$index]] . $this->aDestination[$schedules[$hour]['comment'][$index]];
-					}
-					else {
-						$markers['MIN'] = '';
-					}
-					$minsContent .= $this->pObj->cObj->substituteMarkerArray($minutesTemplate, $markers, '###|###');
-				}
-				$lineContent .= $this->pObj->cObj->substituteSubpart($templateLine, '###MIN_COLUMNS###', $minsContent);
+		$timeTemplate = $this->pObj->cObj->getSubpart($template, '###TEMPLATE_TIMES###');
+		$timeContent = '';
+		for ($i = 0; $i < $stopList->Count(); $i++) {
+			$stop = $stopList->Get($i);
+			$timeMarkers = array();
+			$time = mktime($stop->stopTime->hour, $stop->stopTime->minute, 0, date('m'), date('d'), date('Y'));
+			$time = $this->pObj->cObj->stdWrap($time, $confBase['time_stdWrap.']);
+			if ($stop->stopTime->Day && (($stop->stopTime->hour * 60 + $stop->stopTime->minute) >= intval($confBase['dateChangeTime']))) {
+				$time = $this->pObj->cObj->stdWrap($time, $confBase['nextDay_stdWrap.']);
 			}
+			$timeMarkers['TIME'] = $time;
+			$timeContent .= $this->pObj->cObj->substituteMarkerArray($timeTemplate, $timeMarkers, '###|###');
 		}
-		elseif($data['StopPointList']->Count() && $data['StopList']->Count()) {
-			$markers['ERROR'] = $this->pObj->pi_getLL('error.no_more_schedules');
-		}
-		
-		if($data['DestinationList']->Count()) {
-			$index = 0;
-			foreach ($data['DestinationList']->ToArray() as $destination) {
-				$destinationTemplate = $this->pObj->cObj->getSubpart($template, '###DESTINATION_LIST###');
-				$markers['TERMINUS'] = $this->pObj->pi_getLL('terminus');
-				$markers['DESTINATION'] = $destination->name;
-				$markers['DESTINATIONPOS'] = $this->aDestination[$index];
-				$destinationContent .= $this->pObj->cObj->substituteMarkerArray($destinationTemplate, $markers, '###|###');
-				$index++;
-			}
-		}
-		
-		/*if($data['CommentList']->Count()) {
-			$index = 0;
-			foreach ($data['CommentList']->ToArray() as $comment) {
-				$commentTemplate = $this->pObj->cObj->getSubpart($template, '###COMMENT_LIST###');
-				$markers['COMMENT_NAME'] = $comment->name;
-				$markers['COMMENTPOS'] = $this->aDestination[$data['DestinationList']->Count() -1 + $index];
-				$commentContent .= $this->pObj->cObj->substituteMarkerArray($commentTemplate, $markers, '###|###');
-				$index++;
-			}
-		}*/
-		
-		$template = $this->pObj->cObj->substituteSubpart($template, '###COMMENT_LIST###', $commentContent);
-		$template = $this->pObj->cObj->substituteSubpart($template, '###DESTINATION_LIST###', $destinationContent);
-		$template = $this->pObj->cObj->substituteSubpart($template, '###SCHEDULES_LINE###', $lineContent);
+		$template = $this->pObj->cObj->substituteSubpart($template, '###TEMPLATE_TIMES###', $timeContent);
+
 		$content .= $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
 		return $content;
 	}
 	
+	function makeStationNoData(tx_icslibnavitia_StopArea $stopArea = null, tx_icslibnavitia_Line $line = null, $forward = true) {
+		if ($stopArea == null) {
+			return '(null)';
+		}
+		$templatePart = $this->pObj->templates['nextDeparture'];
+		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_STATION_NODATA###');
+
+		$markers = array();
+		$markers['PICTO'] = $this->pObj->pictoLine->getlinepicto($line->code/*$line->externalCode*/, 'Navitia');
+		if (!$markers['PICTO']) $markers['PICTO'] = htmlspecialchars($line->code);
+		$markers['LINE'] = htmlspecialchars($line->name);
+		$markers['NAME'] = htmlspecialchars($stopArea->name);
+		$direction = ($forward ? $line->forward : $line->backward);
+		$markers['DIRECTION'] = htmlspecialchars($direction->name);
+		
+		$confBase = $this->pObj->conf['nextDeparture.'];
+		
+		foreach ($markers as $name => $value) {
+			$markers[$name] = $this->pObj->cObj->stdWrap($value, $confBase[strtolower($name) . '_stdWrap.']);
+		}
+		
+		$markers['TO_LABEL'] = htmlspecialchars($this->pObj->pi_getLL('nextDeparture_direction'));
+		
+		$markers['MESSAGE'] = htmlspecialchars($this->pObj->pi_getLL('nextDeparture_noData'));
+
+		$content .= $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
+		return $content;
+	}
 }
