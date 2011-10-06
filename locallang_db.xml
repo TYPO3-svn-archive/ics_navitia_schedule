@@ -3,15 +3,72 @@
 	<meta type="array">
 		<type>database</type>
 		<description>Language labels for database tables/fields belonging to extension 'ics_navitia_schedule'</description>
+		<labelContext type="array">
+		</labelContext>
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
 			<label index="tt_content.list_type_pi1">Schedule</label>
-			<label index="constants.networks">Network list to look into.</label>
-			<label index="constants.displayMode">Display mode: board=Departure board at stop with full selection; &lt;br /&gt;next=Next departures, with parameters; &lt;br /&gt;proximity=Next departures for nearest stops; &lt;br /&gt;bookmark=Next departures for bookmarks.</label>
+			<label index="constants.url">NAViTiA API dll library URL</label>
+			<label index="constants.login">NAViTiA login for stats</label>
+			<label index="constants.networks">Network list to look into</label>
+			<label index="constants.displayMode">Display mode: board=Departure board at stop with full selection; 
+next=Next departures, with parameters; 
+proximity=Next departures for nearest stops; 
+bookmark=Next departures for bookmarks.</label>
+			<label index="constants.maxItems">Max stops: Maximum number of stops to display.</label>
+			<label index="constants.maxTimes">Max time items: Maximum next departure times to display.</label>
+			<label index="constants.noNextDay">Don't span over running day: Do not display results for next days after date change time.</label>
+			<label index="constants.dateChangeTime">Date change time: Number of minutes after midnight to consider as next day limit.</label>
+			<label index="constants.timeSpanLimit">Time span limit: Under this limit in minutes, minutes to the schedule is displayed. Above, the schedule is displayed. A valeur of zero (0) always display the schedule.</label>
+			<label index="constants.proximity.min">Min proximity results: Minimum number of proximity results.</label>
+			<label index="constants.proximity.distance">Proximity max distance: Maximum search distance for proximity search (meters).</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="tt_content.list_type_pi1">Module horaires</label>
+			<label index="constants.url">URL de la bibliothèque dll de NAViTiA</label>
+			<label index="constants.login">Identifiant NAViTiA pour les stats</label>
+			<label index="constants.networks">Liste des réseau de recherche</label>
+			<label index="constants.displayMode">Mode d'affichage: board=Tableau des horaires et sélection de l'arrêt;
+next=Prochain départs à un arrêt, si paramètres indiqués;
+proximity=Prochains départs aux arrêts les plus proches;
+bookmark=Prochains départs aux arrêts favoris.</label>
+			<label index="constants.maxItems">Maximum d'arrêts: Nombre maximum d'arrêts à afficher. Non limité si 0.</label>
+			<label index="constants.maxTimes">Maximum d'horaires: Nombre maximum d'horaires de prochain départ à afficher par arrêt.</label>
+			<label index="constants.noNextDay">Pas de jour suivant: Ne pas afficher d'horaire de prochain départ le jour suivant après l'heure de changement de jour.</label>
+			<label index="constants.dateChangeTime">Heure de changement de jour: Nombre de minutes après minuit à considérer comme limite de changement de jour.</label>
+			<label index="constants.timeSpanLimit">Limite d'intervalle de temps: Sous cette limite en minutes, la durée avant l'horaire en minute est affichée. En-deça, l'horaire est affiché. Une valeur de zéro (0) affiche tout le temps l'horaire.</label>
+			<label index="constants.proximity.min">Résultats de proximité minimum: Nombre minimum de résultats de proximité.</label>
+			<label index="constants.proximity.distance">Distance maximale de proximité: Distance maximale à utiliser pour la recherche de proximité (mètres).</label>
 		</languageKey>
 	</data>
+	<orig_hash type="array">
+		<languageKey index="fr" type="array">
+			<label index="tt_content.list_type_pi1" type="integer">39809863</label>
+			<label index="constants.networks" type="integer">51952391</label>
+			<label index="constants.displayMode" type="integer">116473799</label>
+			<label index="constants.maxItems" type="integer">247334410</label>
+			<label index="constants.maxTimes" type="integer">96102241</label>
+			<label index="constants.noNextDay" type="integer">56431741</label>
+			<label index="constants.dateChangeTime" type="integer">149702724</label>
+			<label index="constants.proximity.min" type="integer">189478418</label>
+			<label index="constants.proximity.distance" type="integer">116210078</label>
+		</languageKey>
+	</orig_hash>
+	<orig_text type="array">
+		<languageKey index="fr" type="array">
+			<label index="tt_content.list_type_pi1">Schedule</label>
+			<label index="constants.networks">Network list to look into.</label>
+			<label index="constants.displayMode">Display mode: board=Departure board at stop with full selection; 
+next=Next departures, with parameters; 
+proximity=Next departures for nearest stops; 
+bookmark=Next departures for bookmarks.</label>
+			<label index="constants.maxItems">Max stops: Maximum number of stops to display.</label>
+			<label index="constants.maxTimes">Max time items: Maximum next departure times to display.</label>
+			<label index="constants.noNextDay">Don't span over running day: Do not display results for next days after date change time.</label>
+			<label index="constants.dateChangeTime">Date change time: Number of minutes after midnight to consider as next day limit.</label>
+			<label index="constants.proximity.min">Min proximity results: Minimum number of proximity results.</label>
+			<label index="constants.proximity.distance">Proximity max distance: Maximum search distance for proximity search.</label>
+		</languageKey>
+	</orig_text>
 </T3locallang>

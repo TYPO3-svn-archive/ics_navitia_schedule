@@ -1,6 +1,6 @@
 plugin.tx_icsnavitiaschedule_pi1 {
-	url =
-	login = 
+	url = {$plugin.tx_icsnavitiaschedule_pi1.navitiaUrl}
+	login = {$plugin.tx_icsnavitiaschedule_pi1.statLogin}
 	networks = {$plugin.tx_icsnavitiaschedule_pi1.networks}
 	view {
 		lineList {
@@ -32,6 +32,10 @@ plugin.tx_icsnavitiaschedule_pi1 {
 	
 	nextDeparture {
 		time_stdWrap.strftime = %H:%M
+		timeSpan_stdWrap {
+			dataWrap = | {LLL:EXT:ics_navitia_schedule/pi1/locallang.xml:nextDeparture_minutes}
+		}
+		timeSpanLimit = {$plugin.tx_icsnavitiaschedule_pi1.timeSpanLimit}
 		nextDay_stdWrap {
 			setContentToCurrent = 1
 			data = LLL:EXT:ics_navitia_schedule/pi1/locallang.xml:nextDeparture_nextDay
@@ -39,10 +43,10 @@ plugin.tx_icsnavitiaschedule_pi1 {
 		}
 		currentDay_stdWrap {
 		}
-		nextLimit = 3
-		resultsLimit = 5
-		noNextDay = 0
-		dateChangeTime = 0
+		nextLimit = {$plugin.tx_icsnavitiaschedule_pi1.maxTimes}
+		resultsLimit = {$plugin.tx_icsnavitiaschedule_pi1.maxItems}
+		noNextDay = {$plugin.tx_icsnavitiaschedule_pi1.noNextDay}
+		dateChangeTime = {$plugin.tx_icsnavitiaschedule_pi1.dateChangeTime}
 		picto_stdWrap {
 		}
 		line_stdWrap {
@@ -51,13 +55,16 @@ plugin.tx_icsnavitiaschedule_pi1 {
 		}
 		direction_stdWrap {
 		}
+		proximity {
+			min = {$plugin.tx_icsnavitiaschedule_pi1.proximity.min}
+			max = {$plugin.tx_icsnavitiaschedule_pi1.maxItems}
+			distance = {$plugin.tx_icsnavitiaschedule_pi1.proximity.distance}
+		}
 	}
 	
 	mode = {$plugin.tx_icsnavitiaschedule_pi1.mode}
 	
 	_CSS_DEFAULT_STYLE (
-	
-
 	)
 	
 }

@@ -1,7 +1,34 @@
 plugin.tx_icsnavitiaschedule_pi1 {
-	# cat=plugin_icsnavitiaschedule; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.networks
+	# cat=plugin.icsnavitiaschedule//a; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.url
+	navitiaUrl = 
+	
+	# cat=plugin.icsnavitiaschedule//b; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.login
+	statLogin = 
+	
+	# cat=plugin.icsnavitiaschedule//c; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.networks
 	networks = 
 	
-	# cat=plugin_icsnavitiaschedule; type=options[board,next,proximity,bookmark]; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.displayMode
-	mode=board
+	# cat=plugin.icsnavitiaschedule//d; type=options[board,next,proximity,bookmark]; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.displayMode
+	mode = board
+	
+	# cat=plugin.icsnavitiaschedule//e; type=int+; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.maxItems
+	maxItems = 3
+	
+	# cat=plugin.icsnavitiaschedule//f; type=int+; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.maxTimes
+	maxTimes = 5
+	
+	# cat=plugin.icsnavitiaschedule/enable/g; type=boolean; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.noNextDay
+	noNextDay = 0
+	
+	# cat=plugin.icsnavitiaschedule/enable/h; type=int+; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.dateChangeTime
+	dateChangeTime = 0
+	
+	# cat=plugin.icsnavitiaschedule//i; type=int+; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.proximity.min
+	proximity.min = 0
+	
+	# cat=plugin.icsnavitiaschedule//j; type=int+; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.proximity.distance
+	proximity.distance = 1000
+	
+	# cat=plugin.icsnavitiaschedule//k; type=int+; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.timeSpanLimit
+	timeSpanLimit = 60
 }

@@ -70,6 +70,8 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase {
 				}
 				break;
 			case 'proximity':
+				$next = t3lib_div::makeInstance('tx_icsnavitiaschedule_nextDeparture', $this);
+				$content = $next->renderProximity($this->dataProvider);
 				break;
 			case 'bookmark':
 				break;

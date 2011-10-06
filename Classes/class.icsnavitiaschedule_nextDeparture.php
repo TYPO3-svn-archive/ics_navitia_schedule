@@ -65,6 +65,19 @@ class tx_icsnavitiaschedule_nextDeparture {
 		return $content;
 	}
 	
+	function renderProximity($dataProvider) {
+		$templatePart = $this->pObj->templates['nextDeparture'];
+		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_STATION_NEXT###');
+
+		$geoloc = new tx_icslibgeoloc_GeoLocation();
+		if ($geoloc->Position === false) {
+			
+		}
+		else {
+		}
+		return $content;
+	}
+	
 	function makeStation(tx_icslibnavitia_INodeList $stopList, tx_icslibnavitia_Line $line, $forward) {
 		$templatePart = $this->pObj->templates['nextDeparture'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_STATION###');
@@ -87,13 +100,25 @@ class tx_icsnavitiaschedule_nextDeparture {
 		
 		$timeTemplate = $this->pObj->cObj->getSubpart($template, '###TEMPLATE_TIMES###');
 		$timeContent = '';
+		$currentTime = $_SERVER['REQUEST_TIME'];
+		$dateChangeTime = intval($confBase['dateChangeTime']);
+		$currentMinutes = (int)date('H') * 60 + (int)date('i');
+		$limit = (int)$confBase['timeSpanLimit'];
 		for ($i = 0; $i < $stopList->Count(); $i++) {
 			$stop = $stopList->Get($i);
 			$timeMarkers = array();
 			$time = mktime($stop->stopTime->hour, $stop->stopTime->minute, 0, date('m'), date('d'), date('Y'));
-			$time = $this->pObj->cObj->stdWrap($time, $confBase['time_stdWrap.']);
-			if ($stop->stopTime->Day && (($stop->stopTime->hour * 60 + $stop->stopTime->minute) >= intval($confBase['dateChangeTime']))) {
-				$time = $this->pObj->cObj->stdWrap($time, $confBase['nextDay_stdWrap.']);
+			$day = $stop->stopTime->day;
+			$minutes = $stop->stopTime->hour * 60 + $stop->stopTime->minute;
+			// if (($dateChangeTime > 0) && ($currentMinutes < $dateChangeTime) && ($minutes >= $dateChangeTime))
+				// $day++;
+			if ($limit && !$day && (($minutes - $currentMinutes) < $limit))
+				$time = $this->pObj->cObj->stdWrap(($minutes - $currentMinutes), $confBase['timeSpan_stdWrap.']);
+			else {
+				$time = $this->pObj->cObj->stdWrap($time, $confBase['time_stdWrap.']);
+				if ($day) {
+					$time = sprintf($this->pObj->cObj->stdWrap($time, $confBase['nextDay_stdWrap.']), $day);
+				}
 			}
 			$timeMarkers['TIME'] = $time;
 			$timeContent .= $this->pObj->cObj->substituteMarkerArray($timeTemplate, $timeMarkers, '###|###');

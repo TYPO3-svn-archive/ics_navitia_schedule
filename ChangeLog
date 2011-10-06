@@ -1,3 +1,7 @@
+2011-10-06 Pierrick Caillon <pierrick@in-cite.net>
+	* Started proximity.
+	* Changed time formatting for minute display in some cases.
+
 2011-10-05 Pierrick Caillon <pierrick@in-cite.net>
 	* Made first view for next departure: for a selected station.
 
