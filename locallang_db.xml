@@ -23,6 +23,7 @@ bookmark=Next departures for bookmarks.</label>
 			<label index="constants.timeSpanLimit">Time span limit: Under this limit in minutes, minutes to the schedule is displayed. Above, the schedule is displayed. A valeur of zero (0) always display the schedule.</label>
 			<label index="constants.proximity.min">Min proximity results: Minimum number of proximity results.</label>
 			<label index="constants.proximity.distance">Proximity max distance: Maximum search distance for proximity search (meters).</label>
+			<label index="constants.proximity.hideEmpty">Hide empty: Hide results with no schedule.</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="tt_content.list_type_pi1">Module horaires</label>
@@ -40,6 +41,7 @@ bookmark=Prochains départs aux arrêts favoris.</label>
 			<label index="constants.timeSpanLimit">Limite d'intervalle de temps: Sous cette limite en minutes, la durée avant l'horaire en minute est affichée. En-deça, l'horaire est affiché. Une valeur de zéro (0) affiche tout le temps l'horaire.</label>
 			<label index="constants.proximity.min">Résultats de proximité minimum: Nombre minimum de résultats de proximité.</label>
 			<label index="constants.proximity.distance">Distance maximale de proximité: Distance maximale à utiliser pour la recherche de proximité (mètres).</label>
+			<label index="constants.proximity.hideEmpty">Cacher les vides: Cacher les résultats sans horaires.</label>
 		</languageKey>
 	</data>
 	<orig_hash type="array">

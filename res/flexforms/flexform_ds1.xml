@@ -64,7 +64,7 @@
 				<el>
 					<line>
 						<TCEforms>
-							<label>LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.general.line</label>
+							<label>LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.templates.line</label>
 							<config>
 								<type>group</type>
 								<internal_type>file</internal_type>
@@ -79,7 +79,7 @@
 					</line>
 					<direction>
 						<TCEforms>
-							<label>LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.general.direction</label>
+							<label>LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.templates.direction</label>
 							<config>
 								<type>group</type>
 								<internal_type>file</internal_type>
@@ -94,7 +94,7 @@
 					</direction>
 					<stop>
 						<TCEforms>
-							<label>LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.general.stop</label>
+							<label>LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.templates.stop</label>
 							<config>
 								<type>group</type>
 								<internal_type>file</internal_type>
@@ -109,7 +109,7 @@
 					</stop>
 					<board>
 						<TCEforms>
-							<label>LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.general.board</label>
+							<label>LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.templates.board</label>
 							<config>
 								<type>group</type>
 								<internal_type>file</internal_type>
@@ -124,7 +124,7 @@
 					</board>
 					<next>
 						<TCEforms>
-							<label>LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.general.next</label>
+							<label>LLL:EXT:ics_navitia_schedule/res/flexforms/locallang_ds1.php:pi1_flexform.sheets.templates.next</label>
 							<config>
 								<type>group</type>
 								<internal_type>file</internal_type>

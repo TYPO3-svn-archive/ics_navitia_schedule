@@ -59,6 +59,10 @@ plugin.tx_icsnavitiaschedule_pi1 {
 			min = {$plugin.tx_icsnavitiaschedule_pi1.proximity.min}
 			max = {$plugin.tx_icsnavitiaschedule_pi1.maxItems}
 			distance = {$plugin.tx_icsnavitiaschedule_pi1.proximity.distance}
+			hideEmpty = {$plugin.tx_icsnavitiaschedule_pi1.proximity.hideEmpty}
+			distance_stdWrap {
+				wrap = |m
+			}
 		}
 	}
 	

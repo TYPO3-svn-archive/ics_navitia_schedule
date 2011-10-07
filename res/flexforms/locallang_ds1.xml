@@ -23,6 +23,51 @@
 		<languageKey index="fr" type="array">
 			<label index="tt_content.pi1_flexform.sheet_general">Configuration</label>
 			<label index="pi1_flexform.sheets.general.display_mode">Mode d'affichage</label>
+			<label index="pi1_flexform.sheets.general.display_mode.I.1">Tableau des horaires et recherche</label>
+			<label index="pi1_flexform.sheets.general.display_mode.I.2">Prochains départ</label>
+			<label index="pi1_flexform.sheets.general.display_mode.I.3">Proximité</label>
+			<label index="pi1_flexform.sheets.general.display_mode.I.4">Favoris</label>
+			<label index="pi1_flexform.sheets.general.limit">Nombre maximum d'arrêts (0 sans limite)</label>
+			<label index="tt_content.pi1_flexform.sheet_templates">Fichiers de modèle</label>
+			<label index="pi1_flexform.sheets.templates.line">Modèle de la liste de lignes</label>
+			<label index="pi1_flexform.sheets.templates.direction">Modèle de la liste des directions</label>
+			<label index="pi1_flexform.sheets.templates.stop">Modèle de la liste d'arrêts</label>
+			<label index="pi1_flexform.sheets.templates.board">Modèle du tableau d'horaires</label>
+			<label index="pi1_flexform.sheets.templates.next">Modèle des prochains départs</label>
 		</languageKey>
 	</data>
+	<orig_hash type="array">
+		<languageKey index="fr" type="array">
+			<label index="tt_content.pi1_flexform.sheet_general" type="integer">262485503</label>
+			<label index="pi1_flexform.sheets.general.display_mode" type="integer">194991965</label>
+			<label index="pi1_flexform.sheets.general.display_mode.I.1" type="integer">169944215</label>
+			<label index="pi1_flexform.sheets.general.display_mode.I.2" type="integer">75169062</label>
+			<label index="pi1_flexform.sheets.general.display_mode.I.3" type="integer">260963154</label>
+			<label index="pi1_flexform.sheets.general.display_mode.I.4" type="integer">128359787</label>
+			<label index="pi1_flexform.sheets.general.limit" type="integer">80829381</label>
+			<label index="tt_content.pi1_flexform.sheet_templates" type="integer">186560764</label>
+			<label index="pi1_flexform.sheets.templates.line" type="integer">213935069</label>
+			<label index="pi1_flexform.sheets.templates.direction" type="integer">32460016</label>
+			<label index="pi1_flexform.sheets.templates.stop" type="integer">246880447</label>
+			<label index="pi1_flexform.sheets.templates.board" type="integer">40427572</label>
+			<label index="pi1_flexform.sheets.templates.next" type="integer">204276654</label>
+		</languageKey>
+	</orig_hash>
+	<orig_text type="array">
+		<languageKey index="fr" type="array">
+			<label index="tt_content.pi1_flexform.sheet_general">Config</label>
+			<label index="pi1_flexform.sheets.general.display_mode">Display mode</label>
+			<label index="pi1_flexform.sheets.general.display_mode.I.1">Departure Board and search</label>
+			<label index="pi1_flexform.sheets.general.display_mode.I.2">Next Departure</label>
+			<label index="pi1_flexform.sheets.general.display_mode.I.3">Proximity</label>
+			<label index="pi1_flexform.sheets.general.display_mode.I.4">Bookmarks</label>
+			<label index="pi1_flexform.sheets.general.limit">Max number of items (0 is no limit)</label>
+			<label index="tt_content.pi1_flexform.sheet_templates">Template files</label>
+			<label index="pi1_flexform.sheets.templates.line">Line list template</label>
+			<label index="pi1_flexform.sheets.templates.direction">Direction list template</label>
+			<label index="pi1_flexform.sheets.templates.stop">Stop list template</label>
+			<label index="pi1_flexform.sheets.templates.board">Departure board template</label>
+			<label index="pi1_flexform.sheets.templates.next">Next departure template</label>
+		</languageKey>
+	</orig_text>
 </T3locallang>

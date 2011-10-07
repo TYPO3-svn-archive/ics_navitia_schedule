@@ -67,26 +67,70 @@ class tx_icsnavitiaschedule_nextDeparture {
 	
 	function renderProximity($dataProvider) {
 		$templatePart = $this->pObj->templates['nextDeparture'];
-		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_STATION_NEXT###');
+		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_PROXIMITY###');
 
+		$markers = array(
+			'PREFIXID' => $this->pObj->prefixId,
+		);
+		
 		$geoloc = new tx_icslibgeoloc_GeoLocation();
 		if ($geoloc->Position === false) {
-			
+			$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_PROXIMITY_NODATA###');
+			$markers['MESSAGE'] = htmlspecialchars($this->pObj->pi_getLL('nextDeparture_noLocation'));
 		}
 		else {
+			$timeLimit = max(1, intval($this->pObj->conf['nextDeparture.']['nextLimit']));
+			$dateChangeTime = intval($this->pObj->conf['nextDeparture.']['dateChangeTime']);
+			$noNextDay = intval($this->pObj->conf['nextDeparture.']['noNextDay']);
+			$confBase = $this->pObj->conf['nextDeparture.']['proximity.'];
+			$coords = t3lib_div::makeInstance('tx_icslibnavitia_Coord');
+			$loc = $geoloc->Position;
+			$coords->lat = $loc['latitude'];
+			$coords->lng = $loc['longitude'];$coords->x = 299979.28; $coords->y = 2350688.51;
+			$proximities = $dataProvider->getStopAreaProximityList($coords, $confBase['distance'], $confBase['min'], $confBase['max']);
+			$stationsTemplate = $this->pObj->cObj->getSubpart($template, '###STATIONS###');
+			$stationsContent = '';
+			$networks = $this->pObj->getNetworkList();
+			for ($i = 0; $i < $proximities->Count(); $i++) {
+				$stopArea = $proximities->Get($i)->stopArea;
+				$lines = $dataProvider->getLineListByStopAreaCode($stopArea->externalCode, $networks);
+				for ($j = 0; $j < $lines->Count(); $j++) {
+					$line = $lines->Get($j);
+					foreach (array(true, false) as $forward) {
+						$stationsMarkers = array();
+						$data = $dataProvider->getNextDepartureByStopAreaForLine($stopArea->externalCode, $line->externalCode, $forward, $timeLimit, $dateChangeTime, $noNextDay);
+						if ($data->Count() > 0) {
+							$stationsMarkers['STATION'] = $this->makeStation($data, $line, $forward, $proximities->Get($i)->distance);
+						}
+						else {
+							if ($confBase['hideEmpty'])
+								continue;
+							$stationsMarkers['STATION'] = $this->makeStationNoData($stopArea, $line, $forward);
+						}
+						$stationsContent .= $this->pObj->cObj->substituteMarkerArray($stationsTemplate, $stationsMarkers, '###|###');
+					}
+				}
+			}
+			$template = $this->pObj->cObj->substituteSubpart($template, '###STATIONS###', $stationsContent);
 		}
+
+		$content .= $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
+		$content = $this->pObj->cObj->substituteMarkerArray($content, $markers, '###|###');
 		return $content;
 	}
 	
-	function makeStation(tx_icslibnavitia_INodeList $stopList, tx_icslibnavitia_Line $line, $forward) {
+	function makeStation(tx_icslibnavitia_INodeList $stopList, tx_icslibnavitia_Line $line, $forward, $distance = false) {
 		$templatePart = $this->pObj->templates['nextDeparture'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_STATION###');
+		if ($distance !== false) {
+			$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_STATION_PROXIMITY###');
+		}
 
 		$markers = array();
 		$markers['PICTO'] = $this->pObj->pictoLine->getlinepicto($line->code/*$line->externalCode*/, 'Navitia');
 		if (!$markers['PICTO']) $markers['PICTO'] = htmlspecialchars($line->code);
 		$markers['LINE'] = htmlspecialchars($line->name);
-		$markers['NAME'] = htmlspecialchars($stopList->Get(0)->stopArea->name);
+		$markers['NAME'] = htmlspecialchars($stopList->Get(0)->stopPoint->stopArea->name);
 		$direction = ($forward ? $line->forward : $line->backward);
 		$markers['DIRECTION'] = htmlspecialchars($direction->name);
 		
@@ -94,6 +138,10 @@ class tx_icsnavitiaschedule_nextDeparture {
 		
 		foreach ($markers as $name => $value) {
 			$markers[$name] = $this->pObj->cObj->stdWrap($value, $confBase[strtolower($name) . '_stdWrap.']);
+		}
+		
+		if ($distance !== false) {
+			$markers['DISTANCE'] = $this->pObj->cObj->stdWrap($distance, $confBase['proximity.']['distance_stdWrap.']);
 		}
 		
 		$markers['TO_LABEL'] = htmlspecialchars($this->pObj->pi_getLL('nextDeparture_direction'));

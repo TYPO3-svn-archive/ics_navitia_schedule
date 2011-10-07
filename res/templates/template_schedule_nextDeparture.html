@@ -38,15 +38,24 @@
 
 <!-- ###TEMPLATE_STATION### begin -->
 <div>
-	<p>###PICTO### ###LINE### ###NAME### ###TO_LABEL### ###DIRECTION###</p>
+	<p class="###PREFIXID###_stationTitle">###PICTO### ###LINE### ###NAME### ###TO_LABEL### ###DIRECTION###</p>
 	<div class="###PREFIXID###_departureTime"><!-- ###TEMPLATE_TIMES### begin -->
 		<p>###TIME###</p><!-- ###TEMPLATE_TIMES### end -->
 	</div>
 </div><!-- ###TEMPLATE_STATION### end -->
 
+<!-- ###TEMPLATE_STATION_PROXIMITY### begin -->
+<div>
+	<p class="###PREFIXID###_stationTitle">###PICTO### ###LINE### ###NAME### ###TO_LABEL### ###DIRECTION###</p>
+	<div class="###PREFIXID###_departureTime"><!-- ###TEMPLATE_TIMES### begin -->
+		<p>###TIME###</p><!-- ###TEMPLATE_TIMES### end -->
+	</div>
+	<p class="###PREFIXID###_distance">###DISTANCE###</p>
+</div><!-- ###TEMPLATE_STATION_PROXIMITY### end -->
+
 <!-- ###TEMPLATE_STATION_NODATA### begin -->
 <div>
-	<p>###PICTO### ###LINE### ###NAME### ###TO_LABEL### ###DIRECTION###</p>
+	<p class="###PREFIXID###_stationTitle">###PICTO### ###LINE### ###NAME### ###TO_LABEL### ###DIRECTION###</p>
 	<div class="###PREFIXID###_noDepartureTime">
 		###MESSAGE###
 	</div>
