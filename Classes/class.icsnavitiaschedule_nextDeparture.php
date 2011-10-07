@@ -86,7 +86,7 @@ class tx_icsnavitiaschedule_nextDeparture {
 			$coords = t3lib_div::makeInstance('tx_icslibnavitia_Coord');
 			$loc = $geoloc->Position;
 			$coords->lat = $loc['latitude'];
-			$coords->lng = $loc['longitude'];$coords->x = 299979.28; $coords->y = 2350688.51;
+			$coords->lng = $loc['longitude'];
 			$proximities = $dataProvider->getStopAreaProximityList($coords, $confBase['distance'], $confBase['min'], $confBase['max']);
 			$stationsTemplate = $this->pObj->cObj->getSubpart($template, '###STATIONS###');
 			$stationsContent = '';
