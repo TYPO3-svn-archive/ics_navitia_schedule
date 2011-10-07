@@ -55,6 +55,10 @@ plugin.tx_icsnavitiaschedule_pi1 {
 		}
 		direction_stdWrap {
 		}
+		stationItem_stdWrap {
+		}
+		timeItem_stdWrap {
+		}
 		proximity {
 			min = {$plugin.tx_icsnavitiaschedule_pi1.proximity.min}
 			max = {$plugin.tx_icsnavitiaschedule_pi1.maxItems}

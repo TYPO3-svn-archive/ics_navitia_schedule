@@ -125,28 +125,39 @@ class tx_icsnavitiaschedule_nextDeparture {
 		if ($distance !== false) {
 			$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_STATION_PROXIMITY###');
 		}
+		$direction = ($forward ? $line->forward : $line->backward);
+		
+		$cObjData = array(
+			'lineCode' => $line->code,
+			'lineName' => $line->name,
+			'stopName' => $stopList->Get(0)->stopPoint->stopArea->name,
+			'direction' => $direction->name
+		);
+		if ($distance !== false)
+			$cObjData['distance'] = $distance;
+		$localCObj = t3lib_div::makeInstance('tslib_cObj');
+		$localCObj->start($cObjData);
 
 		$markers = array();
 		$markers['PICTO'] = $this->pObj->pictoLine->getlinepicto($line->code/*$line->externalCode*/, 'Navitia');
 		if (!$markers['PICTO']) $markers['PICTO'] = htmlspecialchars($line->code);
 		$markers['LINE'] = htmlspecialchars($line->name);
 		$markers['NAME'] = htmlspecialchars($stopList->Get(0)->stopPoint->stopArea->name);
-		$direction = ($forward ? $line->forward : $line->backward);
 		$markers['DIRECTION'] = htmlspecialchars($direction->name);
 		
 		$confBase = $this->pObj->conf['nextDeparture.'];
 		
 		foreach ($markers as $name => $value) {
-			$markers[$name] = $this->pObj->cObj->stdWrap($value, $confBase[strtolower($name) . '_stdWrap.']);
+			$markers[$name] = $localCObj->stdWrap($value, $confBase[strtolower($name) . '_stdWrap.']);
 		}
 		
 		if ($distance !== false) {
-			$markers['DISTANCE'] = $this->pObj->cObj->stdWrap($distance, $confBase['proximity.']['distance_stdWrap.']);
+			$markers['DISTANCE'] = $localCObj->stdWrap($distance, $confBase['proximity.']['distance_stdWrap.']);
 		}
 		
 		$markers['TO_LABEL'] = htmlspecialchars($this->pObj->pi_getLL('nextDeparture_direction'));
 		
-		$timeTemplate = $this->pObj->cObj->getSubpart($template, '###TEMPLATE_TIMES###');
+		$timeTemplate = $localCObj->getSubpart($template, '###TEMPLATE_TIMES###');
 		$timeContent = '';
 		$currentTime = $_SERVER['REQUEST_TIME'];
 		$dateChangeTime = intval($confBase['dateChangeTime']);
@@ -160,20 +171,34 @@ class tx_icsnavitiaschedule_nextDeparture {
 			$minutes = $stop->stopTime->hour * 60 + $stop->stopTime->minute;
 			// if (($dateChangeTime > 0) && ($currentMinutes < $dateChangeTime) && ($minutes >= $dateChangeTime))
 				// $day++;
+			$cObjDataItem = array(
+				'time' => $time,
+				'day' =>  $day,
+				'minuteSpan' => totalSeconds / 60 - $currentMinutes,
+			);
+			$localItemCObj = t3lib_div::makeInstance('tslib_cObj');
+			$localItemCObj->start($cObjDataItem);
+			$localItemCObj->setParent($cObjData, '');
 			if ($limit && !$day && (($minutes - $currentMinutes) < $limit))
-				$time = $this->pObj->cObj->stdWrap(($minutes - $currentMinutes), $confBase['timeSpan_stdWrap.']);
+				$time = $localItemCObj->stdWrap(($minutes - $currentMinutes), $confBase['timeSpan_stdWrap.']);
 			else {
-				$time = $this->pObj->cObj->stdWrap($time, $confBase['time_stdWrap.']);
+				$time = $localItemCObj->stdWrap($time, $confBase['time_stdWrap.']);
 				if ($day) {
-					$time = sprintf($this->pObj->cObj->stdWrap($time, $confBase['nextDay_stdWrap.']), $day);
+					$time = sprintf($localItemCObj->stdWrap($time, $confBase['nextDay_stdWrap.']), $day);
 				}
 			}
 			$timeMarkers['TIME'] = $time;
-			$timeContent .= $this->pObj->cObj->substituteMarkerArray($timeTemplate, $timeMarkers, '###|###');
+			$timeContent .= $localItemCObj->stdWrap(
+				$localItemCObj->substituteMarkerArray($timeTemplate, $timeMarkers, '###|###'),
+				$confBase['timeItem_stdWrap.']
+			);
 		}
-		$template = $this->pObj->cObj->substituteSubpart($template, '###TEMPLATE_TIMES###', $timeContent);
+		$template = $localCObj->substituteSubpart($template, '###TEMPLATE_TIMES###', $timeContent);
 
-		$content .= $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
+		$content .= $localCObj->stdWrap(
+			$this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###'),
+			$confBase['stationItem_stdWrap.']
+		);
 		return $content;
 	}
 	
@@ -183,26 +208,39 @@ class tx_icsnavitiaschedule_nextDeparture {
 		}
 		$templatePart = $this->pObj->templates['nextDeparture'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_STATION_NODATA###');
+		$direction = ($forward ? $line->forward : $line->backward);
+
+		$cObjData = array(
+			'lineCode' => $line->code,
+			'lineName' => $line->name,
+			'stopName' => $stopList->Get(0)->stopPoint->stopArea->name,
+			'direction' => $direction->name,
+			'noData' => 1,
+		);
+		$localCObj = t3lib_div::makeInstance('tslib_cObj');
+		$localCObj->start($cObjData);
 
 		$markers = array();
 		$markers['PICTO'] = $this->pObj->pictoLine->getlinepicto($line->code/*$line->externalCode*/, 'Navitia');
 		if (!$markers['PICTO']) $markers['PICTO'] = htmlspecialchars($line->code);
 		$markers['LINE'] = htmlspecialchars($line->name);
 		$markers['NAME'] = htmlspecialchars($stopArea->name);
-		$direction = ($forward ? $line->forward : $line->backward);
 		$markers['DIRECTION'] = htmlspecialchars($direction->name);
 		
 		$confBase = $this->pObj->conf['nextDeparture.'];
 		
 		foreach ($markers as $name => $value) {
-			$markers[$name] = $this->pObj->cObj->stdWrap($value, $confBase[strtolower($name) . '_stdWrap.']);
+			$markers[$name] = $localCObj->stdWrap($value, $confBase[strtolower($name) . '_stdWrap.']);
 		}
 		
 		$markers['TO_LABEL'] = htmlspecialchars($this->pObj->pi_getLL('nextDeparture_direction'));
 		
 		$markers['MESSAGE'] = htmlspecialchars($this->pObj->pi_getLL('nextDeparture_noData'));
 
-		$content .= $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
+		$content .= $localCObj->stdWrap(
+			$this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###'),
+			$confBase['stationItem_stdWrap.']
+		);
 		return $content;
 	}
 }
