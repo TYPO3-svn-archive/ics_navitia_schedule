@@ -37,7 +37,7 @@ class tx_icsnavitiaschedule_nextDeparture {
 		$this->pObj = $pObj;
 	}
 
-	function renderNextDeparture($dataProvider, $lineExternalCode, $stopAreaExternalCode, $forward) {
+	public function renderNextDeparture($dataProvider, $lineExternalCode, $stopAreaExternalCode, $forward) {
 		$templatePart = $this->pObj->templates['nextDeparture'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_STATION_NEXT###');
 		
@@ -65,7 +65,7 @@ class tx_icsnavitiaschedule_nextDeparture {
 		return $content;
 	}
 	
-	function renderProximity($dataProvider) {
+	public function renderProximity($dataProvider) {
 		$templatePart = $this->pObj->templates['nextDeparture'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_PROXIMITY###');
 
@@ -119,7 +119,7 @@ class tx_icsnavitiaschedule_nextDeparture {
 		return $content;
 	}
 	
-	function makeStation(tx_icslibnavitia_INodeList $stopList, tx_icslibnavitia_Line $line, $forward, $distance = false) {
+	public function makeStation(tx_icslibnavitia_INodeList $stopList, tx_icslibnavitia_Line $line, $forward, $distance = false) {
 		$templatePart = $this->pObj->templates['nextDeparture'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_STATION###');
 		if ($distance !== false) {
@@ -202,7 +202,7 @@ class tx_icsnavitiaschedule_nextDeparture {
 		return $content;
 	}
 	
-	function makeStationNoData(tx_icslibnavitia_StopArea $stopArea = null, tx_icslibnavitia_Line $line = null, $forward = true) {
+	public function makeStationNoData(tx_icslibnavitia_StopArea $stopArea = null, tx_icslibnavitia_Line $line = null, $forward = true) {
 		if ($stopArea == null) {
 			return '(null)';
 		}

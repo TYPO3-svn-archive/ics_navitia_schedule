@@ -11,11 +11,13 @@
 			<label index="stopList.title">Choose stop point</label>
 			<label index="hourLess">- 1h</label>
 			<label index="hourMore">+ 1h</label>
+			<label index="stoppoint">Stop</label>
 			<label index="nextDeparture_nextDay">D+%d</label>
 			<label index="nextDeparture_noData">No departure time available</label>
 			<label index="nextDeparture_direction">to</label>
 			<label index="nextDeparture_noLocation">No location data available.</label>
 			<label index="nextDeparture_minutes">mn.</label>
+			<label index="line">Line</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="lineList.title">Choisissez votre ligne</label>
@@ -23,11 +25,13 @@
 			<label index="stopList.title">Choisissez l'arrêt</label>
 			<label index="hourLess">- 1h</label>
 			<label index="hourMore">+ 1h</label>
+			<label index="stoppoint">Arrêt</label>
 			<label index="nextDeparture_nextDay">J+%d</label>
 			<label index="nextDeparture_noData">Pas d'heure de départ disponible.</label>
 			<label index="nextDeparture_direction">vers</label>
 			<label index="nextDeparture_noLocation">Pas de donnée de position disponible.</label>
 			<label index="nextDeparture_minutes">mn.</label>
+			<label index="line">Ligne</label>
 		</languageKey>
 	</data>
 </T3locallang>

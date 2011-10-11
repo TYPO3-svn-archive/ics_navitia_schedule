@@ -33,7 +33,7 @@ class tx_icsnavitiaschedule_stopList {
 		$this->pObj = $pObj;
 	}
 
-	function getStopsList($dataProvider, $lineExternalCode, $forward = true) {
+	public function getStopsList($dataProvider, $lineExternalCode, $forward = true) {
 		$templatePart = $this->pObj->templates['stopList'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_SCHEDULE_STOP_LIST###');
 		$stops = $dataProvider->getRoutePointList($lineExternalCode, $forward);

@@ -33,7 +33,7 @@ class tx_icsnavitiaschedule_directionList {
 		$this->pObj = $pObj;
 	}
 
-	function getDirectionList($dataProvider, $lineExternalCode) {
+	public function getDirectionList($dataProvider, $lineExternalCode) {
 		$templatePart = $this->pObj->templates['directionList'];
 		$line = $dataProvider->getLineByCode($lineExternalCode);
 		
@@ -50,13 +50,13 @@ class tx_icsnavitiaschedule_directionList {
 		return $content;
 	}
 	
-	function getDirections($line) {
+	private function getDirections($line) {
 		$directionForward = $this->getDirection($line, true);
 		$directionBackward = $this->getDirection($line, false);
 		return $directionForward . $directionBackward;
 	}
 	
-	function getDirection($line, $forward = true) {
+	private function getDirection($line, $forward = true) {
 		$templatePart = $this->pObj->templates['directionList'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_SCHEDULE_DIRECTION_LIST###');
 		$directionListTemplate = $this->pObj->cObj->getSubpart($template, '###DIRECTION_LIST###');

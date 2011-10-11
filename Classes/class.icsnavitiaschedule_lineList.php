@@ -33,7 +33,7 @@ class tx_icsnavitiaschedule_lineList {
 		$this->pObj = $pObj;
 	}
 
-	function getLineList($dataProvider, $networks = null) {
+	public function getLineList($dataProvider, $networks = null) {
 	
 		$templatePart = $this->pObj->templates['lineList'];
 		$lineList = $dataProvider->getLineList($networks);

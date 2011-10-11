@@ -44,8 +44,8 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase {
 	private $login;
 	private $url;
 	private $dataProvider;
-	var $pictoLine;
-	var $templates;
+	public $pictoLine;
+	public $templates;
 	
 	/**
 	 * The main method of the PlugIn
@@ -54,7 +54,7 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase {
 	 * @param	array		$conf: The PlugIn configuration
 	 * @return	The content that is displayed on the website
 	 */
-	function main($content, $conf) {
+	public function main($content, $conf) {
 		$this->conf = $conf;
 		$this->pi_setPiVarDefaults();
 		$this->pi_loadLL();
@@ -102,7 +102,7 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase {
 	 * Declares onload event for geoloc init.
 	 * @author Pierrick Caillon <pierrick@in-cite.net>
 	 */
-	function positionLoad($content, $conf) {
+	public function positionLoad($content, $conf) {
 		$GLOBALS['TSFE']->JSeventFuncCalls['onload'][$this->prefixId] = 'if (' . $this->prefixId . '_init) ' . $this->prefixId . '_init();';
 		$conf['userFunc'] .= 'Int';
 		return $this->cObj->USER($conf, 'INT');
@@ -112,7 +112,7 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase {
 	 * Sets onload handler for geoloc init if required.
 	 * @author Pierrick Caillon <pierrick@in-cite.net>
 	 */
-	function positionLoadInt($content, $conf) {
+	public function positionLoadInt($content, $conf) {
 		if (!isset($conf['refreshDelay']))
 			$conf['refreshDelay'] = 120;
 		$geoloc = new tx_icslibgeoloc_GeoLocation();
@@ -131,7 +131,7 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase {
 		return '';
 	}
 	
-	function init() {
+	private function init() {
 		$this->pi_initPIflexForm();
 		$this->login = $this->conf['login'];
 		$this->url = $this->conf['url'];
@@ -154,7 +154,7 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase {
 			$this->mode = $this->piVars['mode'];
 	}
 	
-	function getNetworkList() {
+	private function getNetworkList() {
 		$networkList = null;
 		if (!empty($this->networks)) {
 			$networks = explode(',', $this->networks);
@@ -163,7 +163,7 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase {
 		return $networkList;
 	}
 	
-	function getTemplateFile($templateName, $default) {
+	private function getTemplateFile($templateName, $default) {
 		$flex = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], $templateName, 'templates');
 		return $this->cObj->fileResource($flex ? 'uploads/tx_icsnavitiaschedule/' . $flex : $default);
 	}

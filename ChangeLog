@@ -1,3 +1,10 @@
+2011-10-11 Loïc Stéphan <loic@in-cite.net>
+	* Added stoppoint and line locallang.
+	* Fixed hidden fields bug for departure board
+	* Added Line name when line icon is not available.
+	* Added/changed methods and variables visibility
+	* Fixed bug on +/- 1 hour link
+
 2011-10-07 Pierrick Caillon <pierrick@in-cite.net>
 	* Finalized proximity display.
 	* Fixed plugin flexform display.
@@ -13,11 +20,19 @@
 	* Prepared plugin for next departure feature.
 
 2011-09-29 Loïc Stéphan <loic@in-cite.net>
+	Added fully notes on schedules.
+	Added Configuration for notes on constants.
+	Review search template for styling.
+
+2011-09-27 Loïc Stéphan <loic@in-cite.net>
 	* Fixed bug on validation button.
 	* Fixed bug on hour value.
 	* Added error handling.
-	* Added hidden line code when picto is displayed 
-
+	* Added hiddden line code when picto is displayed 
+	* Notes on schedules are partially integrated.
+	* Added jQuery data-theme parameter on lists view.
+	* Added Notes configuration.
+	
 2011-09-21 Pierrick Caillon <pierrick@in-cite.net>
 	* Reorganized templates.
 
