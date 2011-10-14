@@ -42,7 +42,7 @@ class tx_icsnavitiaschedule_lineList {
 		
 		$markers = array(
 			'###PREFIXID###' => $this->prefixId,
-			'###LINE_LIST_TITLE###' => $this->pObj->pi_getLL('lineList.title'),
+			'###LINE_LIST_TITLE###' => $this->pObj->pi_getLL('lineLis_title'),
 		);
 		
 		if ($lineTot) {
@@ -95,4 +95,5 @@ class tx_icsnavitiaschedule_lineList {
 		$content .= $this->pObj->cObj->substituteMarkerArray($template, $markers);
 		return $content;
 	}
+	
 }

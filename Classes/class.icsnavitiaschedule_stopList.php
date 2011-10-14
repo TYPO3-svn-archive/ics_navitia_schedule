@@ -40,7 +40,7 @@ class tx_icsnavitiaschedule_stopList {
 		
 		$markers = array(
 			'###PREFIXID###' => $this->pObj->prefixId,
-			'###STOP_LIST_TITLE###' => $this->pObj->pi_getLL('stopList.title'),
+			'###STOP_LIST_TITLE###' => $this->pObj->pi_getLL('stopList_title'),
 		);
 		
 		$stopListTemplate = $this->pObj->cObj->getSubpart($template, '###STOP_LIST###');

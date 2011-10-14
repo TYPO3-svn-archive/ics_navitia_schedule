@@ -6,9 +6,9 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="lineList.title">Choose your line</label>
-			<label index="directionList.title">Choose direction</label>
-			<label index="stopList.title">Choose stop point</label>
+			<label index="lineList_title">Choose your line</label>
+			<label index="directionList_title">Choose direction</label>
+			<label index="stopList_title">Choose stop point</label>
 			<label index="hourLess">- 1h</label>
 			<label index="hourMore">+ 1h</label>
 			<label index="stoppoint">Stop</label>
@@ -20,9 +20,9 @@
 			<label index="line">Line</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
-			<label index="lineList.title">Choisissez votre ligne</label>
-			<label index="directionList.title">Choisissez le sens</label>
-			<label index="stopList.title">Choisissez l'arrêt</label>
+			<label index="lineList_title">Choisissez votre ligne</label>
+			<label index="directionList_title">Choisissez le sens</label>
+			<label index="stopList_title">Choisissez l'arrêt</label>
 			<label index="hourLess">- 1h</label>
 			<label index="hourMore">+ 1h</label>
 			<label index="stoppoint">Arrêt</label>

@@ -40,7 +40,7 @@ class tx_icsnavitiaschedule_directionList {
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_SCHEDULE_DIRECTION_LIST###');
 		$markers = array(
 			'###PREFIXID###' => $this->prefixId,
-			'###DIRECTION_LIST_TITLE###' => $this->pObj->pi_getLL('directionList.title'),
+			'###DIRECTION_LIST_TITLE###' => $this->pObj->pi_getLL('directionList_title'),
 		);
 		$directionListContent = $this->getDirections($line);
 		

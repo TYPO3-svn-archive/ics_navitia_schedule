@@ -1,3 +1,7 @@
+2011-10-14 Loïc Stéphan <loic@in-cite.net>
+	* Removed icons in list view
+	* Removed dot in locallang (overriding in TS).
+
 2011-10-11 Loïc Stéphan <loic@in-cite.net>
 	* Added stoppoint and line locallang.
 	* Fixed hidden fields bug for departure board
@@ -32,7 +36,7 @@
 	* Notes on schedules are partially integrated.
 	* Added jQuery data-theme parameter on lists view.
 	* Added Notes configuration.
-	
+
 2011-09-21 Pierrick Caillon <pierrick@in-cite.net>
 	* Reorganized templates.
 
@@ -43,5 +47,5 @@
 
 2011-08-19 In Cité Solution  <technique@in-cite.net>
 
-	* initial code generated with kickstarter
-	* Added: Template files for each view
+	* initial code generated with kickstarter.
+	* Added: Template files for each view.

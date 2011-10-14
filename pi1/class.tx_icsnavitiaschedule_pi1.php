@@ -154,7 +154,7 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase {
 			$this->mode = $this->piVars['mode'];
 	}
 	
-	private function getNetworkList() {
+	public function getNetworkList() {
 		$networkList = null;
 		if (!empty($this->networks)) {
 			$networks = explode(',', $this->networks);

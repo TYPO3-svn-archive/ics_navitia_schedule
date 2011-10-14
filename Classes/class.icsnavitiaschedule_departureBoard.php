@@ -253,7 +253,7 @@ class tx_icsnavitiaschedule_departureBoard {
 			}
 		}
 		elseif($data['StopPointList']->Count() && $data['StopList']->Count()) {
-			$markers['ERROR'] = $this->pObj->pi_getLL('error.no_more_schedules');
+			$markers['ERROR'] = $this->pObj->pi_getLL('error_no_more_schedules');
 		}
 		
 		if($data['DestinationList']->Count()) {
