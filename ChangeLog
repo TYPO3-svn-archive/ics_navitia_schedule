@@ -1,3 +1,13 @@
+2011-10-18 Loïc Stéphan <loic@in-cite.net>
+	* Integrated bookmark link in departureBoard view.
+	* Added modes bookmark and bookmark_manage.
+	* Added function viewBookmark used in ics_bookmarks (the interface tx_icsbookmarks_IProvider is implemented)
+	* Added bookmark subpart in nextDeparture template
+	* Reviewed init code
+	* Added bookmarks label
+	* Added renderBookmarks function in nextDeparture view
+	* Added template_schedule_bookmarks.html template file
+
 2011-10-14 Loïc Stéphan <loic@in-cite.net>
 	* Removed icons in list view
 	* Removed dot in locallang (overriding in TS).

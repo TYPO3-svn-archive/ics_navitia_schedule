@@ -46,7 +46,7 @@ class tx_icsnavitiaschedule_departureBoard {
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_SCHEDULE_TABLE###');
 
 		if(is_array($this->pObj->conf['departureBoard.']['destination.'])) {
-			$this->aDestination = $this->pObj->conf['departureBoard.']['destination.'];
+			$libsBookmarks->aDestination = $this->pObj->conf['departureBoard.']['destination.'];
 		}
 		
 		$hours = array();
@@ -115,7 +115,7 @@ class tx_icsnavitiaschedule_departureBoard {
 		$data = $dataProvider->getDepartureBoardByStopPointForLine($stopPointExternalCode, $lineExternalCode, $currentDateFormatted, $forward);
 		$aLines = $data['LineList']->ToArray();
 		$line = $aLines[0];
-
+		
 		$markers = array(
 			'PREFIXID' => $this->pObj->prefixId,
 			'LINE_PICTO' => $this->pObj->pictoLine->getlinepicto($line->code /*$line->externalCode*/, 'Navitia'),
@@ -130,6 +130,7 @@ class tx_icsnavitiaschedule_departureBoard {
 			'HIDDEN_FIELDS' => $this->pObj->getHiddenFields(),
 			'ERROR' => '',
 			'STOPPOINT_LABEL' => $this->pObj->pi_getLL('stoppoint'),
+			'BOOKMARK_LABEL' => $this->pObj->pi_getLL('bookmark_add'),
 		);
 		
 		if($this->pObj->pictoLine->getlinepicto($line->code /*$line->externalCode*/, 'Navitia')) {
@@ -169,6 +170,27 @@ class tx_icsnavitiaschedule_departureBoard {
 		
 		$markers['STOP_NAME'] = $stopPoint[0]->name;
 		
+		if (t3lib_extMgm::isLoaded('ics_bookmarks')) {
+			$libsBookmarks = t3lib_div::makeInstance('tx_icsbookmarks_libs');
+			$bookmarks = $libsBookmarks->getBookmarks($this->pObj->extKey);
+			
+			$bookmarkData = array(
+				'lineExternalCode' => $lineExternalCode,
+				'stopAreaExternalCode' => $stopPoint[0]->stopArea->externalCode,
+				'forward' => $forward,
+			);
+			$redirect = $this->pObj->pi_linkTP_keepPIvars_url();
+			
+			if(isset($bookmarks[serialize($bookmarkData)])) {
+				$url = $libsBookmarks->getURL(tx_icsbookmarks_libs::ACTION_DELETE, $this->pObj->extKey, serialize($bookmarkData), $redirect);
+				$markers['BOOKMARK_LABEL'] = $this->pObj->pi_getLL('bookmark_delete');
+			}
+			else {
+				$url = $libsBookmarks->getURL(tx_icsbookmarks_libs::ACTION_ADD, $this->pObj->extKey, serialize($bookmarkData), $redirect);
+			}
+			$markers['BOOKMARK_URL'] = $url;
+		}
+		
 		foreach ($data['StopList']->ToArray() as $stop) {
 			if (!in_array($stop->stopTime->hour, $hours)) {
 				$hours[] = $stop->stopTime->hour;
@@ -179,16 +201,8 @@ class tx_icsnavitiaschedule_departureBoard {
 			$schedules[$stop->stopTime->hour]['comment'][] = $stop->comment->ExternalCode;
 		}
 		
-		
 		if (is_array($hours) && count($hours)) {
 			foreach ($hours as $index => $hour) {
-			
-				//if (isset($this->pObj->piVars['hourOffset']) && !empty($this->pObj->piVars['hourOffset'])) {
-				//	var_dump($index);
-					//var_dump($this->pObj->piVars['hourOffset']);
-				//	$index += $this->pObj->piVars['hourOffset'];
-				//}
-			
 				if (($hour >= $currentHour) && !$aHours) {
 					if(intval($index-1)>=0 && !is_null($hours[intval($index-2)])) {
 						$hourToShow[] = $hours[intval($index-1)]; // On récupère l'heure juste avant l'heure courante

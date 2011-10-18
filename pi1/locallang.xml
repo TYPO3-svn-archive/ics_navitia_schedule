@@ -18,6 +18,12 @@
 			<label index="nextDeparture_noLocation">No location data available.</label>
 			<label index="nextDeparture_minutes">mn.</label>
 			<label index="line">Line</label>
+			<label index="bookmark_add">Add to the favorites</label>
+			<label index="bookmark_delete">Delete favorite</label>
+			<label index="bookmarks">Next time</label>
+			<label index="bookmarks_up">Up</label>
+			<label index="bookmarks_delete">Delete</label>
+			<label index="bookmarks_down">Down</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="lineList_title">Choisissez votre ligne</label>
@@ -32,6 +38,12 @@
 			<label index="nextDeparture_noLocation">Pas de donnée de position disponible.</label>
 			<label index="nextDeparture_minutes">mn.</label>
 			<label index="line">Ligne</label>
+			<label index="bookmark_add">Mettre la page en favoris</label>
+			<label index="bookmark_delete">Supprimer le favoris</label>
+			<label index="bookmarks">Prochains passages</label>
+			<label index="bookmarks_up">Monter</label>
+			<label index="bookmarks_delete">Supprimer</label>
+			<label index="bookmarks_down">Descendre</label>
 		</languageKey>
 	</data>
 </T3locallang>

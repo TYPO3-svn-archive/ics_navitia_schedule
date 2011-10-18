@@ -243,4 +243,55 @@ class tx_icsnavitiaschedule_nextDeparture {
 		);
 		return $content;
 	}
+	
+	public function renderBookmarks($dataProvider, $limit = 5) {
+		$content = '';
+		if (t3lib_extMgm::isLoaded('ics_bookmarks')) {
+			$templatePart = $this->pObj->templates['nextDeparture'];
+			$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_BOOKMARK###');
+			
+			$libsBookmarks = t3lib_div::makeInstance('tx_icsbookmarks_libs');
+			$bookmarks = $libsBookmarks->getBookmarks($this->pObj->extKey);
+			
+			$bookmarks = array_flip($bookmarks);
+			
+			$markers = array(
+				'PREFIXID' => $this->pObj->prefixId,
+				'BOOKMARKS' => $this->pObj->pi_getLL('bookmarks'),
+			);
+			
+			if(is_array($bookmarks) && count($bookmarks)) {
+				foreach($bookmarks as $sorting => $bookmark) {
+					$templateStation = $this->pObj->cObj->getSubpart($templatePart, '###STATIONS_LIST###');
+					$aBookmarsData = unserialize($bookmark);
+					
+					//TODO $limit FF
+					$timeLimit = max(1, intval($this->pObj->conf['nextDeparture.']['nextLimit']));
+					$dateChangeTime = intval($this->pObj->conf['nextDeparture.']['dateChangeTime']);
+					$noNextDay = intval($this->pObj->conf['nextDeparture.']['noNextDay']);
+					$confBase = $this->pObj->conf['nextDeparture.']['proximity.'];
+					
+					$line = $dataProvider->getLineByCode($aBookmarsData['lineExternalCode']);
+					$data = $dataProvider->getNextDepartureByStopAreaForLine($aBookmarsData['stopAreaExternalCode'], $aBookmarsData['lineExternalCode'], $aBookmarsData['forward'], $timeLimit, $dateChangeTime, $noNextDay);
+					
+					
+					$stationsMarkers = array();
+					if ($data->Count() > 0) {
+						$markers['STATION'] = $this->makeStation($data, $line, $aBookmarsData['forward']);
+					}
+					else {
+						if ($confBase['hideEmpty'])
+							continue;
+						$stopArea = $dataProvider->getStopAreaByCode($aBookmarsData['stopAreaExternalCode']);
+						$markers['STATION'] = $this->makeStationNoData($stopArea, $line, $forward);
+					}
+					$contentStation .= $this->pObj->cObj->substituteMarkerArray($templateStation, $markers, '###|###');
+				}
+			}
+			
+			$content = $this->pObj->cObj->substituteSubpart($template, '###STATIONS_LIST###', $contentStation);
+			$content = $this->pObj->cObj->substituteMarkerArray($content, $markers, '###|###');
+		}
+		return $content;
+	}
 }
