@@ -44,6 +44,7 @@ plugin.tx_icsnavitiaschedule_pi1 {
 		currentDay_stdWrap {
 		}
 		nextLimit = {$plugin.tx_icsnavitiaschedule_pi1.maxTimes}
+		bookmarksLimit = {$plugin.tx_icsnavitiaschedule_pi1.bookmarksLimit}
 		resultsLimit = {$plugin.tx_icsnavitiaschedule_pi1.maxItems}
 		noNextDay = {$plugin.tx_icsnavitiaschedule_pi1.noNextDay}
 		dateChangeTime = {$plugin.tx_icsnavitiaschedule_pi1.dateChangeTime}
@@ -66,6 +67,9 @@ plugin.tx_icsnavitiaschedule_pi1 {
 			hideEmpty = {$plugin.tx_icsnavitiaschedule_pi1.proximity.hideEmpty}
 			distance_stdWrap {
 				wrap = |m
+			}
+			noData_stdWrap {
+				wrap = <p class="nodata">|</p>
 			}
 		}
 	}

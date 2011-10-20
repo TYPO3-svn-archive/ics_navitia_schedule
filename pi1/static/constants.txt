@@ -15,7 +15,7 @@ plugin.tx_icsnavitiaschedule_pi1 {
 	maxItems = 3
 	
 	# cat=plugin.icsnavitiaschedule//f; type=int+; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.maxTimes
-	maxTimes = 5
+	maxTimes = 3
 	
 	# cat=plugin.icsnavitiaschedule/enable/g; type=boolean; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.noNextDay
 	noNextDay = 0
@@ -34,4 +34,7 @@ plugin.tx_icsnavitiaschedule_pi1 {
 	
 	# cat=plugin.icsnavitiaschedule//l; type=int+; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.timeSpanLimit
 	timeSpanLimit = 60
+	
+	# cat=plugin.icsnavitiaschedule//m; type=int+; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.bookmarksLimit
+	bookmarksLimit = 3
 }

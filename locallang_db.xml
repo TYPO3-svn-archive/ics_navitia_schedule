@@ -24,6 +24,7 @@ bookmark=Next departures for bookmarks.</label>
 			<label index="constants.proximity.min">Min proximity results: Minimum number of proximity results.</label>
 			<label index="constants.proximity.distance">Proximity max distance: Maximum search distance for proximity search (meters).</label>
 			<label index="constants.proximity.hideEmpty">Hide empty: Hide results with no schedule.</label>
+			<label index="constants.bookmarksLimit">Max bookmarks: Maximum number of bookmarks.</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="tt_content.list_type_pi1">Module horaires</label>
@@ -42,6 +43,7 @@ bookmark=Prochains départs aux arrêts favoris.</label>
 			<label index="constants.proximity.min">Résultats de proximité minimum: Nombre minimum de résultats de proximité.</label>
 			<label index="constants.proximity.distance">Distance maximale de proximité: Distance maximale à utiliser pour la recherche de proximité (mètres).</label>
 			<label index="constants.proximity.hideEmpty">Cacher les vides: Cacher les résultats sans horaires.</label>
+			<label index="constants.bookmarksLimit">Maximum de favoris: Nombre maximum de favoris.</label>
 		</languageKey>
 	</data>
 	<orig_hash type="array">

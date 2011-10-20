@@ -68,7 +68,7 @@ class tx_icsnavitiaschedule_nextDeparture {
 	public function renderProximity($dataProvider) {
 		$templatePart = $this->pObj->templates['nextDeparture'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_PROXIMITY###');
-
+		
 		$markers = array(
 			'PREFIXID' => $this->pObj->prefixId,
 		);
@@ -88,6 +88,7 @@ class tx_icsnavitiaschedule_nextDeparture {
 			$coords->lat = $loc['latitude'];
 			$coords->lng = $loc['longitude'];
 			$proximities = $dataProvider->getStopAreaProximityList($coords, $confBase['distance'], $confBase['min'], $confBase['max']);
+			
 			$stationsTemplate = $this->pObj->cObj->getSubpart($template, '###STATIONS###');
 			$stationsContent = '';
 			$networks = $this->pObj->getNetworkList();
@@ -144,7 +145,7 @@ class tx_icsnavitiaschedule_nextDeparture {
 		$markers['LINE'] = htmlspecialchars($line->name);
 		$markers['NAME'] = htmlspecialchars($stopList->Get(0)->stopPoint->stopArea->name);
 		$markers['DIRECTION'] = htmlspecialchars($direction->name);
-		
+		$markers['STOP_LABEL'] = $this->pObj->pi_getLL('stoppoint');
 		$confBase = $this->pObj->conf['nextDeparture.'];
 		
 		foreach ($markers as $name => $value) {
@@ -244,14 +245,34 @@ class tx_icsnavitiaschedule_nextDeparture {
 		return $content;
 	}
 	
-	public function renderBookmarks($dataProvider, $limit = 5) {
+	public function renderBookmarks($dataProvider, $edit = false) {
 		$content = '';
+		if(isset($this->pObj->bookmarksLimit) && $this->pObj->bookmarksLimit) {
+			$bookmarksLimit = $this->pObj->bookmarksLimit;
+		}
+		
 		if (t3lib_extMgm::isLoaded('ics_bookmarks')) {
 			$templatePart = $this->pObj->templates['nextDeparture'];
-			$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_BOOKMARK###');
+			
+			if($edit) {
+				$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_BOOKMARK_MANAGE###');
+			}
+			else {
+				$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_BOOKMARK###');
+			}
 			
 			$libsBookmarks = t3lib_div::makeInstance('tx_icsbookmarks_libs');
 			$bookmarks = $libsBookmarks->getBookmarks($this->pObj->extKey);
+			
+			$maxSorting = 0;
+			if (!empty($bookmarks)) {
+				if(!$edit && ($bookmarksLimit && max($bookmarks) > intval($bookmarksLimit-1))) {
+					$maxSorting = intval($bookmarksLimit-1);
+				}
+				else {
+					$maxSorting = max($bookmarks);
+				}
+			}
 			
 			$bookmarks = array_flip($bookmarks);
 			
@@ -260,36 +281,99 @@ class tx_icsnavitiaschedule_nextDeparture {
 				'BOOKMARKS' => $this->pObj->pi_getLL('bookmarks'),
 			);
 			
+			$count = 0;
 			if(is_array($bookmarks) && count($bookmarks)) {
 				foreach($bookmarks as $sorting => $bookmark) {
-					$templateStation = $this->pObj->cObj->getSubpart($templatePart, '###STATIONS_LIST###');
-					$aBookmarsData = unserialize($bookmark);
-					
-					//TODO $limit FF
-					$timeLimit = max(1, intval($this->pObj->conf['nextDeparture.']['nextLimit']));
-					$dateChangeTime = intval($this->pObj->conf['nextDeparture.']['dateChangeTime']);
-					$noNextDay = intval($this->pObj->conf['nextDeparture.']['noNextDay']);
-					$confBase = $this->pObj->conf['nextDeparture.']['proximity.'];
-					
-					$line = $dataProvider->getLineByCode($aBookmarsData['lineExternalCode']);
-					$data = $dataProvider->getNextDepartureByStopAreaForLine($aBookmarsData['stopAreaExternalCode'], $aBookmarsData['lineExternalCode'], $aBookmarsData['forward'], $timeLimit, $dateChangeTime, $noNextDay);
-					
-					
-					$stationsMarkers = array();
-					if ($data->Count() > 0) {
-						$markers['STATION'] = $this->makeStation($data, $line, $aBookmarsData['forward']);
+					if($edit || (!$edit && $count < $bookmarksLimit)) {
+						$templateStation = $this->pObj->cObj->getSubpart($template, '###STATIONS_LIST###');
+						$aBookmarsData = unserialize($bookmark);
+						
+						//TODO $limit FF
+						$timeLimit = max(1, intval($this->pObj->conf['nextDeparture.']['nextLimit']));
+						$dateChangeTime = intval($this->pObj->conf['nextDeparture.']['dateChangeTime']);
+						$noNextDay = intval($this->pObj->conf['nextDeparture.']['noNextDay']);
+						$confBase = $this->pObj->conf['nextDeparture.']['proximity.'];
+						
+						$line = $dataProvider->getLineByCode($aBookmarsData['lineExternalCode']);
+						$data = $dataProvider->getNextDepartureByStopAreaForLine($aBookmarsData['stopAreaExternalCode'], $aBookmarsData['lineExternalCode'], $aBookmarsData['forward'], $timeLimit, $dateChangeTime, $noNextDay);
+						
+						
+						$stationsMarkers = array();
+						if ($data->Count() > 0) {
+							$markers['STATION'] = $this->makeStation($data, $line, $aBookmarsData['forward']);
+						}
+						else {
+							if ($confBase['hideEmpty'])
+								continue;
+							$stopArea = $dataProvider->getStopAreaByCode($aBookmarsData['stopAreaExternalCode']);
+							$markers['STATION'] = $this->makeStationNoData($stopArea, $line, $forward);
+						}
+						
+						if($edit) {
+							/* Si édition alors on n'affiche pas les données */
+							$templateNoTime = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_STATION###');
+							
+							$markersNoTime['PREFIXID'] = $this->pObj->prefixId;
+							$markersNoTime['PICTO'] = $this->pObj->pictoLine->getlinepicto($line->code, 'Navitia');
+							
+							if(!$markersNoTime['PICTO']) {
+								$markersNoTime['PICTO'] = htmlspecialchars($this->pObj->pi_getLL('line')) . ' ' . $line->code;
+							}
+							
+							$markersNoTime['NAME'] = $dataProvider->getStopAreaByCode($aBookmarsData['stopAreaExternalCode'])->name;
+							$markersNoTime['TO_LABEL'] = /*htmlspecialchars($this->pObj->pi_getLL('nextDeparture_direction'))*/'';
+							$markersNoTime['STOP_LABEL'] = htmlspecialchars($this->pObj->pi_getLL('stoppoint'));
+							
+							if($aBookmarsData['forward']) {
+								$markersNoTime['DIRECTION'] = $line->forward->name;
+							}
+							else {
+								$markersNoTime['DIRECTION'] = $line->backward->name;
+							}
+							
+							$templateNoTime = $this->pObj->cObj->substituteSubpart($templateNoTime, '###TEMPLATE_TIMES###', '');
+						
+							$markers['STATION'] = $this->pObj->cObj->substituteMarkerArray($templateNoTime, $markersNoTime, '###|###');
+							/* Fin si édition */
+							$redirect = t3lib_div::getIndpEnv('TYPO3_REQUEST_URL');
+							$markerLinks['DELETE_LINK'] = $libsBookmarks->getURL(tx_icsbookmarks_libs::ACTION_DELETE, $this->pObj->extKey, $sorting, $redirect);
+							$markerLinks['UP_LINK'] = $libsBookmarks->getURL(tx_icsbookmarks_libs::ACTION_UP, $this->pObj->extKey, $sorting, $redirect);
+							$markerLinks['DOWN_LINK'] = $libsBookmarks->getURL(tx_icsbookmarks_libs::ACTION_DOWN, $this->pObj->extKey, $sorting, $redirect);
+							$markerLinks['UP_LABEL'] = $this->pObj->pi_getLL('bookmarks_up');
+							$markerLinks['DELETE_LABEL'] = $this->pObj->pi_getLL('bookmarks_delete');
+							$markerLinks['DOWN_LABEL'] = $this->pObj->pi_getLL('bookmarks_down');
+							
+							$templateStationLinks = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_BOOKMARK_LINKS###');
+							
+							if (!$sorting)
+								$templateStationLinks = $this->pObj->cObj->substituteSubpart($templateStationLinks, '###UP###', '');
+							if ($sorting >= $maxSorting)
+								$templateStationLinks = $this->pObj->cObj->substituteSubpart($templateStationLinks, '###DOWN###', '');
+							
+							$stationLinks = $this->pObj->cObj->substituteMarkerArray($templateStationLinks, $markerLinks, '###|###');
+							$markers['LINKS'] = $stationLinks;
+							//var_dump($templateStation);
+							
+							$contentStation .= $this->pObj->cObj->substituteMarkerArray($templateStation, $markers, '###|###');
+						}
+						else {
+							$contentStation .= $this->pObj->cObj->substituteMarkerArray($templateStation, $markers, '###|###');
+
+						}
 					}
-					else {
-						if ($confBase['hideEmpty'])
-							continue;
-						$stopArea = $dataProvider->getStopAreaByCode($aBookmarsData['stopAreaExternalCode']);
-						$markers['STATION'] = $this->makeStationNoData($stopArea, $line, $forward);
-					}
-					$contentStation .= $this->pObj->cObj->substituteMarkerArray($templateStation, $markers, '###|###');
+					$count++;
 				}
 			}
 			
-			$content = $this->pObj->cObj->substituteSubpart($template, '###STATIONS_LIST###', $contentStation);
+			if($contentStation) {
+				$content = $this->pObj->cObj->substituteSubpart($template, '###STATIONS_LIST###', $contentStation);
+			}
+			else {
+				if(!$this->pObj->conf['nextDeparture.']['proximity.']['hideEmpty']) {
+					$content = $this->pObj->cObj->stdWrap($this->pObj->pi_getLL('noData'), $this->pObj->conf['nextDeparture.']['proximity.']['noData_stdWrap.']);
+				}
+			}
+			
 			$content = $this->pObj->cObj->substituteMarkerArray($content, $markers, '###|###');
 		}
 		return $content;

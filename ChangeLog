@@ -1,3 +1,12 @@
+2011-10-20 Loïc Stéphan <loic@in-cite.net>
+	* Added bookmarksLimit and noData configuration.
+	* Added Bookmarks subpart in nextDeparture template.
+	* Removed bookmkars template file.
+	* Added no data message.
+	* Improved pi1 source code.
+	* changed viewBookMarks function.
+	* Improved renderBookmarks function.
+
 2011-10-18 Loïc Stéphan <loic@in-cite.net>
 	* Integrated bookmark link in departureBoard view.
 	* Added modes bookmark and bookmark_manage.

@@ -24,6 +24,7 @@
 			<label index="bookmarks_up">Up</label>
 			<label index="bookmarks_delete">Delete</label>
 			<label index="bookmarks_down">Down</label>
+			<label index="noData">No stop on bookmark.</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="lineList_title">Choisissez votre ligne</label>
@@ -41,9 +42,10 @@
 			<label index="bookmark_add">Mettre la page en favoris</label>
 			<label index="bookmark_delete">Supprimer le favoris</label>
 			<label index="bookmarks">Prochains passages</label>
-			<label index="bookmarks_up">Monter</label>
-			<label index="bookmarks_delete">Supprimer</label>
-			<label index="bookmarks_down">Descendre</label>
+			<label index="bookmarks_up">up</label>
+			<label index="bookmarks_delete">del</label>
+			<label index="bookmarks_down">down</label>
+			<label index="noData">Aucun arrêt en favori.</label>
 		</languageKey>
 	</data>
 </T3locallang>

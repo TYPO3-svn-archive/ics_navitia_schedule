@@ -56,8 +56,12 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase implements tx_icsbookmarks_
 	 */
 	public function main($content, $conf) {
 		$this->conf = $conf;
+		$this->pi_setPiVarDefaults();
+		$this->pi_loadLL();
+		$this->pi_USER_INT_obj = 1;	// Configuring so caching is not expected. This value means that no cHash params are ever set. We do this, because it's a USER_INT object!
+		
 		$this->init();
-
+		
 		switch ($this->mode) {
 			case 'next':
 				if (isset($this->piVars['lineExternalCode']) && !empty($this->piVars['lineExternalCode']) && isset($this->piVars['sens']) && isset($this->piVars['stopAreaExternalCode']) && !empty($this->piVars['stopAreaExternalCode'])) {
@@ -71,22 +75,11 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase implements tx_icsbookmarks_
 				break;
 			case 'bookmark':
 				$next = t3lib_div::makeInstance('tx_icsnavitiaschedule_nextDeparture', $this);
-				$content = $next->renderBookmarks($this->dataProvider, $this->bookmarksLimit);
-				return $content;
+				$content = $next->renderBookmarks($this->dataProvider, false);
 				break;
 			case 'bookmark_manage':
 				$next = t3lib_div::makeInstance('tx_icsnavitiaschedule_nextDeparture', $this);
-				
-				if (t3lib_extMgm::isLoaded('ics_bookmarks')) {
-					$libsBookmarks = t3lib_div::makeInstance('tx_icsbookmarks_libs');
-					$bookmarks = $libsBookmarks->getBookmarks($this->extKey);
-					$content = $this->viewBookmarks($bookmarks, true);
-					//viewBookmarks
-					//$bookmarksManage = t3lib_div::makeInstance('tx_icsbookmarks_manage', $this);
-					//$content = $bookmarksManage->
-				}
-				//$content = $next->renderBookmarksManage($this->dataProvider);
-				return $content;
+				$content = $next->renderBookmarks($this->dataProvider, true);
 				break;
 			default:
 				if (isset($this->piVars['lineExternalCode']) && !empty($this->piVars['lineExternalCode']) && isset($this->piVars['sens']) && isset($this->piVars['stopPointExternalCode']) && !empty($this->piVars['stopPointExternalCode'])) {
@@ -145,9 +138,6 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase implements tx_icsbookmarks_
 	}
 	
 	private function init() {
-		$this->pi_setPiVarDefaults();
-		$this->pi_loadLL();
-		$this->pi_USER_INT_obj = 1;	// Configuring so caching is not expected. This value means that no cHash params are ever set. We do this, because it's a USER_INT object!
 		
 		$this->pi_initPIflexForm();
 		$this->login = $this->conf['login'];
@@ -162,7 +152,6 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase implements tx_icsbookmarks_
 			'stopList' => $this->getTemplateFile('stop', $this->conf['view.']['stopList.']['templateFile']),
 			'departureBoard' => $this->getTemplateFile('departure', $this->conf['view.']['departureBoard.']['templateFile']),
 			'nextDeparture' => $this->getTemplateFile('next', $this->conf['view.']['nextDeparture.']['templateFile']),
-			'bookmarks' => $this->getTemplateFile('next', $this->conf['view.']['bookmarks.']['templateFile']),
 		);
 		
 		$this->mode = $this->conf['mode'];
@@ -172,13 +161,12 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase implements tx_icsbookmarks_
 		if ($this->piVars['mode'])
 			$this->mode = $this->piVars['mode'];
 			
-		$this->bookmarksLimit = $this->conf['bookmarksLimit'];
+		$this->bookmarksLimit = $this->conf['nextDeparture.']['bookmarksLimit'];
 		$flexBookmarksLimit = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'limit');
 		if ($flexBookmarksLimit)
 			$this->bookmarksLimit = $flexBookmarksLimit;
 		if ($this->piVars['bookmarksLimit'])
 			$this->bookmarksLimit = $this->piVars['bookmarksLimit'];
-			
 	}
 	
 	public function getNetworkList() {
@@ -212,66 +200,14 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase implements tx_icsbookmarks_
 	}
 	
 	function viewBookmarks($bookmarks, $edit = false) {
-		$this->conf = $GLOBALS['TSFE']->tmpl->setup['plugin.'][$this->prefixId . '.'];
-		$this->init();
-
-		$template = $this->cObj->getSubpart($this->templates['bookmarks'], '###TEMPLATE_BOOKMARKS###');
-		$templateList = $this->cObj->getSubpart($template, '###TEMPLATE_LIST###');
-		$libsBookmarks = t3lib_div::makeInstance('tx_icsbookmarks_libs');
-		$redirect = t3lib_div::getIndpEnv('TYPO3_REQUEST_URL');
-		
-		$markers = array(
-			'PREFIXID'		=> $this->prefixId,
-			'BOOKMARKS_TITLE'	=> $this->pi_getLL('bookmarks'),
-			'UP_LABEL'	=> $this->pi_getLL('bookmarks_up'),
-			'DELETE_LABEL'	=> $this->pi_getLL('bookmarks_delete'),
-			'DOWN_LABEL'	=> $this->pi_getLL('bookmarks_down'),
-		);
-		
-		$listContent = '';
-		$maxSorting = 0;
-		if (!empty($bookmarks))
-			$maxSorting = max($bookmarks);
-
-		foreach ($bookmarks as $data => $sorting) {
-			$templateListItem = $templateList;
-			
-			if ($edit) {
-				$markers['DELETE_LINK'] = $libsBookmarks->getURL(tx_icsbookmarks_libs::ACTION_DELETE, $this->extKey, $sorting, $redirect);
-				$markers['UP_LINK'] = $libsBookmarks->getURL(tx_icsbookmarks_libs::ACTION_UP, $this->extKey, $sorting, $redirect);
-				$markers['DOWN_LINK'] = $libsBookmarks->getURL(tx_icsbookmarks_libs::ACTION_DOWN, $this->extKey, $sorting, $redirect);
-				
-				if (!$sorting)
-					$templateListItem = $this->cObj->substituteSubpart($templateListItem, '###UP###', '');
-				if ($sorting >= $maxSorting)
-					$templateListItem = $this->cObj->substituteSubpart($templateListItem, '###DOWN###', '');
-			}
-			
-			$aBookmarksData = unserialize($data);
-			$stopArea = $this->dataProvider->getStopAreaByCode($aBookmarksData['stopAreaExternalCode']);
-			$line = $this->dataProvider->getLineByCode($aBookmarksData['lineExternalCode']);
-			
-			$markers['STOPAREA_NAME'] = $stopArea->name;
-			$markers['LINE_NAME'] = $line->name;
-			
-			if($aBookmarksData['forward']) {
-				$markers['FORWARD'] = $line->forward->name;
-			}
-			else {
-				$markers['FORWARD'] = $line->backward->name;
-			}
-			
-			$timeLimit = max(1, intval($this->pObj->conf['nextDeparture.']['nextLimit']));
-			$dateChangeTime = intval($this->pObj->conf['nextDeparture.']['dateChangeTime']);
-			$noNextDay = intval($this->pObj->conf['nextDeparture.']['noNextDay']);
-			$confBase = $this->pObj->conf['nextDeparture.']['proximity.'];
-			$listContent .= $this->cObj->substituteMarkerArray($templateListItem, $markers, '###|###');
+		$conf = $GLOBALS['TSFE']->tmpl->setup['plugin.'][$this->prefixId . '.'];
+		if(!$edit) {
+			$conf['mode'] = 'bookmark';
 		}
-		
-		
-		$template = $this->cObj->substituteSubpart($template, '###TEMPLATE_LIST###', $listContent);
-		$content = $this->cObj->substituteMarkerArray($template, $markers, '###|###');
-		return $content;
+		else {
+			$conf['mode'] = 'bookmark_manage';
+		}
+		return $this->main('', $conf);
 	}
 	
 }
