@@ -1,10 +1,18 @@
+2011-10-20 Pierrick Caillon <pierrick@in-cite.net>
+	* Improved tx_icsnavitiaschedule_nextDeparture::renderBookmarks.
+	* Added a parameter to tx_icsnavitiaschedule_nextDeparture::makeStation and tx_icsnavitiaschedule_nextDeparture::makeStationNoData to not display time data or no data message.
+	* Improved next day computation in tx_icsnavitiaschedule_nextDeparture::makeStation.
+	* Removed bookmarksLimit in constant and setup, maxItems / resultsLimit had to be used.
+	* Added hideEmpty and showEmpty in constants and setup for bookmarks.
+	* Moved the setup proximity.noData_stdWrap node to bookmarks.noData_stdWrap.
+
 2011-10-20 Loïc Stéphan <loic@in-cite.net>
 	* Added bookmarksLimit and noData configuration.
 	* Added Bookmarks subpart in nextDeparture template.
 	* Removed bookmkars template file.
 	* Added no data message.
 	* Improved pi1 source code.
-	* changed viewBookMarks function.
+	* Changed viewBookMarks function.
 	* Improved renderBookmarks function.
 
 2011-10-18 Loïc Stéphan <loic@in-cite.net>

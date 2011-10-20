@@ -35,6 +35,9 @@ plugin.tx_icsnavitiaschedule_pi1 {
 	# cat=plugin.icsnavitiaschedule//l; type=int+; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.timeSpanLimit
 	timeSpanLimit = 60
 	
-	# cat=plugin.icsnavitiaschedule//m; type=int+; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.bookmarksLimit
-	bookmarksLimit = 3
+	# cat=plugin.icsnavitiaschedule/enable/m; type=boolean; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.bookmarks.hideEmpty
+	bookmarks.hideEmpty = 0
+	
+	# cat=plugin.icsnavitiaschedule/enable/n; type=boolean; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.bookmarks.showEmpty
+	bookmarks.showEmpty = 0
 }

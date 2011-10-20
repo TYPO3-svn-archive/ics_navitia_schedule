@@ -37,14 +37,11 @@ plugin.tx_icsnavitiaschedule_pi1 {
 		}
 		timeSpanLimit = {$plugin.tx_icsnavitiaschedule_pi1.timeSpanLimit}
 		nextDay_stdWrap {
-			setContentToCurrent = 1
-			data = LLL:EXT:ics_navitia_schedule/pi1/locallang.xml:nextDeparture_nextDay
-			dataWrap = <span class="nextday">|</span> {current:}
+			dataWrap = <span class="nextday">{LLL:EXT:ics_navitia_schedule/pi1/locallang.xml:nextDeparture_nextDay} </span>|
 		}
 		currentDay_stdWrap {
 		}
 		nextLimit = {$plugin.tx_icsnavitiaschedule_pi1.maxTimes}
-		bookmarksLimit = {$plugin.tx_icsnavitiaschedule_pi1.bookmarksLimit}
 		resultsLimit = {$plugin.tx_icsnavitiaschedule_pi1.maxItems}
 		noNextDay = {$plugin.tx_icsnavitiaschedule_pi1.noNextDay}
 		dateChangeTime = {$plugin.tx_icsnavitiaschedule_pi1.dateChangeTime}
@@ -68,6 +65,10 @@ plugin.tx_icsnavitiaschedule_pi1 {
 			distance_stdWrap {
 				wrap = |m
 			}
+		}
+		bookmarks {
+			hideEmpty = {$plugin.tx_icsnavitiaschedule_pi1.bookmarks.hideEmpty}
+			showEmpty = {$plugin.tx_icsnavitiaschedule_pi1.bookmarks.showEmpty}
 			noData_stdWrap {
 				wrap = <p class="nodata">|</p>
 			}

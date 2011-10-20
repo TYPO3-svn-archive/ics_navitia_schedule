@@ -46,6 +46,7 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase implements tx_icsbookmarks_
 	private $dataProvider;
 	public $pictoLine;
 	public $templates;
+	public $flexLimit;
 	
 	/**
 	 * The main method of the PlugIn
@@ -138,7 +139,6 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase implements tx_icsbookmarks_
 	}
 	
 	private function init() {
-		
 		$this->pi_initPIflexForm();
 		$this->login = $this->conf['login'];
 		$this->url = $this->conf['url'];
@@ -161,12 +161,11 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase implements tx_icsbookmarks_
 		if ($this->piVars['mode'])
 			$this->mode = $this->piVars['mode'];
 			
-		$this->bookmarksLimit = $this->conf['nextDeparture.']['bookmarksLimit'];
-		$flexBookmarksLimit = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'limit');
-		if ($flexBookmarksLimit)
-			$this->bookmarksLimit = $flexBookmarksLimit;
-		if ($this->piVars['bookmarksLimit'])
-			$this->bookmarksLimit = $this->piVars['bookmarksLimit'];
+		$this->flexLimit = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'limit');
+		if (($this->flexLimit < 0) || !is_numeric($this->flexLimit))
+			$this->flexLimit = false;
+		else
+			$this->flexLimit = intval($this->flexLimit);
 	}
 	
 	public function getNetworkList() {

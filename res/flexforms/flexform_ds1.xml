@@ -49,6 +49,8 @@
 								<size>5</size>
 								<max>2</max>
 								<eval>nospace,int</eval>
+								<default>-1</default>
+								<checkbox>1</checkbox>
 							</config>
 						</TCEforms>
 					</limit>
