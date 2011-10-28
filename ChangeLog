@@ -3,6 +3,9 @@
 	* Improved departureBoard template.
 	* Modified some labels.
 
+2011-10-21 Pierrick Caillon <pierrick@in-cite.net>
+	* Bug fix: undefined variable used in tx_icsnavitiaschedule_nextDeparture::renderBookmarks.
+
 2011-10-20 Pierrick Caillon <pierrick@in-cite.net>
 	* Improved tx_icsnavitiaschedule_nextDeparture::renderBookmarks.
 	* Added a parameter to tx_icsnavitiaschedule_nextDeparture::makeStation and tx_icsnavitiaschedule_nextDeparture::makeStationNoData to not display time data or no data message.

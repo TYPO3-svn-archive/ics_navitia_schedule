@@ -307,9 +307,9 @@ class tx_icsnavitiaschedule_nextDeparture {
 			
 			if ($edit) {
 				$redirect = t3lib_div::getIndpEnv('TYPO3_REQUEST_URL');
-				$markerLinks['DELETE_LINK'] = htmlspecialchars($libsBookmarks->getURL(tx_icsbookmarks_libs::ACTION_DELETE, $this->pObj->extKey, $sorting, $redirect));
-				$markerLinks['UP_LINK'] = htmlspecialchars($libsBookmarks->getURL(tx_icsbookmarks_libs::ACTION_UP, $this->pObj->extKey, $sorting, $redirect));
-				$markerLinks['DOWN_LINK'] = htmlspecialchars($libsBookmarks->getURL(tx_icsbookmarks_libs::ACTION_DOWN, $this->pObj->extKey, $sorting, $redirect));
+				$markerLinks['DELETE_LINK'] = htmlspecialchars($libsBookmarks->getURL(tx_icsbookmarks_libs::ACTION_DELETE, $this->pObj->extKey, $i, $redirect));
+				$markerLinks['UP_LINK'] = htmlspecialchars($libsBookmarks->getURL(tx_icsbookmarks_libs::ACTION_UP, $this->pObj->extKey, $i, $redirect));
+				$markerLinks['DOWN_LINK'] = htmlspecialchars($libsBookmarks->getURL(tx_icsbookmarks_libs::ACTION_DOWN, $this->pObj->extKey, $i, $redirect));
 				$markerLinks['UP_LABEL'] = htmlspecialchars($this->pObj->pi_getLL('bookmarks_up'));
 				$markerLinks['DELETE_LABEL'] = htmlspecialchars($this->pObj->pi_getLL('bookmarks_delete'));
 				$markerLinks['DOWN_LABEL'] = htmlspecialchars($this->pObj->pi_getLL('bookmarks_down'));
