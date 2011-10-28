@@ -39,14 +39,15 @@ class tx_icsnavitiaschedule_directionList {
 		
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_SCHEDULE_DIRECTION_LIST###');
 		$markers = array(
-			'###PREFIXID###' => $this->prefixId,
-			'###DIRECTION_LIST_TITLE###' => $this->pObj->pi_getLL('directionList_title'),
+			'PREFIXID' => $this->pObj->prefixId,
+			'DIRECTION_LIST_TITLE' => $this->pObj->pi_getLL('directionList_title'),
+			'LINE_PICTO' => $this->pObj->pictoLine->getlinepicto($line->code /*$line->externalCode*/, 'Navitia'),
 		);
 		$directionListContent = $this->getDirections($line);
 		
 		$template = $this->pObj->cObj->substituteSubpart($template, '###DIRECTION_LIST###', $directionListContent);
-		$content .= $this->pObj->cObj->substituteMarkerArray($template, $markers);
-		
+		$content .= $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
+
 		return $content;
 	}
 	
@@ -62,26 +63,26 @@ class tx_icsnavitiaschedule_directionList {
 		$directionListTemplate = $this->pObj->cObj->getSubpart($template, '###DIRECTION_LIST###');
 		
 		$markers = array(
-			'###PREFIXID###' => $this->pObj->prefixId,
-			'###LINE_PICTO###' => $this->pObj->pictoLine->getlinepicto($line->externalCode, 'Navitia'),
+			'PREFIXID' => $this->pObj->prefixId,
+			'LINE_PICTO' => $this->pObj->pictoLine->getlinepicto($line->externalCode, 'Navitia'),
 		);
 		
 		if ($forward) {
-			$markers['###DIRECTION_NAME###'] = $line->forward->name;
-			$markers['###URL###'] = $this->pObj->pi_linkTP_keepPIvars_url(array('sens' => $forward));
-			$markers['###DATA_THEME###'] = 'e';
+			$markers['DIRECTION_NAME'] = $line->forward->name;
+			$markers['URL'] = $this->pObj->pi_linkTP_keepPIvars_url(array('sens' => $forward));
+			$markers['DATA_THEME'] = 'e';
 		}
 		else {
-			$markers['###DIRECTION_NAME###'] = $line->backward->name;
-			$markers['###URL###'] = $this->pObj->pi_linkTP_keepPIvars_url(array('sens' => 0));
-			$markers['###DATA_THEME###'] = 'd';
+			$markers['DIRECTION_NAME'] = $line->backward->name;
+			$markers['URL'] = $this->pObj->pi_linkTP_keepPIvars_url(array('sens' => 0));
+			$markers['DATA_THEME'] = 'd';
 		}
 
 		if (tx_icslibnavitia_Debug::IsDebugEnabled()) {
-			$markers['###URL###'] .= '&' . $this->pObj->debug_param . '=' . t3lib_div::_GP($this->pObj->debugParam);
+			$markers['URL'] .= '&' . $this->pObj->debug_param . '=' . t3lib_div::_GP($this->pObj->debugParam);
 		}
-		
-		$content = $this->pObj->cObj->substituteMarkerArray($directionListTemplate, $markers);
+
+		$content = $this->pObj->cObj->substituteMarkerArray($directionListTemplate, $markers, '###|###');
 		return $content;
 	}
 	

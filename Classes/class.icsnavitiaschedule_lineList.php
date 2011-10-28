@@ -80,7 +80,7 @@ class tx_icsnavitiaschedule_lineList {
 					}
 					
 					$markers['###LINE_NAME###'] = $line->name;
-					$markers['###URL###'] = $this->pObj->pi_getPageLink($GLOBALS['TSFE']->id, '', array($this->pObj->prefixId . '[lineExternalCode]' => $line->externalCode));
+					$markers['###URL###'] = $this->pObj->pi_getPageLink($GLOBALS['TSFE']->id, '', array(/*'no_cache' => 1,*/ $this->pObj->prefixId . '[lineExternalCode]' => $line->externalCode));
 					if (tx_icslibnavitia_Debug::IsDebugEnabled()) {
 						$markers['###URL###'] .= '&' . $this->pObj->debug_param . '=' . t3lib_div::_GP($this->pObj->debugParam);
 					}

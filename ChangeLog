@@ -1,3 +1,8 @@
+2011-10-28 Loïc Stéphan <loic@in-cite.net>
+	* Added line choice in stopList and directonList views.
+	* Improved departureBoard template.
+	* Modified some labels.
+
 2011-10-20 Pierrick Caillon <pierrick@in-cite.net>
 	* Improved tx_icsnavitiaschedule_nextDeparture::renderBookmarks.
 	* Added a parameter to tx_icsnavitiaschedule_nextDeparture::makeStation and tx_icsnavitiaschedule_nextDeparture::makeStationNoData to not display time data or no data message.

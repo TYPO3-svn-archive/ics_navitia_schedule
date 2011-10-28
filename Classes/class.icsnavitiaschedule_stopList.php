@@ -37,36 +37,42 @@ class tx_icsnavitiaschedule_stopList {
 		$templatePart = $this->pObj->templates['stopList'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_SCHEDULE_STOP_LIST###');
 		$stops = $dataProvider->getRoutePointList($lineExternalCode, $forward);
+		$line = $dataProvider->getLineByCode($lineExternalCode);
+		
+		$lineDirection = $forward?'forward':'backward';
+		$direction = $line->$lineDirection->name;
 		
 		$markers = array(
-			'###PREFIXID###' => $this->pObj->prefixId,
-			'###STOP_LIST_TITLE###' => $this->pObj->pi_getLL('stopList_title'),
+			'PREFIXID' => $this->pObj->prefixId,
+			'STOP_LIST_TITLE' => $this->pObj->pi_getLL('stopList_title'),
+			'LINE_PICTO' => $this->pObj->pictoLine->getlinepicto($line->code /*$line->externalCode*/, 'Navitia'),
+			'DIRECTION_NAME' => $direction
 		);
 		
 		$stopListTemplate = $this->pObj->cObj->getSubpart($template, '###STOP_LIST###');
 		
 		$stopNum = 0;
 		foreach ($stops->ToArray() as $stop) {
-			$markers['###STOP_NAME###'] = $stop->stopPoint->name;
-			$markers['###URL###'] = $this->pObj->pi_linkTP_keepPIvars_url(array('stopPointExternalCode' => $stop->stopPoint->externalCode));
+			$markers['STOP_NAME'] = $stop->stopPoint->name;
+			$markers['URL'] = $this->pObj->pi_linkTP_keepPIvars_url(array('stopPointExternalCode' => $stop->stopPoint->externalCode));
 
 			if (tx_icslibnavitia_Debug::IsDebugEnabled()) {
-				$markers['###URL###'] .= '&' . $this->pObj->debug_param . '=' . t3lib_div::_GP($this->pObj->debugParam);
+				$markers['URL'] .= '&' . $this->pObj->debug_param . '=' . t3lib_div::_GP($this->pObj->debugParam);
 			}
 			
 			if($stopNum%2) {
-				$markers['###DATA_THEME###'] = 'd';
+				$markers['DATA_THEME'] = 'd';
 			}
 			else {
-				$markers['###DATA_THEME###'] = 'e';
+				$markers['DATA_THEME'] = 'e';
 			}
 	
-			$stopListContent .= $this->pObj->cObj->substituteMarkerArray($stopListTemplate, $markers);
+			$stopListContent .= $this->pObj->cObj->substituteMarkerArray($stopListTemplate, $markers, '###|###');
 			$stopNum++;
 		}
 		
 		$template = $this->pObj->cObj->substituteSubpart($template, '###STOP_LIST###', $stopListContent);
-		$content .= $this->pObj->cObj->substituteMarkerArray($template, $markers);
+		$content .= $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
 		return $content;
 	}
 	

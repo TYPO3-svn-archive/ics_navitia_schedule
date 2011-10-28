@@ -37,11 +37,11 @@
 			<label index="nextDeparture_noData">Pas d'heure de départ disponible.</label>
 			<label index="nextDeparture_direction">vers</label>
 			<label index="nextDeparture_noLocation">Pas de donnée de position disponible.</label>
-			<label index="nextDeparture_minutes">mn.</label>
+			<label index="nextDeparture_minutes">min</label>
 			<label index="line">Ligne</label>
 			<label index="bookmark_add">Mettre la page en favoris</label>
 			<label index="bookmark_delete">Supprimer le favoris</label>
-			<label index="bookmarks">Prochains passages</label>
+			<label index="bookmarks">Mes arrêts</label>
 			<label index="bookmarks_up">up</label>
 			<label index="bookmarks_delete">del</label>
 			<label index="bookmarks_down">down</label>
