@@ -1,3 +1,6 @@
+2011-10-31 Pierrick Caillon <pierrick@in-cite.net>
+	* Changed constant definition for plugin.tx_icsnavitiaschedule_pi1.networks. Now use the new user control defined in ics_libnavitia.
+
 2011-10-28 Loïc Stéphan <loic@in-cite.net>
 	* Added line choice in stopList and directonList views.
 	* Improved departureBoard template.

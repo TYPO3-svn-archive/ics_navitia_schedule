@@ -5,7 +5,8 @@ plugin.tx_icsnavitiaschedule_pi1 {
 	# cat=plugin.icsnavitiaschedule//b; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.login
 	statLogin = 
 	
-	# cat=plugin.icsnavitiaschedule//c; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.networks
+	# cat=plugin.icsnavitiaschedule//c; type=user[tx_icslibnavitia_ConstantEditorControls->selectNetworkControl]; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.networks
+	# url=plugin.tx_icsnavitiaschedule_pi1.navitiaUrl; login=plugin.tx_icsnavitiaschedule_pi1.statLogin; size=-1
 	networks = 
 	
 	# cat=plugin.icsnavitiaschedule//d; type=options[board,next,proximity,bookmark]; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.displayMode
