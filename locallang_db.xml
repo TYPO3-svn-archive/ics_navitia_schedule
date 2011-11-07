@@ -9,8 +9,8 @@
 	<data type="array">
 		<languageKey index="default" type="array">
 			<label index="tt_content.list_type_pi1">Schedule</label>
-			<label index="constants.url">NAViTiA API dll library URL</label>
-			<label index="constants.login">NAViTiA login for stats</label>
+			<label index="constants.url">NAViTiA API dll: URL to the NAViTiA library</label>
+			<label index="constants.login">NAViTiA login: ID for usage stats</label>
 			<label index="constants.networks">Network list to look into</label>
 			<label index="constants.displayMode">Display mode: board=Departure board at stop with full selection; 
 next=Next departures, with parameters; 
@@ -27,16 +27,16 @@ bookmark=Next departures for bookmarks.</label>
 			<label index="constants.bookmarks.hideEmpty">Hide empty: Hide results with no schedule (bookmarks).</label>
 			<label index="constants.bookmarks.showEmpty">Message if empty: Show a message if there is no bookmark.</label>
 			<label index="constantscat.templates">Templates files</label>
-			<label index="constants.templates.lineList">Lines list template file</label>
-			<label index="constants.templates.directionList">Directions list template file</label>
-			<label index="constants.templates.stopList">Stops list template file</label>
-			<label index="constants.templates.departureBoard">Departureboard template file</label>
-			<label index="constants.templates.nextDeparture">Next departure template file</label>
+			<label index="constants.templates.lineList">HTML template for Line list</label>
+			<label index="constants.templates.directionList">HTML template for Directions list</label>
+			<label index="constants.templates.stopList">HTML template for Stops list</label>
+			<label index="constants.templates.departureBoard">HTML template for Departure board</label>
+			<label index="constants.templates.nextDeparture">HTML template for Next departure</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="tt_content.list_type_pi1">Module horaires</label>
-			<label index="constants.url">URL de la bibliothèque dll de NAViTiA</label>
-			<label index="constants.login">Identifiant NAViTiA pour les stats</label>
+			<label index="constants.url">Dll de l'API NAViTiA: URL vers la bibliothèque NAViTiA</label>
+			<label index="constants.login">Identifiant NAViTiA: Identificateur pour les statistiques d'usage</label>
 			<label index="constants.networks">Liste des réseau de recherche</label>
 			<label index="constants.displayMode">Mode d'affichage: board=Tableau des horaires et sélection de l'arrêt;
 next=Prochain départs à un arrêt, si paramètres indiqués;
@@ -52,12 +52,12 @@ bookmark=Prochains départs aux arrêts favoris.</label>
 			<label index="constants.proximity.hideEmpty">Cacher les vides: Cacher les résultats sans horaires (proximité).</label>
 			<label index="constants.bookmarks.hideEmpty">Cacher les vides: Cacher les résultats sans horaires (favoris).</label>
 			<label index="constants.bookmarks.showEmpty">Message si vide: Afficher un message s'il n'y a pas de favoris.</label>
-			<label index="constantscat.templates">Fichiers templates</label>
-			<label index="constants.templates.lineList">Fichier template de la liste des lignes</label>
-			<label index="constants.templates.directionList">Fichier template de la liste des directions</label>
-			<label index="constants.templates.stopList">Fichier template de la liste des arrêts</label>
-			<label index="constants.templates.departureBoard">Fichier template des résultats des horaires</label>
-			<label index="constants.templates.nextDeparture">Fichier template des prochains passages</label>
+			<label index="constantscat.templates">Fichiers modèles</label>
+			<label index="constants.templates.lineList">Modèle HTML de la liste des lignes</label>
+			<label index="constants.templates.directionList">Modèle HTML de la liste des directions</label>
+			<label index="constants.templates.stopList">Modèle HTML de la liste des arrêts</label>
+			<label index="constants.templates.departureBoard">Modèle HTML des fiches horaires</label>
+			<label index="constants.templates.nextDeparture">Modèle HTML des prochains départs</label>
 		</languageKey>
 	</data>
 	<orig_hash type="array">
