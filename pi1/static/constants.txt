@@ -1,3 +1,5 @@
+# customsubcategory=templates=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constantscat.templates
+
 plugin.tx_icsnavitiaschedule_pi1 {
 	# cat=plugin.icsnavitiaschedule//a; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.url
 	navitiaUrl = 
@@ -41,4 +43,33 @@ plugin.tx_icsnavitiaschedule_pi1 {
 	
 	# cat=plugin.icsnavitiaschedule/enable/n; type=boolean; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.bookmarks.showEmpty
 	bookmarks.showEmpty = 0
+	
+	view {
+		# cat=plugin.icsnavitiaschedule/templates/o; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.templates.lineList
+		lineList {
+			templateFile = EXT:ics_navitia_schedule/res/templates/template_schedule_lineList.html
+		}
+		# cat=plugin.icsnavitiaschedule/templates/p; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.templates.directionList
+		directionList {
+			templateFile = EXT:ics_navitia_schedule/res/templates/template_schedule_directionList.html
+		}
+		# cat=plugin.icsnavitiaschedule/templates/q; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.templates.stopList
+		stopList {
+			templateFile = EXT:ics_navitia_schedule/res/templates/template_schedule_stopList.html
+		}
+		# cat=plugin.icsnavitiaschedule/templates/r; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.templates.departureBoard
+		departureBoard {
+			templateFile = EXT:ics_navitia_schedule/res/templates/template_schedule_departureBoard.html
+		}
+		# cat=plugin.icsnavitiaschedule/templates/s; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.templates.nextDeparture
+		nextDeparture {
+			templateFile = EXT:ics_navitia_schedule/res/templates/template_schedule_nextDeparture.html
+		}
+	}
+	
+	icons {
+		up = EXT:ics_navitia_schedule/res/icons/up.png
+		down = EXT:ics_navitia_schedule/res/icons/down.png
+		delete = EXT:ics_navitia_schedule/res/icons/delete.png
+	}
 }
