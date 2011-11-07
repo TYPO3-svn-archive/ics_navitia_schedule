@@ -4,20 +4,26 @@ plugin.tx_icsnavitiaschedule_pi1 {
 	networks = {$plugin.tx_icsnavitiaschedule_pi1.networks}
 	view {
 		lineList {
-			templateFile = EXT:ics_navitia_schedule/res/templates/template_schedule_lineList.html
+			templateFile = {$plugin.tx_icsnavitiaschedule_pi1.view.lineList.templateFile}
 		}
 		directionList {
-			templateFile = EXT:ics_navitia_schedule/res/templates/template_schedule_directionList.html
+			templateFile = {$plugin.tx_icsnavitiaschedule_pi1.view.directionList.templateFile}
 		}
 		stopList {
-			templateFile = EXT:ics_navitia_schedule/res/templates/template_schedule_stopList.html
+			templateFile = {$plugin.tx_icsnavitiaschedule_pi1.view.stopList.templateFile}
 		}
 		departureBoard {
-			templateFile = EXT:ics_navitia_schedule/res/templates/template_schedule_departureBoard.html
+			templateFile = {$plugin.tx_icsnavitiaschedule_pi1.view.departureBoard.templateFile}
 		}
 		nextDeparture {
-			templateFile = EXT:ics_navitia_schedule/res/templates/template_schedule_nextDeparture.html
+			templateFile = {$plugin.tx_icsnavitiaschedule_pi1.view.nextDeparture.templateFile}
 		}
+	}
+	
+	icons {
+		up = {$plugin.tx_icsnavitiaschedule_pi1.icons.up}
+		down = {$plugin.tx_icsnavitiaschedule_pi1.icons.down}
+		delete = {$plugin.tx_icsnavitiaschedule_pi1.icons.delete}
 	}
 	
 	departureBoard {

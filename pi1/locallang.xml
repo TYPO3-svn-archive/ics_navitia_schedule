@@ -42,9 +42,9 @@
 			<label index="bookmark_add">Mettre la page en favoris</label>
 			<label index="bookmark_delete">Supprimer le favoris</label>
 			<label index="bookmarks">Mes arrêts</label>
-			<label index="bookmarks_up">up</label>
-			<label index="bookmarks_delete">del</label>
-			<label index="bookmarks_down">down</label>
+			<label index="bookmarks_up">Monter</label>
+			<label index="bookmarks_delete">Supprimer</label>
+			<label index="bookmarks_down">Descendre</label>
 			<label index="noData">Aucun arrêt en favori.</label>
 		</languageKey>
 	</data>
