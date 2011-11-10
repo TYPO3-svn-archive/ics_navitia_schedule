@@ -25,6 +25,8 @@
 			<label index="bookmarks_delete">Delete</label>
 			<label index="bookmarks_down">Down</label>
 			<label index="noData">No stop on bookmark.</label>
+			<label index="error.nodata">No result with this parameters</label>
+			<label index="terminus">Terminus</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="lineList_title">Choisissez votre ligne</label>
@@ -46,6 +48,8 @@
 			<label index="bookmarks_delete">Supprimer</label>
 			<label index="bookmarks_down">Descendre</label>
 			<label index="noData">Aucun arrêt en favori.</label>
+			<label index="error.nodata">Il n'y a aucun horaire pour les paramètres saisis</label>
+			<label index="terminus">Terminus</label>
 		</languageKey>
 	</data>
 </T3locallang>

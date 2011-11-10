@@ -42,7 +42,7 @@
 	<form action="###ACTION_URL###" method="get" class="date">
 		###HIDDEN_FIELDS###
 		<fieldset class="###PREFIXID###_date"><!--ddd dd mmm YYYY-->
-			<input data-theme="d" class="###PREFIXID###_dateSel" value="###DATE_SEL###" name="###PREFIXID###[date]" type="date" data-role="datebox" data-options='{"mode": "calbox", "dateFormat": "dd/mm/YYYY"}' onChange="dateChange(this.value);" style="text-align:center;">
+			<input data-theme="d" class="###PREFIXID###_dateSel" value="###DATE_SEL###" name="###PREFIXID###[date]" type="date" data-role="datebox" data-options='{"mode": "calbox", "dateFormat": "dd/mm/YYYY"}' style="text-align:center;">
 		</fieldset>
 		<fieldset class="###PREFIXID###_hour">
 			<a class="###PREFIXID###_hourLess" href="###HOUR_LESS_URL###" data-theme="d">###HOUR_LESS_TEXT###</a>
@@ -72,7 +72,7 @@
 	<!-- ###COMMENT_LIST### begin -->
 	<p class="###PREFIXID###_comment">###COMMENTPOS### : ###COMMENT_NAME###</p>
 	<!-- ###COMMENT_LIST### end -->
-	###ERROR###
+	<p class="###PREFIXID###_error">###ERROR###</p>
 </div>
 <!-- ###TEMPLATE_SCHEDULE_TABLE### end -->
 

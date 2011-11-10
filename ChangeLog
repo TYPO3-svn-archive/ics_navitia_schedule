@@ -1,3 +1,11 @@
+2011-11-10 Loïc Stéphan <loic@in-cite.net>
+	* Remove useless JS call in departureBoard template.
+	* Added icons for bookmarks edition.
+	* Implemented icons in nextDeparture Class.
+	* Improved translations.
+	* Fixed JS call in positionLoad function.
+	* Added condition in getDirection method to not displayed direction name if empty.
+	
 2011-11-07 Pierrick Caillon <pierrick@in-cite.net>
 	* Improved translations.
 

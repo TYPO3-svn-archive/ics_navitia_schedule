@@ -67,13 +67,25 @@ class tx_icsnavitiaschedule_directionList {
 			'LINE_PICTO' => $this->pObj->pictoLine->getlinepicto($line->externalCode, 'Navitia'),
 		);
 		
+		
+		
 		if ($forward) {
-			$markers['DIRECTION_NAME'] = $line->forward->name;
+			if(!empty($line->forward->name)) {
+				$markers['DIRECTION_NAME'] = $line->forward->name;
+			}
+			else {
+				return '';
+			}
 			$markers['URL'] = $this->pObj->pi_linkTP_keepPIvars_url(array('sens' => $forward));
 			$markers['DATA_THEME'] = 'e';
 		}
 		else {
-			$markers['DIRECTION_NAME'] = $line->backward->name;
+			if(!empty($line->backward->name)) {
+				$markers['DIRECTION_NAME'] = $line->backward->name;
+			}
+			else {
+				return '';
+			}
 			$markers['URL'] = $this->pObj->pi_linkTP_keepPIvars_url(array('sens' => 0));
 			$markers['DATA_THEME'] = 'd';
 		}

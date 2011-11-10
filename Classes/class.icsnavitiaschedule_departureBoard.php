@@ -116,6 +116,10 @@ class tx_icsnavitiaschedule_departureBoard {
 		$aLines = $data['LineList']->ToArray();
 		$line = $aLines[0];
 		
+		if(is_null($line)) {
+			$line = $dataProvider->getLineByCode($lineExternalCode);
+		}
+		
 		$markers = array(
 			'PREFIXID' => $this->pObj->prefixId,
 			'LINE_PICTO' => $this->pObj->pictoLine->getlinepicto($line->code /*$line->externalCode*/, 'Navitia'),
@@ -150,7 +154,7 @@ class tx_icsnavitiaschedule_departureBoard {
 		}
 		
 		if(!$data['StopPointList']->Count() && !$data['StopList']->Count()) {
-			$markers['ERROR'] = $this->pObj->pi_getLL('error');
+			$markers['ERROR'] = $this->pObj->pi_getLL('error.nodata');
 		}
 
 		if (tx_icslibnavitia_Debug::IsDebugEnabled()) {
@@ -169,6 +173,8 @@ class tx_icsnavitiaschedule_departureBoard {
 		$stopPoint = $data['StopPointList']->ToArray();
 		
 		$markers['STOP_NAME'] = $stopPoint[0]->name;
+		
+		//lineschedule_no_active_circulation_this_date
 		
 		if (t3lib_extMgm::isLoaded('ics_bookmarks')) {
 			$libsBookmarks = t3lib_div::makeInstance('tx_icsbookmarks_libs');

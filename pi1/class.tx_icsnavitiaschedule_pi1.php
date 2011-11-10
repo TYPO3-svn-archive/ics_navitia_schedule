@@ -110,7 +110,7 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase implements tx_icsbookmarks_
 	 * @author Pierrick Caillon <pierrick@in-cite.net>
 	 */
 	public function positionLoad($content, $conf) {
-		$GLOBALS['TSFE']->JSeventFuncCalls['onload'][$this->prefixId] = 'if (' . $this->prefixId . '_init) ' . $this->prefixId . '_init();';
+		$GLOBALS['TSFE']->JSeventFuncCalls['onload'][$this->prefixId] = 'if (typeof ' . $this->prefixId . '_init == "function") ' . $this->prefixId . '_init();';
 		$conf['userFunc'] .= 'Int';
 		return $this->cObj->USER($conf, 'INT');
 	}
@@ -139,6 +139,7 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase implements tx_icsbookmarks_
 	}
 	
 	private function init() {
+		
 		$this->pi_initPIflexForm();
 		$this->login = $this->conf['login'];
 		$this->url = $this->conf['url'];
