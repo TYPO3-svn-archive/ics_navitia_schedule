@@ -43,6 +43,7 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase implements tx_icsbookmarks_
 	
 	private $login;
 	private $url;
+	private $networks;
 	private $dataProvider;
 	public $pictoLine;
 	public $templates;

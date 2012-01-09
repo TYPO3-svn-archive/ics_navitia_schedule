@@ -1,3 +1,6 @@
+2012-01-06 Pierrick Caillon <pierrick@in-cite.net>
+	* Added a missing attribute in plugin.
+
 2011-11-10 Loïc Stéphan <loic@in-cite.net>
 	* Remove useless JS call in departureBoard template.
 	* Added icons for bookmarks edition.
