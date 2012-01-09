@@ -1,3 +1,11 @@
+2011-01-09 Loïc Stéphan <loic@in-cite.net>
+	* Added a constant to activate bookmarks.
+	* Added bookmarks marker in departure board template file.
+	* Modified viewBookmarks function in pi1.
+	* Improved message when no localized in NextDeparture class.
+	* Fixed title locallang in lineList class.
+	* Added more than 4 "notes" in departureBoard class.
+
 2012-01-06 Pierrick Caillon <pierrick@in-cite.net>
 	* Added a missing attribute in plugin.
 

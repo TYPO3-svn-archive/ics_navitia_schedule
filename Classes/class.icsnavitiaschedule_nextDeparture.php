@@ -70,13 +70,21 @@ class tx_icsnavitiaschedule_nextDeparture {
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_PROXIMITY###');
 		
 		$markers = array(
-			'PREFIXID' => $this->pObj->prefixId,
+			'PREFIXID'		=> $this->pObj->prefixId,
+			'TITLE'			=> htmlspecialchars($this->pObj->pi_getLL('title')),
 		);
 		
 		$geoloc = new tx_icslibgeoloc_GeoLocation();
 		if ($geoloc->Position === false) {
 			$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_PROXIMITY_NODATA###');
 			$markers['MESSAGE'] = htmlspecialchars($this->pObj->pi_getLL('nextDeparture_noLocation'));
+			if($GLOBALS['TSFE']->tmpl->setup['geoloc.']['file']) {
+				$geolocImg = array(
+					'file' => $GLOBALS['TSFE']->tmpl->setup['geoloc.']['file']
+				);
+				$markers['ICON'] = $this->pObj->cObj->IMAGE($geolocImg);
+				$markers['BR'] = '<br />';
+			}
 		}
 		else {
 			$timeLimit = max(1, intval($this->pObj->conf['nextDeparture.']['nextLimit']));

@@ -3,8 +3,7 @@
 	<meta type="array">
 		<type>database</type>
 		<description>Language labels for database tables/fields belonging to extension 'ics_navitia_schedule'</description>
-		<labelContext type="array">
-		</labelContext>
+		<labelContext type="array"/>
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
@@ -12,10 +11,7 @@
 			<label index="constants.url">NAViTiA API dll: URL to the NAViTiA library</label>
 			<label index="constants.login">NAViTiA login: ID for usage stats</label>
 			<label index="constants.networks">Network list to look into</label>
-			<label index="constants.displayMode">Display mode: board=Departure board at stop with full selection; 
-next=Next departures, with parameters; 
-proximity=Next departures for nearest stops; 
-bookmark=Next departures for bookmarks.</label>
+			<label index="constants.displayMode">Display mode: board=Departure board at stop with full selection; next=Next departures, with parameters; proximity=Next departures for nearest stops; bookmark=Next departures for bookmarks.</label>
 			<label index="constants.maxItems">Max stops: Maximum number of stops to display.</label>
 			<label index="constants.maxTimes">Max time items: Maximum next departure times to display.</label>
 			<label index="constants.noNextDay">Don't span over running day: Do not display results for next days after date change time.</label>
@@ -26,6 +22,7 @@ bookmark=Next departures for bookmarks.</label>
 			<label index="constants.proximity.hideEmpty">Hide empty: Hide results with no schedule (proximity).</label>
 			<label index="constants.bookmarks.hideEmpty">Hide empty: Hide results with no schedule (bookmarks).</label>
 			<label index="constants.bookmarks.showEmpty">Message if empty: Show a message if there is no bookmark.</label>
+			<label index="constants.bookmarks.activate">Navitia bookmarks: Activate Navitia bookmarks</label>
 			<label index="constantscat.templates">Templates files</label>
 			<label index="constants.templates.lineList">HTML template for Line list</label>
 			<label index="constants.templates.directionList">HTML template for Directions list</label>
@@ -38,10 +35,7 @@ bookmark=Next departures for bookmarks.</label>
 			<label index="constants.url">Dll de l'API NAViTiA: URL vers la bibliothèque NAViTiA</label>
 			<label index="constants.login">Identifiant NAViTiA: Identificateur pour les statistiques d'usage</label>
 			<label index="constants.networks">Liste des réseau de recherche</label>
-			<label index="constants.displayMode">Mode d'affichage: board=Tableau des horaires et sélection de l'arrêt;
-next=Prochain départs à un arrêt, si paramètres indiqués;
-proximity=Prochains départs aux arrêts les plus proches;
-bookmark=Prochains départs aux arrêts favoris.</label>
+			<label index="constants.displayMode">Mode d'affichage: board=Tableau des horaires et sélection de l'arrêt;next=Prochain départs à un arrêt, si paramètres indiqués;proximity=Prochains départs aux arrêts les plus proches;bookmark=Prochains départs aux arrêts favoris.</label>
 			<label index="constants.maxItems">Maximum d'arrêts: Nombre maximum d'arrêts à afficher. Non limité si 0.</label>
 			<label index="constants.maxTimes">Maximum d'horaires: Nombre maximum d'horaires de prochain départ à afficher par arrêt.</label>
 			<label index="constants.noNextDay">Pas de jour suivant: Ne pas afficher d'horaire de prochain départ le jour suivant après l'heure de changement de jour.</label>
@@ -52,6 +46,7 @@ bookmark=Prochains départs aux arrêts favoris.</label>
 			<label index="constants.proximity.hideEmpty">Cacher les vides: Cacher les résultats sans horaires (proximité).</label>
 			<label index="constants.bookmarks.hideEmpty">Cacher les vides: Cacher les résultats sans horaires (favoris).</label>
 			<label index="constants.bookmarks.showEmpty">Message si vide: Afficher un message s'il n'y a pas de favoris.</label>
+			<label index="constants.bookmarks.activate">Navitia bookmarks: Activate Navitia bookmarks</label>
 			<label index="constantscat.templates">Fichiers modèles</label>
 			<label index="constants.templates.lineList">Modèle HTML de la liste des lignes</label>
 			<label index="constants.templates.directionList">Modèle HTML de la liste des directions</label>
@@ -77,10 +72,7 @@ bookmark=Prochains départs aux arrêts favoris.</label>
 		<languageKey index="fr" type="array">
 			<label index="tt_content.list_type_pi1">Schedule</label>
 			<label index="constants.networks">Network list to look into.</label>
-			<label index="constants.displayMode">Display mode: board=Departure board at stop with full selection; 
-next=Next departures, with parameters; 
-proximity=Next departures for nearest stops; 
-bookmark=Next departures for bookmarks.</label>
+			<label index="constants.displayMode">Display mode: board=Departure board at stop with full selection; next=Next departures, with parameters; proximity=Next departures for nearest stops; bookmark=Next departures for bookmarks.</label>
 			<label index="constants.maxItems">Max stops: Maximum number of stops to display.</label>
 			<label index="constants.maxTimes">Max time items: Maximum next departure times to display.</label>
 			<label index="constants.noNextDay">Don't span over running day: Do not display results for next days after date change time.</label>

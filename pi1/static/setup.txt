@@ -78,6 +78,7 @@ plugin.tx_icsnavitiaschedule_pi1 {
 			noData_stdWrap {
 				wrap = <p class="nodata">|</p>
 			}
+			activate = {$plugin.tx_icsnavitiaschedule_pi1.bookmarks.activate}
 		}
 	}
 	

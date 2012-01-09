@@ -44,24 +44,27 @@ plugin.tx_icsnavitiaschedule_pi1 {
 	# cat=plugin.icsnavitiaschedule/enable/n; type=boolean; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.bookmarks.showEmpty
 	bookmarks.showEmpty = 0
 	
+	# cat=plugin.icsnavitiaschedule/enable/o; type=boolean; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.bookmarks.activate
+	bookmarks.activate = 1
+	
 	view {
-		# cat=plugin.icsnavitiaschedule/templates/o; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.templates.lineList
+		# cat=plugin.icsnavitiaschedule/templates/p; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.templates.lineList
 		lineList {
 			templateFile = EXT:ics_navitia_schedule/res/templates/template_schedule_lineList.html
 		}
-		# cat=plugin.icsnavitiaschedule/templates/p; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.templates.directionList
+		# cat=plugin.icsnavitiaschedule/templates/q; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.templates.directionList
 		directionList {
 			templateFile = EXT:ics_navitia_schedule/res/templates/template_schedule_directionList.html
 		}
-		# cat=plugin.icsnavitiaschedule/templates/q; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.templates.stopList
+		# cat=plugin.icsnavitiaschedule/templates/r; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.templates.stopList
 		stopList {
 			templateFile = EXT:ics_navitia_schedule/res/templates/template_schedule_stopList.html
 		}
-		# cat=plugin.icsnavitiaschedule/templates/r; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.templates.departureBoard
+		# cat=plugin.icsnavitiaschedule/templates/s; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.templates.departureBoard
 		departureBoard {
 			templateFile = EXT:ics_navitia_schedule/res/templates/template_schedule_departureBoard.html
 		}
-		# cat=plugin.icsnavitiaschedule/templates/s; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.templates.nextDeparture
+		# cat=plugin.icsnavitiaschedule/templates/t; type=text; label=LLL:EXT:ics_navitia_schedule/locallang_db.xml:constants.templates.nextDeparture
 		nextDeparture {
 			templateFile = EXT:ics_navitia_schedule/res/templates/template_schedule_nextDeparture.html
 		}

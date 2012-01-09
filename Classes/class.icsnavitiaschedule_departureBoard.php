@@ -35,6 +35,12 @@ class tx_icsnavitiaschedule_departureBoard {
 		1		=> 'b',
 		2		=> 'c',
 		3		=> 'd',
+		4		=> 'e',
+		5		=> 'f',
+		6		=> 'g',
+		7		=> 'h',
+		8		=> 'i',
+		9		=> 'j',
 	);
 
 	public function __construct($pObj) {
@@ -298,6 +304,12 @@ class tx_icsnavitiaschedule_departureBoard {
 				$index++;
 			}
 		}*/
+		
+		$activateBookmarks = $this->pObj->cObj->cObjGetSingle($this->pObj->conf['nextDeparture.']['bookmarks.']['activate'], $this->pObj->conf['nextDeparture.']['bookmarks.']['activate.']);
+		
+		if(!$activateBookmarks) {
+			$template = $this->pObj->cObj->substituteSubpart($template, '###BOOKMARKS###', '');
+		}
 		
 		$template = $this->pObj->cObj->substituteSubpart($template, '###COMMENT_LIST###', $commentContent);
 		$template = $this->pObj->cObj->substituteSubpart($template, '###DESTINATION_LIST###', $destinationContent);

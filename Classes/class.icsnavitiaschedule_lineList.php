@@ -41,7 +41,7 @@ class tx_icsnavitiaschedule_lineList {
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_SCHEDULE_LINE_LIST###');
 		
 		$markers = array(
-			'###PREFIXID###' => $this->prefixId,
+			'###PREFIXID###' => $this->pObj->prefixId,
 			'###LINE_LIST_TITLE###' => $this->pObj->pi_getLL('lineLis_title'),
 		);
 		

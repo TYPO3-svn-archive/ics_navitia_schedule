@@ -202,6 +202,11 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase implements tx_icsbookmarks_
 	
 	function viewBookmarks($bookmarks, $edit = false) {
 		$conf = $GLOBALS['TSFE']->tmpl->setup['plugin.'][$this->prefixId . '.'];
+		$activateBookmarks = $this->cObj->cObjGetSingle($conf['nextDeparture.']['bookmarks.']['activate'], $conf['nextDeparture.']['bookmarks.']['activate.']);
+		if(!$activateBookmarks) {
+			return false;
+		}
+		
 		if(!$edit) {
 			$conf['mode'] = 'bookmark';
 		}

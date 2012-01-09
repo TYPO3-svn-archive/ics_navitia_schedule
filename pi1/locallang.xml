@@ -27,6 +27,7 @@
 			<label index="noData">No stop on bookmark.</label>
 			<label index="error.nodata">No result with this parameters</label>
 			<label index="terminus">Terminus</label>
+			<label index="title">Stops</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="lineList_title">Choisissez votre ligne</label>
@@ -38,11 +39,11 @@
 			<label index="nextDeparture_nextDay">J+%d</label>
 			<label index="nextDeparture_noData">Pas d'heure de départ disponible.</label>
 			<label index="nextDeparture_direction">vers</label>
-			<label index="nextDeparture_noLocation">Pas de donnée de position disponible.</label>
+			<label index="nextDeparture_noLocation">Nous n'avons pas reussi à vous localiser.###BR### Veuillez cliquer sur l'icône ###ICON### pour réviser votre position.</label>
 			<label index="nextDeparture_minutes">min</label>
 			<label index="line">Ligne</label>
-			<label index="bookmark_add">Mettre la page en favoris</label>
-			<label index="bookmark_delete">Supprimer le favoris</label>
+			<label index="bookmark_add">Ajouter l'arrêt à mes favoris</label>
+			<label index="bookmark_delete">Supprimer de mes favoris</label>
 			<label index="bookmarks">Mes arrêts</label>
 			<label index="bookmarks_up">Monter</label>
 			<label index="bookmarks_delete">Supprimer</label>
@@ -50,6 +51,7 @@
 			<label index="noData">Aucun arrêt en favori.</label>
 			<label index="error.nodata">Il n'y a aucun horaire pour les paramètres saisis</label>
 			<label index="terminus">Terminus</label>
+			<label index="title">Arrêts</label>
 		</languageKey>
 	</data>
 </T3locallang>

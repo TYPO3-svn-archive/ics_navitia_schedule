@@ -23,7 +23,9 @@
 
 <!-- ###TEMPLATE_SCHEDULE_TABLE### begin -->
 <div class="###PREFIXID###_bookmark">
+	<!-- ###BOOKMARKS### begin -->
 	<a class="###PREFIXID###_bookmarkLink" href="###BOOKMARK_URL###">###BOOKMARK_LABEL###</a>
+	<!-- ###BOOKMARKS### end -->
 </div>
 <div class="###PREFIXID###_scheduleTable">
 	<div class="###PREFIXID###_recap recap">
@@ -42,7 +44,7 @@
 	<form action="###ACTION_URL###" method="get" class="date">
 		###HIDDEN_FIELDS###
 		<fieldset class="###PREFIXID###_date"><!--ddd dd mmm YYYY-->
-			<input data-theme="d" class="###PREFIXID###_dateSel" value="###DATE_SEL###" name="###PREFIXID###[date]" type="date" data-role="datebox" data-options='{"mode": "calbox", "dateFormat": "dd/mm/YYYY"}' style="text-align:center;">
+			<input data-theme="d" class="###PREFIXID###_dateSel" value="###DATE_SEL###" name="###PREFIXID###[date]" type="date" data-role="datebox" data-options='{"mode": "calbox", "dateFormat": "dd/mm/YYYY", "minDays" : 30}' style="text-align:center;">
 		</fieldset>
 		<fieldset class="###PREFIXID###_hour">
 			<a class="###PREFIXID###_hourLess" href="###HOUR_LESS_URL###" data-theme="d">###HOUR_LESS_TEXT###</a>
