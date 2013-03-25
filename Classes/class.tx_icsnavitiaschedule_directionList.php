@@ -41,7 +41,7 @@ class tx_icsnavitiaschedule_directionList {
 		$markers = array(
 			'PREFIXID' => $this->pObj->prefixId,
 			'DIRECTION_LIST_TITLE' => $this->pObj->pi_getLL('directionList_title'),
-			'LINE_PICTO' => $this->pObj->pictoLine->getlinepicto($line->code /*$line->externalCode*/, 'Navitia'),
+			'LINE_PICTO' => ($this->pObj->pictoLine != null) ? $this->pObj->pictoLine->getlinepicto($line->code /*$line->externalCode*/, 'Navitia') : '',
 		);
 		$directionListContent = $this->getDirections($line);
 		
@@ -64,7 +64,7 @@ class tx_icsnavitiaschedule_directionList {
 		
 		$markers = array(
 			'PREFIXID' => $this->pObj->prefixId,
-			'LINE_PICTO' => $this->pObj->pictoLine->getlinepicto($line->externalCode, 'Navitia'),
+			'LINE_PICTO' => ($this->pObj->pictoLine != null) ? $this->pObj->pictoLine->getlinepicto($line->externalCode, 'Navitia') : '',
 		);
 		
 		

@@ -45,7 +45,7 @@ class tx_icsnavitiaschedule_stopList {
 		$markers = array(
 			'PREFIXID' => $this->pObj->prefixId,
 			'STOP_LIST_TITLE' => $this->pObj->pi_getLL('stopList_title'),
-			'LINE_PICTO' => $this->pObj->pictoLine->getlinepicto($line->code /*$line->externalCode*/, 'Navitia'),
+			'LINE_PICTO' => ($this->pObj->pictoLine != null) ? $this->pObj->pictoLine->getlinepicto($line->code /*$line->externalCode*/, 'Navitia') : '',
 			'DIRECTION_NAME' => $direction
 		);
 		

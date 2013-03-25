@@ -151,7 +151,7 @@ class tx_icsnavitiaschedule_nextDeparture {
 		$localCObj->start($cObjData);
 
 		$markers = array();
-		$markers['PICTO'] = $this->pObj->pictoLine->getlinepicto($line->code/*$line->externalCode*/, 'Navitia');
+		$markers['PICTO'] = ($this->pObj->pictoLine != null) ? $this->pObj->pictoLine->getlinepicto($line->code/*$line->externalCode*/, 'Navitia') : '';
 		if (!$markers['PICTO']) $markers['PICTO'] = htmlspecialchars($line->code);
 		$markers['LINE'] = htmlspecialchars($line->name);
 		$markers['NAME'] = htmlspecialchars($stopList->Get(0)->stopPoint->stopArea->name);
@@ -235,7 +235,7 @@ class tx_icsnavitiaschedule_nextDeparture {
 		$localCObj->start($cObjData);
 
 		$markers = array();
-		$markers['PICTO'] = $this->pObj->pictoLine->getlinepicto($line->code/*$line->externalCode*/, 'Navitia');
+		$markers['PICTO'] = ($this->pObj->pictoLine != null) ? $this->pObj->pictoLine->getlinepicto($line->code/*$line->externalCode*/, 'Navitia') : '';
 		if (!$markers['PICTO']) $markers['PICTO'] = htmlspecialchars($line->code);
 		$markers['LINE'] = htmlspecialchars($line->name);
 		$markers['NAME'] = htmlspecialchars($stopArea->name);

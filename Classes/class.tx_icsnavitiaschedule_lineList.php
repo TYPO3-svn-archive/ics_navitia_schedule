@@ -42,7 +42,7 @@ class tx_icsnavitiaschedule_lineList {
 		
 		$markers = array(
 			'###PREFIXID###' => $this->pObj->prefixId,
-			'###LINE_LIST_TITLE###' => $this->pObj->pi_getLL('lineLis_title'),
+			'###LINE_LIST_TITLE###' => $this->pObj->pi_getLL('lineList_title'),
 		);
 		
 		if ($lineTot) {
@@ -57,9 +57,9 @@ class tx_icsnavitiaschedule_lineList {
 				
 				if (!empty($line->name)) {
 					$lineListTemplate = $this->pObj->cObj->getSubpart($templatePart, '###LINE_LIST###');
-					$linePicto = $this->pObj->pictoLine->getlinepicto($line->code/*$line->externalCode*/, 'Navitia');
+					$linePicto = ($this->pObj->pictoLine != null) ? $this->pObj->pictoLine->getlinepicto($line->code/*$line->externalCode*/, 'Navitia') : '';
 					
-					$markers['###LINE_CODE###'] = $line->code . ' - ';
+					$markers['###LINE_CODE###'] = htmlspecialchars($line->code);
 					
 					if (!empty($linePicto)) {
 						$markers['###LINE_PICTO###'] = $linePicto;
@@ -67,7 +67,7 @@ class tx_icsnavitiaschedule_lineList {
 						$markers['###STYLE_LINEPICTO###'] = 'display:inline;';
 					}
 					else {
-						$markers['###LINE_PICTO###'] = $line->code . ' - ';
+						$markers['###LINE_PICTO###'] = htmlspecialchars($line->code);
 						$markers['###STYLE_LINECODE###'] = 'display:inline;';
 						$markers['###STYLE_LINEPICTO###'] = 'display:none;';
 					}

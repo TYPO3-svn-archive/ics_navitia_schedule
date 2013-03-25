@@ -1,3 +1,9 @@
+2013-03-25 Pierrick Caillon <pierrick.caillon@plan-net.fr>
+	* Added TYPO3 version dependency.
+	* Renamed class files to match expected names
+	* Fix: Resolved optional dependencies error.
+	* Fix: Extracted bookmark implementation from plugin to an intermediate class.
+
 2011-01-09 Loïc Stéphan <loic@in-cite.net>
 	* Added a constant to activate bookmarks.
 	* Added bookmarks marker in departure board template file.

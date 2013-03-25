@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2011 In Cité Solution <technique@in-cite.net>
+*  (c) 2011-2013 Plan.Net France <typo3@plan-net.fr>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -36,7 +36,7 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  * @package	TYPO3
  * @subpackage	tx_icsnavitiaschedule
  */
-class tx_icsnavitiaschedule_pi1 extends tslib_pibase implements tx_icsbookmarks_IProvider {
+class tx_icsnavitiaschedule_pi1 extends tslib_pibase {
 	var $prefixId      = 'tx_icsnavitiaschedule_pi1';		// Same as class name
 	var $scriptRelPath = 'pi1/class.tx_icsnavitiaschedule_pi1.php';	// Path to this script relative to the extension dir.
 	var $extKey        = 'ics_navitia_schedule';	// The extension key.
@@ -147,7 +147,7 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase implements tx_icsbookmarks_
 		$this->networks = $this->conf['networks'];
 		
 		$this->dataProvider = t3lib_div::makeInstance('tx_icslibnavitia_APIService', $this->url, $this->login);
-		$this->pictoLine = t3lib_div::makeInstance('tx_icslinepicto_getlines');
+		$this->pictoLine = (t3lib_extMgm::isLoaded(ics_linepicto)) ? t3lib_div::makeInstance('tx_icslinepicto_getlines') : null;
 		$this->templates = array(
 			'lineList' => $this->getTemplateFile('line', $this->conf['view.']['lineList.']['templateFile']),
 			'directionList' => $this->getTemplateFile('direction', $this->conf['view.']['directionList.']['templateFile']),
@@ -199,23 +199,6 @@ class tx_icsnavitiaschedule_pi1 extends tslib_pibase implements tx_icsbookmarks_
 			$hidden .= '<input type="hidden" name="' . htmlspecialchars($name) . '" value="' . htmlspecialchars($value) . '" />';
 		return $hidden;
 	}
-	
-	function viewBookmarks($bookmarks, $edit = false) {
-		$conf = $GLOBALS['TSFE']->tmpl->setup['plugin.'][$this->prefixId . '.'];
-		$activateBookmarks = $this->cObj->cObjGetSingle($conf['nextDeparture.']['bookmarks.']['activate'], $conf['nextDeparture.']['bookmarks.']['activate.']);
-		if(!$activateBookmarks) {
-			return false;
-		}
-		
-		if(!$edit) {
-			$conf['mode'] = 'bookmark';
-		}
-		else {
-			$conf['mode'] = 'bookmark_manage';
-		}
-		return $this->main('', $conf);
-	}
-	
 }
 
 

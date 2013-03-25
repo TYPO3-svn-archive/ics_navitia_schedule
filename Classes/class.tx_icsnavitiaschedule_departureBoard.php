@@ -128,7 +128,7 @@ class tx_icsnavitiaschedule_departureBoard {
 		
 		$markers = array(
 			'PREFIXID' => $this->pObj->prefixId,
-			'LINE_PICTO' => $this->pObj->pictoLine->getlinepicto($line->code /*$line->externalCode*/, 'Navitia'),
+			'LINE_PICTO' => '',
 			'DATE_SEL' => $currentDate,
 			'HOUR_SEL' => $currentTime,
 			'HOUR_LESS_TEXT' => $this->pObj->pi_getLL('hourLess'),
@@ -143,11 +143,11 @@ class tx_icsnavitiaschedule_departureBoard {
 			'BOOKMARK_LABEL' => $this->pObj->pi_getLL('bookmark_add'),
 		);
 		
-		if($this->pObj->pictoLine->getlinepicto($line->code /*$line->externalCode*/, 'Navitia')) {
+		if(($this->pObj->pictoLine != null) && $this->pObj->pictoLine->getlinepicto($line->code /*$line->externalCode*/, 'Navitia')) {
 			$markers['LINE_PICTO'] = $this->pObj->pictoLine->getlinepicto($line->code /*$line->externalCode*/, 'Navitia');
 		}
 		else {
-			$markers['LINE_PICTO'] = $this->pObj->pi_getLL('line') . ' ' . $line->code;
+			$markers['LINE_PICTO'] = htmlspecialchars($this->pObj->pi_getLL('line') . ' ' . $line->code);
 		}
 		
 		$params = t3lib_div::_GET($this->pObj->prefixId);
